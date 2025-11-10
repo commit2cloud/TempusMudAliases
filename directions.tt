@@ -21,7 +21,7 @@
 #ALIAS {directionsToHolySquare} {north;look modrian;north;north};
 #ALIAS {directionsToStarPlaza} {north;look ec};
 #ALIAS {directionsToSlaveSquare} {north;look skullport};
-#ALIAS {diretionsToAstralManse} {north;look astral};
+#ALIAS {directionsToAstralManse} {north;look astral};
 
 #NOP ----- ^^^^ EDIT THESE VARS ONLY! ^^^^ -----
 
@@ -531,7 +531,7 @@
         #IF {{$currentRoom} === {$myStartingRoomName}}
         {
             #VAR {travelling} {1};
-			diretionsToAstralManse;
+			directionsToAstralManse;
         };
 		#ELSE {
     	#SH {<FF00>Warning!<FBBB> The current starting room is <FF00>NOT<FBBB> your default start room '$myStartingRoomName'!};
