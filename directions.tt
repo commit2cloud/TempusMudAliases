@@ -366,8 +366,8 @@
 			#SH { <acf>| <F0FF>19)<099> Fail Family Legacy <F0FF>20)<099> GenClone Bio Labs    <F0FF>21)<099> Kiddie Kandy, Inc.       <acf>|<099> };
 			#SH { <acf>| <F0FF>22)<099> Kromguard          <F0FF>23)<099> Luxare               <F0FF>24)<099> Merqury City             <acf>|<099> };
 			#SH { <acf>| <F0FF>25)<099> NETWORK  Tower     <F0FF>26)<099> Equipment Reinforcer <F0FF>27)<099> Ruins of HTOM            <acf>|<099> };
-			#SH { <acf>| <F0FF>28)<099> Silver Tower  Ruins<F0FF>29)<099> Simeon the Cybernetic<F0FF>30)<099><FF00>Triskin Asylum<099><F0FF>       <acf>|<099> };
-			#SH { <acf>| <F0FF>31)<099> Virtual  World     <F0FF>32)<099> Zul’Dane                              <acf>|<099> };
+			#SH { <acf>| <F0FF>28)<099> Silver Tower  Ruins<F0FF>29)<099> Simeon the Cybernetic<F0FF>30)<099><FF00>Triskin Asylum<099><F0FF>            <acf>|<099> };
+			#SH { <acf>| <F0FF>31)<099> Virtual  World     <F0FF>32)<099> Zul’Dane                                          <acf>|<099> };
 			#SH { <acf>|                                                                              <acf>|<099> };
 			#SH { <acf>└------------------------------------------------------------------------------┘<099> };
 		};
