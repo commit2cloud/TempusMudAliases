@@ -1574,12 +1574,32 @@
 			e9s3e;
 			where;
 			challenge area;
-			#SH {At entrance of fail: e;e;n;n;n;open door n;n;search coat;s;d;unlock door w;open door w;w;n;e;n;e;e;n;w;push button;n;n;w;u;push 11;listen;e;s;s;w;n;enter tube;push blue};
+			#ACTION {^Walkway to a Huge Mansion}
+			{
+				#SH {To get to Freddy: e;e;n;n;n;open door n;n;search coat;s;d;unlock door w;open door w;w;n;e;n;e;e;n;w;push button;n;n;w;u;push 11;listen;e;s;s;w;n;enter tube;push blue};
+				#SH {Use the alias 'gotoFailFamilyLegacyFreddy'};
+			}{5};
 	    };
     	#ELSE {
 	        resettravel;
 	    }
 	};
+}
+{5}
+
+#ALIAS {gotoFailFamilyLegacyFreddy} {
+	where;
+	#delay {2} {
+		#IF {{$currentRoom} === {Walkway to a Huge Mansion}}
+		{
+			#SH {<cfa>Okay!<099> Travelling to <FFF0> Freddy Fail<099>!};
+			e;e;n;n;n;open door n;n;search coat;s;d;unlock door w;open door w;w;n;e;n;e;e;n;w;push button;n;n;w;u;push 11;listen;e;s;s;w;n;enter tube;push blue;
+		};
+		#ELSE 
+		{
+			#SH {<FF))>Error<099>: You're not in the correct room 'Walkway to a Huge Mansion'!};
+		};
+	}
 }
 {5}
 
