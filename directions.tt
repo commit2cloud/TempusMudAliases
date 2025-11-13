@@ -189,7 +189,7 @@
 			#CASE {"11"} { gotoECMilitary };
 			#CASE {"12"} { gotoECVamps };
 			#CASE {"13"} { gotoECNuclearPower };
-			#CASE {"14"} { gotioECPowerAndPlumbing };
+			#CASE {"14"} { gotoECPowerAndPlumbing };
 			#CASE {"15"} { gotoECSecurityCompound };
 			#CASE {"16"} { gotoECUniversity };
 			#CASE {"17"} { gotoElectronicsSchool };
