@@ -743,7 +743,7 @@
 	#SH {<cfa>Okay!<099> Travelling to the <FFF0>Glacial Rift<099>!};
 	#DELAY {2} {
 	    #IF {!$travelerror}{
-			37e41n;open gate;8n;open gate;17n3w2nw9n7e3nw2ue2wunwndw2nwue3n3w5ne2n 4n2wnwn2w3nd;
+			37e41n;open gate;8n;open gate;17n3w2nw9n7e3nw2ue2wunwndw2nwue3n3w5ne2n4n2wnwn2w3nd;
 			where;
 			challenge area;
 		};
