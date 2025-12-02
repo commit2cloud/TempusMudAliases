@@ -1893,7 +1893,7 @@
 
 #ALIAS {gotoUndeadShark} {
 	gotoskull;
-	#NOP from slave square: sharkskin pants -2es2u open plank e es open door s 3s open door w ws3ene3n2en2en5esese4s open door s s open door s 6s open water e en2e2s open door s 2s2e
+	#NOP from slave square: sharkskin pants -2es2u open plank e es open door s 3s open door w ws3ene3n2en2en5esese4s open door s s open door s 6s open water e en2e2s open door s 2s2e;
 	#SH {<cfa>Okay!<099> Travelling to the <FFF0>Undead Shark<099>!};
 	#DELAY {2} {
 		#IF {!$travelerror}
