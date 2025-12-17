@@ -1,4 +1,4 @@
-#NOP Directions File for TempusMUD by Dracken - derek@sanctuary.org
+#NOP Directions File for TempusMUD by Dracken - derek@sanctuary.org dracken@drackenslair.com
 #NOP https://github.com/dracken/TempusMudAliases/
 #SH { <afc>******************************************************************************************<099> };
 #SH { <afc>*                            Directions Script Loaded!                                   *<099> };
@@ -127,7 +127,7 @@
 		#SWITCH {"%2"} {
 			#CASE {"1"} { gotoAbandonedKeep; };
 			#CASE {"2"} { gotoOldMonastery; };
-		        #CASE {"3"} { gotoCastleSlivendark; };
+		    #CASE {"3"} { gotoCastleSlivendark; };
 			#CASE {"4"} { gotoChessboardOfAraken; };
 			#CASE {"5"} { gotoDismalDelve; };
 			#CASE {"6"} { gotoDraconiansAndDragonHighlord; };
@@ -218,29 +218,29 @@
 
 	#ELSEIF {{"$travelInput1"} === {"planes"} || {%1} === {3}} 
 	{
-        	#SWITCH {"%2"} 
+		#SWITCH {"%2"} 
 		{
-		    	#CASE {"1"} { gotoAbyssUnholyModrian; };
-		    	#CASE {"2"} { gotoAmoria; };
-		    	#CASE {"3"} { gotoAvernusHell; };
-		    	#CASE {"4"} { gotoElementalPlaneOfAir; };
-		    	#CASE {"5"} { gotoElementalPlaneOfEarth; };
-		    	#CASE {"6"} { gotoElementalPlaneOfFire; };
-		    	#CASE {"7"} { gotoElementalPlaneOfIce; };
-		    	#CASE {"8"} { gotoElementalPlaneOfOoze; };
-		    	#CASE {"9"} { gotoElementalPlaneOfSmoke; };
-		    	#CASE {"10"} { gotoElementalPlaneOfWater; };
-		    	#CASE {"11"} { gotoLuniaHeaven; };
-		    	#CASE {"12"} { gotoImmoth; };
+			#CASE {"1"} { gotoAbyssUnholyModrian; };
+			#CASE {"2"} { gotoAmoria; };
+			#CASE {"3"} { gotoAvernusHell; };
+			#CASE {"4"} { gotoElementalPlaneOfAir; };
+			#CASE {"5"} { gotoElementalPlaneOfEarth; };
+			#CASE {"6"} { gotoElementalPlaneOfFire; };
+			#CASE {"7"} { gotoElementalPlaneOfIce; };
+			#CASE {"8"} { gotoElementalPlaneOfOoze; };
+			#CASE {"9"} { gotoElementalPlaneOfSmoke; };
+			#CASE {"10"} { gotoElementalPlaneOfWater; };
+			#CASE {"11"} { gotoLuniaHeaven; };
+			#CASE {"12"} { gotoImmoth; };
 		   	#CASE {"13"} { gotoCastleMahlhevik; };
 			#CASE {"14"} { gotoGith; };
-		    	#DEFAULT 
+		    #DEFAULT 
 			{
-			    	#VAR {travelerror} {1};
+				#VAR {travelerror} {1};
 				#SH {Invalid Destination Combination '<FF00>%1<099>' and '<FF00>%2<099>'};
-		    	};
-		    };
+			};
 		};
+	};
 
 		#ELSEIF {{"$travelInput1"} === {"trainers"} || {%1} === {4}} {
 			#SWITCH {"%2"} {
@@ -386,7 +386,7 @@
 			#SH { <acf>|  <F0FF>4)<099> Plane of Air        <F0FF>5)<099> Plane of Earth        <F0FF>6)<099> Plane of Fire            <acf>|<099> };
 			#SH { <acf>|  <F0FF>7)<099> Plane of Ice        <F0FF>8)<099> Plane of Ooze         <F0FF>9)<099> Plane of Smoke           <acf>|<099> };
 			#SH { <acf>| <F0FF>10)<099> Plane of Water     <F0FF>11)<099> Lunia, Heaven Level 1<F0FF>12)<099>Immoth                    <acf>|<099> };
-			#SH { <acf>| <F0FF>13)<099> Castle Mahlhevik   <F0FF>14) Githyanki Fortress<099>   <F0FF><099>                             <acf>|<099> };
+			#SH { <acf>| <F0FF>13)<099> Castle Mahlhevik   <F0FF>14)<099> Githyanki Fortress   <F0FF><099>                             <acf>|<099> };
 			#SH { <acf>|                                                                              <acf>|<099> };
 			#SH { <acf>└------------------------------------------------------------------------------┘<099> };
 		};
@@ -1103,13 +1103,67 @@
 			61n2e2n8e;
 			where;
 			challenge area;
-		        #SHOWME {To Rebel Leader From Tiltin: d;e;s;d;d;d;s;e;n;n;n;n;bash stone d;d;s;w;w;d;w;n;n;w;w;n;d;w;s;d;s;u;w};
-	                #SHOWME {To Selset from Rebel Leader: e;d;n;u;e;bash cage n};
+			helpShade;
 		};
 		#ELSE {
 	        resettravel;
     	}
 	};
+}
+{5}
+
+#ALIAS {helpShade}
+{
+    #SHOWME {<fca>************************<F0FF> Help Shade <fca>************************<099>};
+    #SHOWME {<fca>gotoShadeRebel - To Rebel Leader From Tiltin<099>: };
+    #SHOWME {    d;e;s;d;d;d;s;e;n;n;n;n;bash stone d;d;s;w;w;d;w;n;n;w;w;n;d;w;s;d;s;u;w};
+    #SHOWME {<fca>gotoShadeSelset - To Selset from Rebel Leader<099>: e;d;n;u;e;bash cage n};
+    #SHOWME {<fca>************************************************************<099>};
+}
+{5}
+
+#ALIAS {gotoShadeRebel}
+{
+    where;
+    #DELAY {2}
+    {
+        #IF {{$currentRoom} === {The Top of the Tower}}
+        {
+            #SH {<cfa>Okay!<099> Travelling to <FFF0>Shade Rebel<099>!};
+            d;e;s;d;d;d;s;e;n;n;n;n;bash stone d;d;s;w;w;d;w;n;n;w;w;n;d;w;s;d;s;u;w;
+        };
+        #ELSE
+        {
+            #SH {<FF00>Error<099>: You're not in the correct room 'The Top of the Tower'!}
+        };
+    };
+}
+{5}
+
+#ALIAS {gotoShadeSelset}
+{
+    where;
+        #DELAY {2}
+    {
+        #IF {{$currentRoom} === {In the Catacombs}}
+        {
+            #SH {<cfa>Okay!<099> Travelling to <FFF0>Shade Selset<099>!};
+            e;d;n;u;e;bash cage n;
+        };
+        #ELSE
+        {
+            #SH {<FF00>Error<099>: You're not in the correct room 'In the Catacombs'!}
+        };
+    };
+}
+{5}
+
+#ACTION {This is the room of Tiltin, the Mage of Shade.  The walls, and} {
+
+    #SHOWME {<fca>************************<F0FF> Help Shade <fca>************************<099>};
+    #SHOWME {<fca>gotoShadeRebel<099>:  To Rebel Leader From Tiltin};
+    #SHOWME {<fca>gotoShadeSelset<099>: To Selset from Rebel Leader};
+    #SHOWME {<fca>************************************************************<099>};
 }
 {5}
 
@@ -1405,6 +1459,7 @@
 			25wnuwununend2n3ed2nw;open grate;u;
 			where;
 			challenge area;
+			helpDracharnos;
 	    };
 	    #ELSE {
 	        resettravel;
@@ -1412,6 +1467,13 @@
 	};
 }
 {5}
+
+#ALIAS {helpDracharnos}
+{
+    #SHOWME {<FFF0>To Aged Dragon<099>: enter tube n of Wzu; w;4n;drink stream;2swsw, Should be in 'A Rock Filled Tunnel'.  Remove adrenaline, rest, and wait for tick(s)};
+}
+{5}
+
 
 #ALIAS {gotoDrugDealer} {
     gotostar;
@@ -2000,40 +2062,100 @@
 }
 {5}
 
-#ALIAS {gotoGith} {
+#ALIAS {gotoGith}
+{
+    #VARIABLE {githFound}{0};
+    #VARIABLE {findGith}{1};
+    #MATH githX 0;
+    #MATH githY 0;
+    #MATH githZ 0;
     gotoastral;
     #SH {<cfa>Okay!<099> Travelling to <FFF0>Gith<099>!};
-    #DELAY {2} {
-        #IF {!$travelerror} {
-            #VARIABLE {findGith}{1};
-            #VARIABLE {westCountMax} {8};
-            #VARIABLE {westCount} {0};
-            #VARIABLE {southCountMax} {8};
-            #VARIABLE {southCount} {0};
-            #VARIABLE {downCountMax} {8};
-            #VARIABLE {downCount} {0};
-            5n;
-            #ACTION {^A huge island of matter is floating here.} {#VAR {findGith}{0};#BREAK;enter island;where;challenges area;revoke} {1};
-            #WHILE {$findGith === 1 && $isFighting === 0}
+    #DELAY {2}
+    {
+        #IF {!$travelerror}
+        {
+            #5 north;exits;
+            #ACTION {^The Astral Plane}
             {
-            #LOOP {0}{$downCountMax}{downCount}
+                #IF {$debug === 1}
                 {
-                    gt down $downCount;
-                    #LOOP {0}{$southCountMax}{southCount}
+                    #SHOWME {<F0FF>Debug:<099> Astral Plane Action triggered.};
+                };
+                #IF {$findGith === 1 && !$isFighting}
+                {
+                    #IF {$debug === 1}
                     {
-                        gt south $southCount;
-                        #LOOP {0}{$westCountMax}{westCount}
+                        #SHOWME {<F0FF>Debug:<099> Find Gith is <cfa>ON<099>!};
+                    };
+                    #IF {$githX < 8}
+                    {
+                        #IF {$debug === 1}
                         {
-                            gt west $westCount;
+                            #SHOWME {<F0FF>Debug:<099> Gith X = $githX};
                         };
+                        #IF {$githFound === 0}
+                        {
+                            north;
+                            #MATH githX $githX + 1;
+                        };
+                        #ELSE
+                        {
+                            enter island;
+                            challenges area;
+                        };
+                        #IF {$githY < 8 && $githX == 7}
+                        {
+                            #MATH githX 0;
+                            #IF {$debug === 1}
+                            {
+                                #SHOWME {<F0FF>Debug:<099> Gith Y = $githY};
+                            };
+                            #IF {$githFound === 0}
+                            {
+                                west;
+                                #MATH githY $githY + 1;
+                            };
+                            #ELSE
+                            {
+                                enter island;
+                                challenges area;
+                            };
+                            #IF {$githZ < 8 && $githY === 7}
+                            {
+                                #IF {$debug === 1}
+                                {
+                                    #SHOWME {<F0FF>Debug:<099> Gith Z = $githZ};
+                                };
+                                #IF {$githFound === 0}
+                                {
+                                    up;
+                                    #MATH githZ $githZ + 1;
+                                    #MATH githY 0;
+                                    #MATH githX 0;
+                                };
+                                #ELSE
+                                {
+                                    enter island;
+                                    challenges area;
+                                };
+                            };
+                        };
+                    };
+                    #IF {$githZ === 8}
+                    {
+                        #SHOWME {<0F00>Warning!<099> Unable to locate the Githyanki Fortress!};
+                        #VAR {findGith} {0};
                     };
                 };
             };
+        #SHOWME {<F0FF>Warning!<099> Attacked, ceasing search.};
         };
-        #ELSE {
+        #ELSE
+        {
             resettravel;
-        }
-    }
+        };
+    };
 }
 {5}
 
@@ -2693,7 +2815,7 @@
 	#SH {<cfa>Okay!<099> Travelling to the <FFF0>Intelligence Trainer<099>!};
     #DELAY {2} {
         #IF {!$travelerror} {
-			4nu;open door west;w;read title31;e;open door east;2e2n2ed4s2w;open door south;s;
+			2nu;open door west;w;read title31;e;open door east;2e2n2ed4s2w;open door south;s;
 			where;
 			challenge area;
         };
