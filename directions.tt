@@ -1130,7 +1130,7 @@
         #IF {{$currentRoom} === {The Top of the Tower}}
         {
             #SH {<cfa>Okay!<099> Travelling to <FFF0>Shade Rebel<099>!};
-            d;e;s;d;d;d;s;e;n;n;n;n;bash stone d;d;s;w;w;d;w;n;n;w;w;n;d;w;s;d;s;u;w;
+            fly;d;e;s;d;d;d;s;e;n;n;n;n;bash stone d;d;s;w;w;d;w;n;n;w;w;n;d;w;s;d;s;u;w;
         };
         #ELSE
         {
@@ -1148,7 +1148,7 @@
         #IF {{$currentRoom} === {In the Catacombs}}
         {
             #SH {<cfa>Okay!<099> Travelling to <FFF0>Shade Selset<099>!};
-            e;d;n;u;e;bash cage n;
+            fly;e;d;n;u;e;bash cage n;
         };
         #ELSE
         {
