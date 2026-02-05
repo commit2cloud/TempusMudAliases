@@ -90,6 +90,7 @@
 #VAR {FutureLocations[gotoElectronicsSchool]} {};
 #VAR {FutureLocations[gotoElectronicsShop]} {};
 #VAR {FutureLocations[gotoFailFamilyLegacy]} {};
+#VAR {FutureLocations[gotoFassanSlaveCompound]} {};
 #VAR {FutureLocations[gotoGenCloneBioMechanicalLabs]} {};
 #VAR {FutureLocations[gotoKiddieKandy]} {#LIST {directions} {add} {4n2wn;open gate n;n;}};
 #VAR {FutureLocations[gotoKromguard]} {};
@@ -196,19 +197,20 @@
 			#CASE {"17"} { gotoElectronicsSchool };
 			#CASE {"18"} { gotoElectronicsShop };
 			#CASE {"19"} { gotoFailFamilyLegacy };
-			#CASE {"20"} { gotoGenCloneBioMechanicalLabs };
-			#CASE {"21"} { gotoKiddieKandy };
-			#CASE {"22"} { gotoKromguard };
-			#CASE {"23"} { gotoLuxare };
-			#CASE {"24"} { gotoMerquryCity };
-			#CASE {"25"} { gotoNETWORKCommunicationsTower };
-			#CASE {"26"} { gotoReinforcer };
-			#CASE {"27"} { gotoRuinsOfHTOM };
-			#CASE {"28"} { gotoRuinsOfTheSilverTower };
-			#CASE {"29"} { gotoSimeonTheCybernetic };
-			#CASE {"30"} { gotoTriskinAsylum };
-			#CASE {"31"} { gotoVirtualWorldOfNETWORK };
-			#CASE {"32"} { gotoZulDane };
+			#CASE {"20"} { gotoFassanSlaveCompound };
+			#CASE {"21"} { gotoGenCloneBioMechanicalLabs };
+			#CASE {"22"} { gotoKiddieKandy };
+			#CASE {"23"} { gotoKromguard };
+			#CASE {"24"} { gotoLuxare };
+			#CASE {"25"} { gotoMerquryCity };
+			#CASE {"26"} { gotoNETWORKCommunicationsTower };
+			#CASE {"27"} { gotoReinforcer };
+			#CASE {"28"} { gotoRuinsOfHTOM };
+			#CASE {"29"} { gotoRuinsOfTheSilverTower };
+			#CASE {"30"} { gotoSimeonTheCybernetic };
+			#CASE {"31"} { gotoTriskinAsylum };
+			#CASE {"32"} { gotoVirtualWorldOfNETWORK };
+			#CASE {"33"} { gotoZulDane };
 			#DEFAULT {
 	            #VAR {travelerror} {1};
 	    #SH {Invalid Destination Combination '<FF00>%1<099>' and '<FF00>%2<099>'};
@@ -368,11 +370,11 @@
 			#SH { <acf>| <F0FF>10)<099> EC Junkyard        <F0FF>11)<099> EC Military          <F0FF>12)<099> EC Vampires              <acf>|<099> };
 			#SH { <acf>| <F0FF>13)<099> EC Nuclear Power   <F0FF>14)<099> EC Power & Plubming  <F0FF>15)<099> EC Security Compound     <acf>|<099> };
 			#SH { <acf>| <F0FF>16)<099> EC University      <F0FF>17)<099> Electronics School   <F0FF>18)<099> Electronics Shop         <acf>|<099> };
-			#SH { <acf>| <F0FF>19)<099> Fail Family Legacy <F0FF>20)<099> GenClone Bio Labs    <F0FF>21)<099> Kiddie Kandy, Inc.       <acf>|<099> };
-			#SH { <acf>| <F0FF>22)<099> Kromguard          <F0FF>23)<099> Luxare               <F0FF>24)<099> Merqury City             <acf>|<099> };
-			#SH { <acf>| <F0FF>25)<099> NETWORK  Tower     <F0FF>26)<099> Equipment Reinforcer <F0FF>27)<099> Ruins of HTOM            <acf>|<099> };
-			#SH { <acf>| <F0FF>28)<099> Silver Tower  Ruins<F0FF>29)<099> Simeon the Cybernetic<F0FF>30)<099><FF00>Triskin Asylum<099><F0FF>            <acf>|<099> };
-			#SH { <acf>| <F0FF>31)<099> Virtual  World     <F0FF>32)<099> Zul’Dane                                          <acf>|<099> };
+			#SH { <acf>| <F0FF>19)<099> Fail Family Legacy <F0FF>20)<099> Fassan Slave Compound<F0FF>21)<099> GenClone Bio Labs        <acf>|<099> };
+			#SH { <acf>| <F0FF>22)<099> Kiddie Kandy, Inc. <F0FF>23)<099> Kromguard            <F0FF>24)<099> Luxare                   <acf>|<099> };
+			#SH { <acf>| <F0FF>25)<099> Merqury City       <F0FF>26)<099> NETWORK  Tower       <F0FF>27)<099> Equipment Reinforcer     <acf>|<099> };
+			#SH { <acf>| <F0FF>28)<099> Ruins of HTOM      <F0FF>29)<099> Silver Tower  Ruins  <F0FF>30)<099>Simeon the Cybernetic     <acf>|<099> };
+			#SH { <acf>| <F0FF>31)<099> <FF00>Triskin Asylum<099>     <F0FF>32)<099> Virtual  World       <F0FF>33)<099>Zul’Dane                  <acf>|<099> };
 			#SH { <acf>|                                                                              <acf>|<099> };
 			#SH { <acf>└------------------------------------------------------------------------------┘<099> };
 		};
@@ -748,7 +750,8 @@
 	#SH {<cfa>Okay!<099> Travelling to the <FFF0>Glacial Rift<099>!};
 	#DELAY {2} {
 	    #IF {!$travelerror}{
-			37e41n;open gate;8n;open gate;17n3w2nw9n7e3nw2ue2wunwndw2nwue3n3w5ne2n4n2wnwn2w3nd;
+			#NOP 37e41n;open gate;8n;open gate;17n3w2nw9n7e3nw2ue2wunwndw2nwue3n3w5ne2n4n2wnwn2w3nd;
+			n;n;u;n;e;open tapestry;n;n;n;n;open gate n;n;n;n;n;n;n;n;n;n;n;n;n;n;n;n;n;n;w;w;w;n;n;w;n;n;n;n;n;n;n;n;n;e;e;e;e;e;e;e;n;n;n;w;u;u;e;w;w;u;n;w;n;d;w;n;n;w;u;e;n;n;n;w;w;w;n;n;n;n;n;e;n;n;n;n;n;n;w;w;w;n;n;w;w;w;n;n;n;d;
 			where;
 			challenge area;
 		};
@@ -756,6 +759,14 @@
     	    resettravel;
 	    }
 	};
+}
+{5}
+
+#ALIAS {gotoGlaicialRiftPaingiver} {
+	#SH {<cfa>Okay!<099> Travelling to the <FFF0>Glacial Rift Paingiver<099>!};
+	#NOP gotoGlacialRift;
+	n;n;u;n;e;open tapestry;n;n;n;n;open gate n;n;n;n;n;n;n;n;n;n;n;n;n;n;n;n;n;n;w;w;w;n;n;w;n;n;n;n;n;n;n;n;n;e;e;e;e;e;e;e;n;n;n;w;u;u;e;w;w;u;n;w;n;d;w;n;n;w;u;e;n;n;n;w;w;w;n;n;n;n;n;e;n;n;n;n;n;n;w;w;w;n;n;w;w;w;n;n;n;d;
+	w;w;n;n;n;u;e;e;u;n;e;s;s;e;e;n;n;n;e;e;s;s;s;s;s;s;s;s;w;w;w;w;w;w;s;s;e;e;n;e;e;e;s;s;s;e;
 }
 {5}
 
@@ -1669,6 +1680,23 @@
 			#SH {<FF))>Error<099>: You're not in the correct room 'Walkway to a Huge Mansion'!};
 		};
 	}
+}
+{5}
+
+#ALIAS {gotoFassanSlaveCompound} {
+    gotostar;
+    #SH {<cfa>Okay!<099> Travelling to the <FFF0>Fassan Slave Compound<099>!};
+    #SH {<FF00>Warning!<099> Lots of flows, DT flow in the Air Ducts!};
+    #DELAY {2} {
+        #IF {!travelerror} {
+            2ds2dwd27wuwu3n4w3nwun;
+            where;
+            challenge area;
+        };
+        #ELSE {
+            resettravel;
+        };
+    }
 }
 {5}
 
