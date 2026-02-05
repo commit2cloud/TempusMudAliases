@@ -1688,7 +1688,7 @@
     #SH {<cfa>Okay!<099> Travelling to the <FFF0>Fassan Slave Compound<099>!};
     #SH {<FF00>Warning!<099> Lots of flows, DT flow in the Air Ducts!};
     #DELAY {2} {
-        #IF {!travelerror} {
+        #IF {!$travelerror} {
             2ds2dwd27wuwu3n4w3nwun;
             where;
             challenge area;
