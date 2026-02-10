@@ -2211,9 +2211,13 @@
 {
 	#SH { <fca>------------------------<F0FF>Help Heaven<fca>---------------------------------<099>};
 	#SH { <fca>To Thor<099>: nenenu5wn2wse - Use <170>gotoThor<099>};
-    #SH { <fca>Then to Diancecht<099>: 2w2n4esene3ne3nws - Use <170>gotoDiancecht<099>};
-    #SH { <fca>Then to Ptah<099>: ne7s2edeu4w2n4u - Use <170>gotoPtah<099>};
-	#SH { <fca>Finally to Ixlilton<099> 4d2s4edsu2e4n - Use <170>gotoIxlilton<099>};
+    #SH { <fca>To Diancecht<099>: 2w2n4esene3ne3nws - Use <170>gotoDiancecht<099>};
+    #SH { <fca>To Ptah<099>: ne7s2edeu4w2n4u - Use <170>gotoPtah<099>};
+	#SH { <fca>To Ixlilton<099>: 4d2s4edsu2e4n - Use <170>gotoIxlilton<099>};
+	#SH { <fca>To Ushas<099>: 4s2wdwu3ws3w3sw3sw - Use <170> gotoUshas<099> };
+	#SH { <fca>To Fu-Hsiing<099>: e3nenene - Use <170> gotoFu<099> };
+	#SH { <fca>To Ebisu<099>: unnww - Use <170>gotoEbisu<099> };
+	#SH { <fca>To Castle Mahlhevik<099>: e3s2enuseuene - Use <170>gotoMahlhevik<099> };
 	#SH { <fca>--------------------------------------------------------------------<099>};
 
 }
@@ -2233,7 +2237,7 @@
 		};
 	};
 }
-{5}
+{5}A
 
 #ALIAS {gotoDiancecht}
 {
@@ -2521,11 +2525,77 @@
 			#SH {<FF00>Warning!<099> Lots of flows.};
 			where;
 			challenge area;
+			#IF {{$currentRoom} === {The Border of the Para-Elemental Plane of Smoke}}
+			{
+				helpEPOS;
+			};
 		};
 		#ELSE {
     	    resettravel;
 		}
     }
+}
+{5}
+
+#ALIAS {helpEPOS}
+{
+	#SH { <fca>--------------<F0FF>Help Elemental Plane of Smoke<fca>-----------------------<099>};
+	#SH { <fca>Start All directions from<099>: "Pitch Black"<099>};
+    #SH { <fca>To Chocking Palace<099>: 2dn;enter palace - Use <170>gotoEPOSPalace<099>};
+    #SH { <fca>To The Fortress<099>: 3d2se;enter cloud - Use <170>gotoEPOSFortress<099>};
+	#SH { <fca>To The Camp<099>: dwn;enter cloud - Use <170>gotoEPOSCamp<099>};
+	#SH { <fca>--------------------------------------------------------------------<099>};
+}
+{5}
+
+#ALIAS {gotoEPOSPalace}
+{
+	where;
+	#DELAY {2} {
+		#IF {{$currentRoom} === {Pitch Black}}
+		{
+			#SH {<cfa>Okay!<099> Travelling to <FFF0>EPOS Palace<099>!};
+			2dn;enter palace
+		};
+		#ELSE
+		{
+			#SH {<FF00>Error<099>: You're not in the correct room 'Pitch Black'!};
+		};
+	};
+}
+{5}
+
+#ALIAS {gotoEPOSFortress}
+{
+	where;
+	#DELAY {2} {
+		#IF {{$currentRoom} === {Pitch Black}}
+		{
+			#SH {<cfa>Okay!<099> Travelling to <FFF0>EPOS Fortress<099>!};
+			3d2se;enter cloud
+		};
+		#ELSE
+		{
+			#SH {<FF00>Error<099>: You're not in the correct room 'Pitch Black'!};
+		};
+	};
+}
+{5}
+
+#ALIAS {gotoEPOSCamp}
+{
+	where;
+	#DELAY {2} {
+		#IF {{$currentRoom} === {Pitch Black}}
+		{
+			#SH {<cfa>Okay!<099> Travelling to <FFF0>EPOS Camp<099>!};
+			dwn;enter cloud
+		};
+		#ELSE
+		{
+			#SH {<FF00>Error<099>: You're not in the correct room 'Pitch Black'!};
+		};
+	};
 }
 {5}
 
