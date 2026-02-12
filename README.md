@@ -135,7 +135,9 @@ When `config.lua` is present, you'll see: `Config loaded from: <path>`
 
 #### Option 2: Using inline defaults (No external file)
 
-If no `config.lua` file is found, the script will automatically use default configuration values embedded in `directions.lua`. You'll see a warning message indicating the expected location for `config.lua`. This option works out-of-the-box but is less convenient for customization since you'd need to edit the default values inside `directions.lua` itself (not recommended for ease of updates).
+If no `config.lua` file is found, the script will automatically use default configuration values embedded in `directions.lua`. You'll see a warning message indicating the expected location for `config.lua`. This option works out-of-the-box with default settings. 
+
+**To customize when using inline defaults:** Create a `config.lua` file as described in Option 1. The inline defaults are meant as a fallback for immediate functionality, not for manual editing of `directions.lua`.
 
 #### Configuration Values
 
