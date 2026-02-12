@@ -34,17 +34,17 @@ Easily navigate TempusMUD zones using a travel menu system. Originally written f
 
 1. Download `directions.tt` and save it in your TinTin root directory.
 2. Load the script with:
-   ```
+   ````
    #read directions.tt
-   ```
+   ````
 
 ## Setup: ZMud
 
 1. Save `directions.tt` to your ZMud root directory.
 2. Load it with:
-   ```
+   ````
    #read directions.tt
-   ```
+   ````
 
 ## Setup: Mudlet (Lua)
 
@@ -68,9 +68,9 @@ Easily navigate TempusMUD zones using a travel menu system. Originally written f
 Once saved, the script runs **automatically**. Mudlet executes all code in the Scripts section as soon as you save it and every time you open the profile. To verify it loaded correctly:
 
 1. In Mudlet's main command line, type:
-   ```
+   ````
    lua showMainMenu()
-   ```
+   ````
 2. You should see the colorized travel menu appear in the output window.
 3. If you see an error like `showMainMenu: nil value`, the script did not load — re-open the Script Editor, make sure the script entry is checked/enabled (the checkbox next to its name), and click **Save** again.
 
@@ -83,9 +83,9 @@ Once saved, the script runs **automatically**. Mudlet executes all code in the S
    - On **macOS**: `~/.config/mudlet/profiles/<profile_name>/`
    - On **Linux**: `~/.config/mudlet/profiles/<profile_name>/`
 2. In Mudlet's command line, run:
-   ```
+   ````
    lua dofile(getMudletHomeDir() .. "/directions.lua")
-   ```
+   ````
 
 **Running the script (Method B):**
 
@@ -104,22 +104,65 @@ This tells Mudlet to execute the `dofile()` command at profile load, which reads
 To verify the script is running after either approach:
 
 1. Type in Mudlet's command line:
-   ```
+   ````
    lua showMainMenu()
-   ```
+   ````
 2. You should see the colorized travel menu. If you do, the script is loaded and ready.
 
 ### Personalization
 
-The script now supports **external configuration** through a separate `config.lua` file, making it easier to customize without modifying the main script.
+The script supports multiple ways to customize your configuration. Choose the option that best fits your workflow.
 
-#### Option 1: Using config.lua (Recommended)
+#### Option 1: Mudlet Script Editor Entry (Recommended)
+
+This method keeps everything inside Mudlet — **no external files needed**. You create a separate script entry in the Script Editor that defines your personal configuration, and place it **below** the main `TempusMUD Directions` script entry so it runs after and overwrites the defaults.
+
+1. Open the **Script Editor** (`Alt+S`) and click **Scripts** on the left sidebar.
+2. Click **Add** to create a **new** script entry.
+3. Name it `TempusMUD Config`.
+4. **Paste** the following into the script body and edit the values to match your character:
+
+   ```lua
+   -- =============================================
+   -- My TempusMUD Configuration
+   -- =============================================
+   -- This runs AFTER directions.lua loads, so these
+   -- globals overwrite the defaults with your personal values.
+
+   myStartingRoomName = "The Beginning of Misery"   -- change to your recall room
+
+   function directionsToHolySquare()
+     sendAll("north", "look modrian", "north", "north")
+   end
+
+   function directionsToStarPlaza()
+     sendAll("north", "look ec")
+   end
+
+   function directionsToSlaveSquare()
+     sendAll("north", "look skullport")
+   end
+
+   function directionsToAstralManse()
+     sendAll("north", "look astral")
+   end
+   ```
+
+5. **Drag this script entry below** the `TempusMUD Directions` entry in the script list.
+   - Mudlet executes scripts **top-to-bottom** in the order they appear. By placing your config below the main script, it runs second and overwrites the built-in defaults with your values.
+6. Click **Save**.
+
+> **Note:** Because no external `config.lua` file exists on disk, you will see a yellow warning message when the main script loads (`Warning: config.lua not found...`). This is **harmless** — your config script entry runs immediately after and sets all your custom values correctly. Everything will work as expected.
+
+#### Option 2: Using config.lua (External File)
+
+If you prefer to keep your configuration in an external file (useful if you edit with an external text editor or share configs between profiles):
 
 1. **Copy** the `config.lua` file from this repository to your Mudlet home directory.
    - To find your Mudlet home directory, run this in Mudlet's command line:
-     ```
+     ````
      lua echo(getMudletHomeDir())
-     ```
+     ````
    - Common locations:
      - **Windows**: `C:\Users\YourName\.config\mudlet\profiles\YourProfile\`
      - **Linux**: `~/.config/mudlet/profiles/YourProfile/`
@@ -133,11 +176,9 @@ The script now supports **external configuration** through a separate `config.lu
 
 When `config.lua` is present, you'll see: `Config loaded from: <path>`
 
-#### Option 2: Using inline defaults (No external file)
+#### Option 3: Using inline defaults (No configuration)
 
-If no `config.lua` file is found, the script will automatically use default configuration values embedded in `directions.lua`. You'll see a warning message indicating the expected location for `config.lua`. This option works out-of-the-box with default settings. 
-
-**To customize when using inline defaults:** Create a `config.lua` file as described in Option 1. The inline defaults are meant as a fallback for immediate functionality, not for manual editing of `directions.lua`.
+If no `config.lua` file is found and no config script entry exists, the script will automatically use default configuration values embedded in `directions.lua`. You'll see a warning message indicating the expected location for `config.lua`. This option works out-of-the-box with default settings.
 
 #### Configuration Values
 
