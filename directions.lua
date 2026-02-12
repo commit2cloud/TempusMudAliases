@@ -49,7 +49,7 @@ githZ = 0
 
 function sendDirs(dirString)
   local cmds = {}
-  for cmd in dirString:gmatch("[^";]+") do
+  for cmd in dirString:gmatch('[^";]+') do
     cmd = cmd:match("^%s*(.-)%s*$")
     if cmd ~= "" then
       table.insert(cmds, cmd)
