@@ -197,6 +197,13 @@ function gotoForgottenValley() travelTo("hs", "Forgotten Valley", "60n2e3nwnwn3e
 function gotoFontOfModrian() travelTo("hs", "Font of Modrian", "7e4ne;enter font") end
 function gotoFrozenTundras() travelTo("hs", "Frozen Tundras", "37e41n;open gate;8n;open gate;17n3w2nw9n7e3nw2ue2wunwndw2nwue3n3w5ne2n") end
 function gotoGlacialRift() travelTo("hs", "Glacial Rift", "37e41n;open gate;8n;open gate;17n3w2nw9n7e3nw2ue2wunwndw2nwue3n3w5ne2n4n2wnwn2w3nd") end
+
+-- Standalone navigation to Paingiver in Glacial Rift
+function gotoGlaicialRiftPaingiver()
+  cecho("\n<green>Okay!<reset> Travelling to the <yellow>Glacial Rift Paingiver<reset>!\n")
+  sendDirs("n;n;u;n;e;open tapestry;n;n;n;n;open gate n;n;n;n;n;n;n;n;n;n;n;n;n;n;n;n;n;n;w;w;w;n;n;w;n;n;n;n;n;n;n;n;n;e;e;e;e;e;e;e;n;n;n;w;u;u;e;w;w;u;n;w;n;d;w;n;n;w;u;e;n;n;n;w;w;w;n;n;n;n;n;e;n;n;n;n;n;n;w;w;w;n;n;w;w;w;n;n;n;d;w;w;n;n;n;u;e;e;u;n;e;s;s;e;e;n;n;n;e;e;s;s;s;s;s;s;s;s;w;w;w;w;w;w;s;s;e;e;n;e;e;e;s;s;s;e")
+end
+
 function gotoGreatPyramid() travelTo("hs", "Great Pyramid", "74w7s3e9s3wuenu") end
 function gotoGuiharianFestivalOfLights() travelTo("hs", "Guiharian Festival of Lights", "4w3se4s") end
 function gotoHalflingVillage() travelTo("hs", "Halfling Village", "15e10s4e") end
@@ -315,6 +322,20 @@ function gotoECUniversity() travelTo("star", "E.C. University", "4w6s2ws") end
 function gotoElectronicsSchool() travelTo("star", "Electronics School", "4w4n1w1n") end
 function gotoElectronicsShop() travelTo("star", "Electronics Shop", "5nes") end
 function gotoFailFamilyLegacy() travelTo("star", "Fail Family Legacy", "e9s3e") end
+
+-- Navigate to Freddy Fail from Fail Family Legacy mansion
+function gotoFailFamilyLegacyFreddy()
+  send("where")
+  tempTimer(2, function()
+    if currentRoom == "Walkway to a Huge Mansion" then
+      cecho("\n<green>Okay!<reset> Travelling to <yellow>Freddy Fail<reset>!\n")
+      sendDirs("e;e;n;n;n;open door n;n;search coat;s;d;unlock door w;open door w;w;n;e;n;e;e;n;w;push button;n;n;w;u;push 11;listen;e;s;s;w;n;enter tube;push blue")
+    else
+      cecho("\n<red>Error<reset>: You're not in the correct room 'Walkway to a Huge Mansion'!\n")
+    end
+  end)
+end
+
 function gotoFassanSlaveCompound() travelTo("star", "Fassan Slave Compound", "2ds2dwd27wuwu3n4w3nwun") end
 function gotoGenCloneBioMechanicalLabs() travelTo("star", "GenClone BioMechanical Labs", "16w9nen4w8n") end
 function gotoKiddieKandy() travelTo("star", "Kiddie Kandy Incorporated", "4n2wn;open gate n;n") end
@@ -535,6 +556,65 @@ function gotoWeaponUnSpecializer() travelTo("star", "Weapon UNSpecializer", "3n1
 function gotoGainer()
   cecho("\n<yellow>Note: Gainer (Nohunger & Nothirst) is 1w of Grand Mistress at top of HTOM\n")
   cecho("Portal to him is at the top of High Tower of Magic\n")
+end
+
+-- Language Trainers
+function gotoModriadicTrainer()
+  gotohs(function()
+    tempTimer(2, function()
+      if travelerror == 0 then
+        cecho("\n<green>Okay!<reset> Travelling to the <yellow>Modriadic Trainer<reset>!\n")
+        send("where")
+        send("challenge area")
+      else
+        resettravel()
+      end
+    end)
+  end)
+end
+
+function gotoElvishTrainer()
+  gotohs(function()
+    tempTimer(2, function()
+      if travelerror == 0 then
+        cecho("\n<green>Okay!<reset> Travelling to the <yellow>Elvish Trainer<reset>!\n")
+        sendDirs("22n4e9n3w;offer elvish")
+        send("where")
+        send("challenge area")
+      else
+        resettravel()
+      end
+    end)
+  end)
+end
+
+function gotoOrcishTrainer()
+  gotostar(function()
+    tempTimer(2, function()
+      if travelerror == 0 then
+        cecho("\n<green>Okay!<reset> Travelling to the <yellow>Orcish Trainer<reset>!\n")
+        send("where")
+        send("challenge area")
+      else
+        resettravel()
+      end
+    end)
+  end)
+end
+
+function gotoHobbishTrainer()
+  gotohs(function()
+    tempTimer(2, function()
+      if travelerror == 0 then
+        cecho("\n<green>Okay!<reset> Travelling to the <yellow>Hobbish Trainer<reset>!\n")
+        sendDirs("15e10s6e3n;open door north;2n;offer hobbish")
+        send("where")
+        send("challenge area")
+      else
+        resettravel()
+      end
+    end)
+  end)
 end
 
 -- Guilds
