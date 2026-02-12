@@ -580,7 +580,7 @@ function showHelpMenu()
   cecho("<yellow>* <white>Example: <reset>travel 2 15                                                                   <yellow>*\n")
   cecho("<yellow>*      Travel to the Future's EC University                                              <yellow>*\n")
   cecho("<yellow>*                                                                                        *\n")
-  cecho("<yellow>* <red>Recommendations: <reset>Make an alias in your own scriping config for locations you use       <yellow>*\n")
+  cecho("<yellow>* <red>Recommendations: <reset>Make an alias in your own scripting config for locations you use       <yellow>*\n")
   cecho("<yellow>*    regularly!                                                                          <yellow>*\n")
   cecho("<yellow>******************************************************************************************\n")
 end
@@ -612,11 +612,11 @@ function showFutureMenu()
   cecho("\n<cyan>┌------------------------------------------------------------------------------┐\n")
   cecho("<cyan>|                           <yellow>Future Locations                                   <cyan>|\n")
   cecho("<cyan>├------------------------------------------------------------------------------┤\n")
-  cecho("<cyan>|  <magenta>1) <reset>Polluted Village    <magenta>2) <reset>Archeolgial Dig      <magenta>3) <reset>Blasted Swamp             <cyan>|\n")
+  cecho("<cyan>|  <magenta>1) <reset>Polluted Village    <magenta>2) <reset>Archaeological Dig      <magenta>3) <reset>Blasted Swamp             <cyan>|\n")
   cecho("<cyan>|  <magenta>4) <reset>Colony              <magenta>5) <reset>Cybertech Labs       <magenta>6) <reset>Cybertech Preparatory     <cyan>|\n")
   cecho("<cyan>|  <magenta>7) <reset>Death Row           <magenta>8) <reset>Dracharnos           <magenta>9) <reset>Drug Dealer               <cyan>|\n")
   cecho("<cyan>| <magenta>10) <reset>EC Junkyard        <magenta>11) <reset>EC Military          <magenta>12) <reset>EC Vampires              <cyan>|\n")
-  cecho("<cyan>| <magenta>13) <reset>EC Nuclear Power   <magenta>14) <reset>EC Power & Plubming  <magenta>15) <reset>EC Security Compound     <cyan>|\n")
+  cecho("<cyan>| <magenta>13) <reset>EC Nuclear Power   <magenta>14) <reset>EC Power & Plumbing  <magenta>15) <reset>EC Security Compound     <cyan>|\n")
   cecho("<cyan>| <magenta>16) <reset>EC University      <magenta>17) <reset>Electronics School   <magenta>18) <reset>Electronics Shop         <cyan>|\n")
   cecho("<cyan>| <magenta>19) <reset>Fail Family Legacy <magenta>20) <reset>Fassan Slave Compound<magenta>21) <reset>GenClone Bio Labs        <cyan>|\n")
   cecho("<cyan>| <magenta>22) <reset>Kiddie Kandy, Inc. <magenta>23) <reset>Kromguard            <magenta>24) <reset>Luxare                   <cyan>|\n")
@@ -647,7 +647,7 @@ function showTrainersMenu()
   cecho("<cyan>|  <magenta>1) <reset>Charisma           <magenta>2) <reset>Constitution           <magenta>3) <reset>Dexterity                <cyan>|\n")
   cecho("<cyan>|  <magenta>4) <reset>Intelligence       <magenta>5) <reset>Strength               <magenta>6) <reset>Wisdom                   <cyan>|\n")
   cecho("<cyan>|  <magenta>7) <reset>Weapon Enhancer    <magenta>8) <reset>Weapon Specializer     <magenta>9) <reset>Weapon Un-Specializer    <cyan>|\n")
-  cecho("<cyan>| <magenta>10) <reset>The Gainer        <magenta>11) <reset>Electronics School                                                       <cyan>|\n")
+  cecho("<cyan>| <magenta>10) <reset>The Gainer                                                                   <cyan>|\n")
   cecho("<cyan>|                                                                              <cyan>|\n")
   cecho("<cyan>└------------------------------------------------------------------------------┘\n")
 end
@@ -823,7 +823,7 @@ astralPlaneGithTrigger = tempRegexTrigger("^The Astral Plane$", function()
         send("challenge area")
       end
       
-      if githY < 8 and githX == 7 then
+      if githY < 8 and githX == 8 then
         githX = 0
         if debug then cecho("\n<magenta>Debug: <reset>Gith Y = " .. githY .. "\n") end
         if githFound == 0 then
@@ -834,7 +834,7 @@ astralPlaneGithTrigger = tempRegexTrigger("^The Astral Plane$", function()
           send("challenge area")
         end
         
-        if githZ < 8 and githY == 7 then
+        if githZ < 8 and githY == 8 then
           if debug then cecho("\n<magenta>Debug: <reset>Gith Z = " .. githZ .. "\n") end
           if githFound == 0 then
             send("up")
