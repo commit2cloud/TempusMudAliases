@@ -1005,11 +1005,11 @@ combatAttackedTrigger = tempRegexTrigger("^.+ (attacks|hits|misses|pierces|slash
 end)
 
 -- Trigger for Combat End Detection (R.I.P. message)
--- Detects when a mob dies based on TempusMUD death message format:
--- "A little boy is dead!  R.I.P."
--- Note: May not perfectly handle multiple mob combat scenarios
+-- Uses R.I.P. as the most reliable indicator that combat has ended
+-- This detects when any mob dies in TempusMUD (e.g., "A little boy is dead!  R.I.P.")
+-- R.I.P. is the keyword that definitively indicates a death occurred
 if combatEndTrigger then killTrigger(combatEndTrigger) end
-combatEndTrigger = tempRegexTrigger("^.+ is dead!  R\\.I\\.P\\.$", function()
+combatEndTrigger = tempRegexTrigger("R\\.I\\.P\\.", function()
   isFighting = false
   if debug then
     cecho("\n<cyan>Debug: Combat ended (R.I.P. detected)\n")
