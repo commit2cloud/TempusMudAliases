@@ -111,20 +111,41 @@ To verify the script is running after either approach:
 
 ### Personalization
 
-Before using the script, **you must edit the configuration section** at the very top of `directions.lua` to match your character's starting location. Look for this block:
+The script now supports **external configuration** through a separate `config.lua` file, making it easier to customize without modifying the main script.
 
-```lua
--- =============================================
--- Configuration - EDIT THESE VARS ONLY!
--- =============================================
-myStartingRoomName = "The Beginning of Misery"
-```
+#### Option 1: Using config.lua (Recommended)
+
+1. **Copy** the `config.lua` file from this repository to your Mudlet home directory.
+   - To find your Mudlet home directory, run this in Mudlet's command line:
+     ```
+     lua echo(getMudletHomeDir())
+     ```
+   - Common locations:
+     - **Windows**: `C:\Users\YourName\.config\mudlet\profiles\YourProfile\`
+     - **Linux**: `~/.config/mudlet/profiles/YourProfile/`
+     - **macOS**: `~/Library/Application Support/Mudlet/profiles/YourProfile/`
+
+2. **Edit** `config.lua` in your favorite text editor to customize:
+   - `myStartingRoomName` - Your character's recall/start location
+   - The four `directionsTo...()` functions - Navigation commands from your start room to each hub
+
+3. **Reload** the script in Mudlet (reconnect or re-run the script).
+
+When `config.lua` is present, you'll see: `Config loaded from: <path>`
+
+#### Option 2: Editing directions.lua directly (Legacy)
+
+If you prefer, you can still edit the configuration directly in `directions.lua`. If no `config.lua` file is found, the script will use default values embedded in `directions.lua` and display a warning message.
+
+#### Configuration Values
 
 **Change `myStartingRoomName`** to whatever room name is displayed when you type `where` at your character's recall/start location. The script uses this to verify you are in the correct room before initiating travel. If this value does not match your actual starting room, all travel commands will fail with a warning.
 
-The four `directionsTo...()` functions below that variable control how the script navigates from your start room to each hub (Holy Square, Star Plaza, Slave Square, Astral Manse). If your starting room is different from the default, you may need to update these functions with the correct movement commands as well:
+The four `directionsTo...()` functions control how the script navigates from your start room to each hub (Holy Square, Star Plaza, Slave Square, Astral Manse). If your starting room is different from the default, you may need to update these functions with the correct movement commands as well:
 
 ```lua
+myStartingRoomName = "The Beginning of Misery"
+
 function directionsToHolySquare()
   sendAll("north", "look modrian", "north", "north")
 end
@@ -215,6 +236,7 @@ Some zones also have dedicated helper aliases for multi-step navigation (e.g., `
 |---|---|
 | `directions.tt` | Original TinTin++ script |
 | `directions.lua` | Mudlet Lua port of the travel system |
+| `config.lua` | Configuration file (optional) - place in Mudlet home directory |
 | `LICENSE` | License file |
 | `README.md` | This file |
 
