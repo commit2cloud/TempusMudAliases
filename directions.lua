@@ -5,43 +5,53 @@
 -- =============================================================================
 
 -- =============================================
--- Configuration - EDIT THESE VARS ONLY!
+-- Load Configuration
 -- =============================================
-myStartingRoomName = "The Beginning of Misery"
+-- Load config.lua file. If it doesn't exist, fall back to defaults.
+local configPath = getMudletHomeDir() .. "/config.lua"
+local configFile = io.open(configPath, "r")
 
-function directionsToHolySquare()
-  sendAll("north", "look modrian", "north", "north")
+if configFile then
+  configFile:close()
+  dofile(configPath)
+  cecho("<green>Config loaded from: " .. configPath .. "\n")
+else
+  -- Default configuration if config.lua doesn't exist
+  cecho("<yellow>Warning: config.lua not found. Using default configuration.\n")
+  cecho("<yellow>Expected location: " .. configPath .. "\n")
+  cecho("<yellow>Copy config.lua to this location or use inline defaults below.\n")
+  
+  -- Default values (same as original)
+  myStartingRoomName = "The Beginning of Misery"
+  
+  function directionsToHolySquare()
+    sendAll("north", "look modrian", "north", "north")
+  end
+  
+  function directionsToStarPlaza()
+    sendAll("north", "look ec")
+  end
+  
+  function directionsToSlaveSquare()
+    sendAll("north", "look skullport")
+  end
+  
+  function directionsToAstralManse()
+    sendAll("north", "look astral")
+  end
+  
+  -- State Variables
+  currentRoom = ""
+  travelerror = 0
+  travelling = 0
+  debug = false
+  isFighting = false
+  githFound = 0
+  findGith = 0
+  githX = 0
+  githY = 0
+  githZ = 0
 end
-
-function directionsToStarPlaza()
-  sendAll("north", "look ec")
-end
-
-function directionsToSlaveSquare()
-  sendAll("north", "look skullport")
-end
-
-function directionsToAstralManse()
-  sendAll("north", "look astral")
-end
-
--- =============================================
--- State Variables
--- =============================================
-currentRoom = ""
-travelerror = 0
-travelling = 0
-debug = false
-
--- Combat state variable
-isFighting = false
-
--- Gith search variables
-githFound = 0
-findGith = 0
-githX = 0
-githY = 0
-githZ = 0
 
 -- =============================================
 -- Helper Functions
