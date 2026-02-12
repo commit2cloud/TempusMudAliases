@@ -378,7 +378,21 @@ end
 -- Trainers
 function gotoCharismaTrainer() travelTo("star", "Charisma Trainer", "3n1e;open door s;1s1w") end
 function gotoConstitutionTrainer() travelTo("hs", "Constitution Trainer", "2nunw;open tapestry;3e4ne") end
-function gotoDexterityTrainer() travelTo("hs", "Dexterity Trainer", "") end -- TODO: Add directions
+function gotoDexterityTrainer()
+  gotohs(function()
+    tempTimer(1, function()
+      if travelerror == 0 then
+        cecho("\n<green>Okay!<reset> Travelling to the <yellow>Dexterity Trainer<reset>!\n")
+        sendDirs("nnwwww;open grate;dessesusseuswnw")
+        cecho("<cyan>Kill the Assassin and go two west!\n")
+        send("where")
+        send("challenge area")
+      else
+        resettravel()
+      end
+    end)
+  end)
+end
 function gotoIntelligenceTrainer() travelTo("hs", "Intelligence Trainer", "2nu;open door west;w") end
 function gotoStrengthTrainer() travelTo("hs", "Strength Trainer", "2nune;open tapestry;3nen") end
 function gotoWisdomTrainer() travelTo("hs", "Wisdom Trainer", "6e11s;open door s;3s1u2s1e") end
@@ -397,13 +411,13 @@ function gotoClericEvilGuildmaster() travelTo("skull", "Evil Cleric Guildmaster"
 function gotoClericGoodGuildmaster() travelTo("hs", "Good Cleric Guildmaster", "6e11s;open door s;3s;5u2s") end
 function gotoCyborgGuildmaster() travelTo("star", "Cyborg Guildmaster", "4w2nws") end
 function gotoKnightEvilGuildmaster() travelTo("skull", "Evil Knight Guildmaster", "2w2ne") end
-function gotoKnightGoodGuildmaster() travelTo("hs", "Good Knight Guildmaster", "") end -- TODO: Add directions
+function gotoKnightGoodGuildmaster() travelTo("hs", "Good Knight Guildmaster", "2nunw;open tap;4wn3e") end
 function gotoMageGuildmaster() travelTo("hs", "Mage Guildmaster", "4nu;open door west;w") end
 function gotoMercenaryGuildmaster() travelTo("star", "Mercenary Guildmaster", "2d4e5nes") end
 function gotoMonkGuildmaster() travelTo("hs", "Monk Guildmaster", "37e41n;open gate n;4n3w") end
 function gotoPhysicGuildmaster() travelTo("star", "Physics Guildmaster", "3s2uswn") end
 function gotoPsionicistGuildmaster() travelTo("hs", "Psionic Guildmaster", "2nune;open tapestry;3w") end
-function gotoRangerGuildmaster() travelTo("hs", "Ranger Guildmaster", "") end -- TODO: Add directions
+function gotoRangerGuildmaster() travelTo("hs", "Ranger Guildmaster", "nnune;open tapestry;ssswwse") end
 function gotoThiefGuildmaster() travelTo("skull", "Thief Guildmaster", "4e;open portrait;2ene2s") end
 
 -- Menu Functions
