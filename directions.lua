@@ -311,7 +311,7 @@ function gotoGenCloneBioMechanicalLabs() travelTo("star", "GenClone BioMechanica
 function gotoKiddieKandy() travelTo("star", "Kiddie Kandy Incorporated", "4n2wn;open gate n;n") end
 function gotoKromguard() travelTo("star", "Kromguard", "19w3n;enter fortress") end
 function gotoLuxare() travelTo("star", "Luxare", "4w4nen") end
-function gotoMerquryCity() travelTo("star", "Mercury City", "19w3n;enter fortress") end
+function gotoMerquryCity() travelTo("star", "Merqury City", "19w3n;enter fortress") end
 function gotoNETWORKCommunicationsTower() travelTo("star", "NETWORK Communications Tower", "4w4ne;open door s;s") end
 function gotoReinforcer() travelTo("star", "Reinforcer", "4w5n2w") end
 function gotoRuinsOfHTOM() travelTo("star", "Ruins of the High Tower of Magic", "34w3n2w7n") end
@@ -429,7 +429,21 @@ function travel(plane, zone)
   end
   local p = string.lower(tostring(plane))
   if not zone then
-    cecho("\n<yellow>Show submenu for " .. p .. "\n")
+    if p == "past" or p == "1" then
+      cecho("\n<yellow>Past Locations: Use travel past <1-43>\n")
+    elseif p == "future" or p == "2" then
+      cecho("\n<yellow>Future Locations: Use travel future <1-33>\n")
+    elseif p == "planes" or p == "3" then
+      cecho("\n<yellow>Planes Locations: Use travel planes <1-14>\n")
+    elseif p == "trainers" or p == "4" then
+      cecho("\n<yellow>Trainers: Use travel trainers <1-10>\n")
+    elseif p == "guilds" or p == "5" then
+      cecho("\n<yellow>Guilds: Use travel guilds <1-14>\n")
+    elseif p == "underdark" or p == "6" then
+      cecho("\n<yellow>Underdark: Use travel underdark <1-4>\n")
+    else
+      cecho("\n<yellow>Unknown category. Use: travel <category> <number>\n")
+    end
     return
   end
   local z = tonumber(zone)
