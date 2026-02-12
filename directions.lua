@@ -449,7 +449,7 @@ end
 function helpEPOS()
   cecho("\n<magenta>--------------<magenta>Help Elemental Plane of Smoke<magenta>-----------------------<cyan>\n")
   cecho("<magenta>Start All directions from<cyan>: 'Pitch Black'\n")
-  cecho("<magenta>To Chocking Palace<cyan>: 2dn;enter palace - Use gotoEPOSPalace\n")
+  cecho("<magenta>To Choking Palace<cyan>: 2dn;enter palace - Use gotoEPOSPalace\n")
   cecho("<magenta>To The Fortress<cyan>: 3d2se;enter cloud - Use gotoEPOSFortress\n")
   cecho("<magenta>To The Camp<cyan>: dwn;enter cloud - Use gotoEPOSCamp\n")
   cecho("<magenta>--------------------------------------------------------------------<cyan>\n")
