@@ -11,6 +11,7 @@ Easily navigate TempusMUD zones using a travel menu system. Originally written f
 - [Setup: ZMud](#setup-zmud)
 - [Setup: Mudlet (Lua)](#setup-mudlet-lua)
   - [Installation](#installation)
+  - [Running the Script](#running-the-script)
   - [Personalization](#personalization)
   - [Registering the Aliases](#registering-the-aliases)
 - [Usage](#usage)
@@ -62,6 +63,19 @@ Easily navigate TempusMUD zones using a travel menu system. Originally written f
 5. **Paste** the entire contents of `directions.lua` into the script body.
 6. Click **Save**.
 
+**Running the script (Method A):**
+
+Once saved, the script runs **automatically**. Mudlet executes all code in the Scripts section as soon as you save it and every time you open the profile. To verify it loaded correctly:
+
+1. In Mudlet's main command line, type:
+   ```
+   lua showMainMenu()
+   ```
+2. You should see the colorized travel menu appear in the output window.
+3. If you see an error like `showMainMenu: nil value`, the script did not load — re-open the Script Editor, make sure the script entry is checked/enabled (the checkbox next to its name), and click **Save** again.
+
+> **Note:** Scripts in the Scripts section run once at load time. Since `directions.lua` defines global functions and registers triggers, everything is ready to use immediately after saving. You do **not** need to manually execute it each session — Mudlet will re-run it automatically every time you open the profile.
+
 #### Method B: Lua `dofile()` (Advanced)
 
 1. Place `directions.lua` in your Mudlet profile directory.
@@ -72,7 +86,28 @@ Easily navigate TempusMUD zones using a travel menu system. Originally written f
    ```
    lua dofile(getMudletHomeDir() .. "/directions.lua")
    ```
-3. To auto-load on every session, add that `dofile()` line to a **Script** in the Script Editor so it runs at profile load.
+
+**Running the script (Method B):**
+
+With this method, the script is **not** loaded automatically — you must execute the `dofile()` command each time you start a new session. To make it automatic:
+
+1. Open the **Script Editor** (`Alt+S`) and click the **Scripts** icon.
+2. Click **Add** to create a new script entry and name it `Auto-load Directions`.
+3. Paste the following single line into the script body:
+   ```lua
+   dofile(getMudletHomeDir() .. "/directions.lua")
+   ```
+4. Click **Save**.
+
+This tells Mudlet to execute the `dofile()` command at profile load, which reads and runs `directions.lua` from disk. The advantage of Method B is that you can edit the `.lua` file in an external text editor and simply reconnect (or type `lua dofile(getMudletHomeDir() .. "/directions.lua")` in the command line) to reload your changes without opening the Script Editor.
+
+To verify the script is running after either approach:
+
+1. Type in Mudlet's command line:
+   ```
+   lua showMainMenu()
+   ```
+2. You should see the colorized travel menu. If you do, the script is loaded and ready.
 
 ### Personalization
 
