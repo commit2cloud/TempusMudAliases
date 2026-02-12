@@ -147,7 +147,7 @@ end
 After loading the script, you need to create **aliases** in Mudlet so you can type commands like `travel`, `travel 1 5`, etc. in the command line.
 
 1. Open the **Script Editor** (`Alt+S`) and click **Aliases** on the left sidebar.
-2. Create the following aliases:
+2. Create the following alias:
 
 #### Alias: `travel` (main menu and navigation)
 
@@ -161,43 +161,26 @@ After loading the script, you need to create **aliases** in Mudlet so you can ty
 
 ```lua
 local plane = matches[2] or ""
-local zone  = tonumber(matches[3])
+local zone  = matches[3] or ""
 
 if plane == "" then
-  showMainMenu()
-elseif zone == nil then
-  -- Show a submenu
-  local menuMap = {
-    ["1"] = showPastMenu,     past     = showPastMenu,
-    ["2"] = showFutureMenu,   future   = showFutureMenu,
-    ["3"] = showPlanesMenu,   planes   = showPlanesMenu,
-    ["4"] = showTrainersMenu, trainers = showTrainersMenu,
-    ["5"] = showGuildsMenu,   guilds   = showGuildsMenu,
-    ["6"] = showUnderdarkMenu, underdark = showUnderdarkMenu,
-    ["7"] = showAllMenu,       all       = showAllMenu,
-  }
-  local fn = menuMap[plane]
-  if fn then fn() else cecho("\n<red>Unknown plane: " .. plane .. "<reset>\n") end
-else
-  -- Travel to a specific zone
-  local planeMap = {
-    ["1"] = pastDestinations,      past      = pastDestinations,
-    ["2"] = futureDestinations,    future    = futureDestinations,
-    ["3"] = planesDestinations,    planes    = planesDestinations,
-    ["4"] = trainerDestinations,   trainers  = trainerDestinations,
-    ["5"] = guildDestinations,     guilds    = guildDestinations,
-    ["6"] = underdarkDestinations, underdark = underdarkDestinations,
-  }
-  local destTable = planeMap[plane]
-  if destTable and destTable[zone] then
-    destTable[zone]()
-  else
-    cecho("\n<red>Invalid destination: plane=" .. plane .. " zone=" .. tostring(zone) .. "<reset>\n")
-  end
+  plane = nil
 end
+if zone == "" then
+  zone = nil
+else
+  zone = tonumber(zone)
+end
+
+travel(plane, zone)
 ```
 
 3. Click **Save**.
+
+The `travel()` function in the script handles all menu displays and destination routing automatically. When you type:
+- `travel` — shows the main menu
+- `travel 1` or `travel past` — shows the Past locations menu
+- `travel 1 17` or `travel past 17` — travels to High Tower of Magic
 
 > **Tip:** You can also create shortcut aliases for frequently visited zones. For example, create an alias with pattern `^gotoShade$` that calls `gotoShade()` in the script body.
 
