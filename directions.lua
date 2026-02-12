@@ -348,6 +348,11 @@ function gotoLuniaHeaven()
         sendDirs("5n3d2sw;enter pool")
         send("where")
         send("challenge area")
+        -- Trigger to show help when entering Heaven
+        if heavenHelpTrigger then
+          killTrigger(heavenHelpTrigger)
+        end
+        heavenHelpTrigger = tempRegexTrigger("^You step into a gold color pool", helpHeaven)
       else
         resettravel()
       end
@@ -373,6 +378,124 @@ function gotoGith()
       end
     end)
   end)
+end
+
+-- Heaven Helper Functions
+function helpHeaven()
+  cecho("\n<magenta>------------------------<magenta>Help Heaven<magenta>---------------------------------<cyan>\n")
+  cecho("<magenta>To Thor<cyan>: nenenu5wn2wse - Use gotoThor\n")
+  cecho("<magenta>To Diancecht<cyan>: 2w2n4esene3ne3nws - Use gotoDiancecht\n")
+  cecho("<magenta>To Ptah<cyan>: ne7s2edeu4w2n4u - Use gotoPtah\n")
+  cecho("<magenta>To Ixlilton<cyan>: 4d2s4edsu2e4n - Use gotoIxlilton\n")
+  cecho("<magenta>To Ushas<cyan>: 4s2wdwu3ws3w3sw3sw - Use gotoUshas\n")
+  cecho("<magenta>To Fu-Hsiing<cyan>: e3nenene - Use gotoFu\n")
+  cecho("<magenta>To Ebisu<cyan>: unnww - Use gotoEbisu\n")
+  cecho("<magenta>To Castle Mahlhevik<cyan>: e3s2enuseuene - Use gotoMahlhevik\n")
+  cecho("<magenta>--------------------------------------------------------------------<cyan>\n")
+end
+
+function gotoThor()
+  send("where")
+  tempTimer(1, function()
+    if currentRoom == "In the Silver Sea" then
+      cecho("\n<green>Okay!<reset> Travelling to <yellow>Thor, God of Lightning<reset>!\n")
+      sendDirs("nenenu5wn2wse")
+    else
+      cecho("\n<red>Error<cyan>: You're not in the correct room 'In the Silver Sea'!\n")
+    end
+  end)
+end
+
+function gotoDiancecht()
+  send("where")
+  tempTimer(1, function()
+    if currentRoom == "Before a Palatial Estate" then
+      cecho("\n<green>Okay!<reset> Travelling to <yellow>Diancecht<reset>!\n")
+      sendDirs("2w2n4esene3ne3nws")
+    else
+      cecho("\n<red>Error<cyan>: You're not in the correct room 'Before the Palatial Estate'!\n")
+    end
+  end)
+end
+
+function gotoPtah()
+  send("where")
+  tempTimer(1, function()
+    if currentRoom == "Before a Spiraling Tower" then
+      cecho("\n<green>Okay!<reset> Travelling to <yellow>Ptah<reset>!\n")
+      sendDirs("ne7s2edeu4w2n4u")
+    else
+      cecho("\n<red>Error<cyan>: You're not in the correct room 'Before a Spiraling Tower'!\n")
+    end
+  end)
+end
+
+function gotoIxlilton()
+  send("where")
+  tempTimer(1, function()
+    if currentRoom == "A Garden Plateau" then
+      cecho("\n<green>Okay!<reset> Travelling to <yellow>Ixlilton<reset>!\n")
+      sendDirs("4d2s4edsu2e4n")
+    else
+      cecho("\n<red>Error<cyan>: You're not in the correct room 'A Garden Plateau'!\n")
+    end
+  end)
+end
+
+-- EPOS Helper Functions  
+function helpEPOS()
+  cecho("\n<magenta>--------------<magenta>Help Elemental Plane of Smoke<magenta>-----------------------<cyan>\n")
+  cecho("<magenta>Start All directions from<cyan>: 'Pitch Black'\n")
+  cecho("<magenta>To Chocking Palace<cyan>: 2dn;enter palace - Use gotoEPOSPalace\n")
+  cecho("<magenta>To The Fortress<cyan>: 3d2se;enter cloud - Use gotoEPOSFortress\n")
+  cecho("<magenta>To The Camp<cyan>: dwn;enter cloud - Use gotoEPOSCamp\n")
+  cecho("<magenta>--------------------------------------------------------------------<cyan>\n")
+end
+
+function gotoEPOSPalace()
+  send("where")
+  tempTimer(1, function()
+    if currentRoom == "Pitch Black" then
+      cecho("\n<green>Okay!<reset> Travelling to <yellow>EPOS Palace<reset>!\n")
+      sendDirs("2dn;enter palace")
+    else
+      cecho("\n<red>Error<cyan>: You're not in the correct room 'Pitch Black'!\n")
+    end
+  end)
+end
+
+function gotoEPOSFortress()
+  send("where")
+  tempTimer(1, function()
+    if currentRoom == "Pitch Black" then
+      cecho("\n<green>Okay!<reset> Travelling to <yellow>EPOS Fortress<reset>!\n")
+      sendDirs("3d2se;enter cloud")
+    else
+      cecho("\n<red>Error<cyan>: You're not in the correct room 'Pitch Black'!\n")
+    end
+  end)
+end
+
+function gotoEPOSCamp()
+  send("where")
+  tempTimer(1, function()
+    if currentRoom == "Pitch Black" then
+      cecho("\n<green>Okay!<reset> Travelling to <yellow>EPOS Camp<reset>!\n")
+      sendDirs("dwn;enter cloud")
+    else
+      cecho("\n<red>Error<cyan>: You're not in the correct room 'Pitch Black'!\n")
+    end
+  end)
+end
+
+function helpEPOSCraftsman()
+  cecho("\n<magenta>--------------<magenta>Elemental Plane of Smoke Craftsman<magenta>-----------------------<cyan>\n")
+  cecho("<magenta>A smoking helm<cyan>: some smoke dragon scales + a smokey potion\n")
+  cecho("<magenta>Some scale-plated gauntlets<cyan>: some smoke dragon scales + gauntlets of ogre power (Ogre Village)\n")
+  cecho("<magenta>Some smoky colored scalemail<cyan>: some smoke dragon scales + scalemail jacket\n")
+  cecho("<magenta>Some scaled leggings<cyan>: some smoke dragon scales + jeweled leggings (Malevolent Circle)\n")
+  cecho("<magenta>A dragonshaped shield<cyan>: some smoke dragon scales + heavy metal shield\n")
+  cecho("<magenta>--------------------------------------------------------------------<cyan>\n")
 end
 
 -- Trainers
@@ -503,3 +626,10 @@ function travel(plane, zone)
 end
 
 cecho("\n<cyan>Directions Script Loaded! Use: travel <plane> <zone>\n")
+
+-- Trigger for EPOS Craftsman workshop
+if eposCraftsmanTrigger then
+  killTrigger(eposCraftsmanTrigger)
+end
+eposCraftsmanTrigger = tempRegexTrigger("^A Large Workshop", helpEPOSCraftsman)
+
