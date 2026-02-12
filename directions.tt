@@ -2599,6 +2599,29 @@
 }
 {5}
 
+#ACTION {^A Large Workshop}
+{
+	helpEPOSCraftsman;
+}
+{5}
+
+#ALIAS {helpEPOSCraftsman}
+{
+	#SH { <fca>--------------<F0FF>Elemental Plane of Smoke Craftsman<fca>-----------------------<099>};
+	#SH { <fca>A smoking helm<099>: some smoke dragon scales + a smokey potion};
+	#SH { <fca>Some scale-plated gauntlets<099>: some smoke dragon scales + gauntlets of ogre power (Ogre Village)};
+	#SH { <fca>Some smoky colored scalemail<099>: some smoke dragon scales + scalemail jacket };
+	#SH { <fca>Some scaled leggings<099>: some smoke dragon scales + jeweled leggings (Malevolent Circle)};
+	#SH { <fca>A dragonshaped shield<099>: some smoke dragon scales + heavy megal shield};
+	#SH { <fca>A dragon-hilted longsword<099>: a dragon's claw + silver bastard sword};
+	#SH { <fca>A smoking dagger<099>: a dragon's claw + flaming spear + vial of thick grey liquid};
+	#SH { <fca>A dragon's claw polearm<099>: a dragon's claw + charred scroll + large smoked-steel halberd};
+	#SH { <fca>A set of dragon's talons<099>: a dragon's claw + cat's claw gloves (Skullport) + smokey potion};
+	#SH { <fca>Some talon studded boots<099>: a dragon's claw + hard leather boots (Modrian)};
+	#SH { <fca>--------------------------------------------------------------------<099>};
+}
+{5}
+
 #ALIAS {gotoElementalPlaneOfWater} {
     gotohs;
 	#SH {<cfa>Okay!<099> Travelling to the <FFF0>Elemental Plane of Water<099>!};
