@@ -546,29 +546,172 @@ function gotoPsionicistGuildmaster() travelTo("hs", "Psionic Guildmaster", "2nun
 function gotoRangerGuildmaster() travelTo("hs", "Ranger Guildmaster", "nnune;open tapestry;ssswwse") end
 function gotoThiefGuildmaster() travelTo("skull", "Thief Guildmaster", "4e;open portrait;2ene2s") end
 
--- Menu Functions
+-- =============================================
+-- Menu Display Functions
+-- =============================================
+
+function showMainMenu()
+  cecho("\n<cyan>┌------------------------------------------------------------------------------┐\n")
+  cecho("<cyan>|                          <orange> Where To Travel                                    <cyan>|\n")
+  cecho("<cyan>├------------------------------------------------------------------------------┤\n")
+  cecho("<cyan>|                                                                              |\n")
+  cecho("<cyan>|               1) <magenta>Past      <cyan>2) <yellow>Future      <cyan>3) <orange>Planes                          <cyan>|\n")
+  cecho("<cyan>|               4) <white>Trainers  <cyan>5) <red>Guilds      <cyan>6) <dark_gray>Underdark                       <cyan>|\n")
+  cecho("<cyan>|                               7) <brown>All                                         <cyan>|\n")
+  cecho("<cyan>|                                                                              <cyan>|\n")
+  cecho("<cyan>└------------------------------------------------------------------------------┘\n")
+end
+
+function showHelpMenu()
+  cecho("\n<yellow>******************************************************************************************\n")
+  cecho("<yellow>*                                Directions Help!                                        *\n")
+  cecho("<yellow>******************************************************************************************\n")
+  cecho("<yellow>*                                                                                        *\n")
+  cecho("<yellow>* <magenta>Usage: <reset>travel <plane> <zone>                                                           <yellow>*\n")
+  cecho("<yellow>* <white>Example: <reset>travel planes 9                                                               <yellow>*\n")
+  cecho("<yellow>*      Travel to the Elemental Plane of Smoke                                            <yellow>*\n")
+  cecho("<yellow>* <white>Example: <reset>travel 2 15                                                                   <yellow>*\n")
+  cecho("<yellow>*      Travel to the Future's EC University                                              <yellow>*\n")
+  cecho("<yellow>*                                                                                        *\n")
+  cecho("<yellow>* <red>Recommendations: <reset>Make an alias in your own scriping config for locations you use       <yellow>*\n")
+  cecho("<yellow>*    regularly!                                                                          <yellow>*\n")
+  cecho("<yellow>******************************************************************************************\n")
+end
+
+function showPastMenu()
+  cecho("\n<cyan>┌------------------------------------------------------------------------------┐\n")
+  cecho("<cyan>|                           <magenta>Past Locations                                     <cyan>|\n")
+  cecho("<cyan>├------------------------------------------------------------------------------┤\n")
+  cecho("<cyan>|  <magenta>1) <reset>Abandoned Keep       <magenta>2) <reset>Old Monastery        <magenta>3) <reset>Castle Slivendark        <cyan>|\n")
+  cecho("<cyan>|  <magenta>4) <reset>Chessboard of Araken <magenta>5) <reset>Dismal Delve         <magenta>6) <reset>Draconians and Highlords <cyan>|\n")
+  cecho("<cyan>|  <magenta>7) <reset>Duke Araken          <magenta>8) <reset>Elven Village        <magenta>9) <reset>Forgotten Valley         <cyan>|\n")
+  cecho("<cyan>| <magenta>10) <reset>Font of Modrian     <magenta>11) <reset>Frozen Tundras      <magenta>12) <reset>Glacial Rift             <cyan>|\n")
+  cecho("<cyan>| <magenta>13) <reset>Great Pyramid       <magenta>14) <reset>Guiharian Festival  <magenta>15) <reset>Halfling Village         <cyan>|\n")
+  cecho("<cyan>| <magenta>16) <reset>Harpell House       <magenta>17) <reset>High Tower of Magic <magenta>18) <reset>Hill Giant Steading      <cyan>|\n")
+  cecho("<cyan>| <magenta>19) <reset>Hobgoblins          <magenta>20) <reset>Holy Grail          <magenta>21) <reset>Istan                    <cyan>|\n")
+  cecho("<cyan>| <magenta>22) <reset>Kobold Tunnels      <magenta>23) <reset>Caves of Learander  <magenta>24) <reset>Crystal Fortress         <cyan>|\n")
+  cecho("<cyan>| <magenta>25) <reset>Malevolent Circle   <magenta>26) <reset>Mavernal            <magenta>27) <reset>Neverwhere               <cyan>|\n")
+  cecho("<cyan>| <magenta>28) <reset>Ogre Encampment     <magenta>29) <reset>Old Thalos          <magenta>30) <reset>Pit Fiend                <cyan>|\n")
+  cecho("<cyan>| <magenta>31) <reset>Pool of Evil        <magenta>32) <reset>Reed Swamp/Lizards  <magenta>33) <reset>Sewers of Modrian        <cyan>|\n")
+  cecho("<cyan>| <magenta>34) <reset>Shade               <magenta>35) <reset>Silver Tower        <magenta>36) <reset>Solace Cove              <cyan>|\n")
+  cecho("<cyan>| <magenta>37) <reset>Skullport (River)   <magenta>38) <reset>Temple of Ancients  <magenta>39) <reset>Tower of Renegade Mage   <cyan>|\n")
+  cecho("<cyan>| <magenta>40) <reset>Treetops of Arachna <magenta>41) <reset>Undermountain       <magenta>42) <reset>Wemic Plains             <cyan>|\n")
+  cecho("<cyan>| <magenta>43) <reset>Zhengi's Castle                                                          <cyan>|\n")
+  cecho("<cyan>|                                                                              <cyan>|\n")
+  cecho("<cyan>└------------------------------------------------------------------------------┘\n")
+end
+
+function showFutureMenu()
+  cecho("\n<cyan>┌------------------------------------------------------------------------------┐\n")
+  cecho("<cyan>|                           <yellow>Future Locations                                   <cyan>|\n")
+  cecho("<cyan>├------------------------------------------------------------------------------┤\n")
+  cecho("<cyan>|  <magenta>1) <reset>Polluted Village    <magenta>2) <reset>Archeolgial Dig      <magenta>3) <reset>Blasted Swamp             <cyan>|\n")
+  cecho("<cyan>|  <magenta>4) <reset>Colony              <magenta>5) <reset>Cybertech Labs       <magenta>6) <reset>Cybertech Preparatory     <cyan>|\n")
+  cecho("<cyan>|  <magenta>7) <reset>Death Row           <magenta>8) <reset>Dracharnos           <magenta>9) <reset>Drug Dealer               <cyan>|\n")
+  cecho("<cyan>| <magenta>10) <reset>EC Junkyard        <magenta>11) <reset>EC Military          <magenta>12) <reset>EC Vampires              <cyan>|\n")
+  cecho("<cyan>| <magenta>13) <reset>EC Nuclear Power   <magenta>14) <reset>EC Power & Plubming  <magenta>15) <reset>EC Security Compound     <cyan>|\n")
+  cecho("<cyan>| <magenta>16) <reset>EC University      <magenta>17) <reset>Electronics School   <magenta>18) <reset>Electronics Shop         <cyan>|\n")
+  cecho("<cyan>| <magenta>19) <reset>Fail Family Legacy <magenta>20) <reset>Fassan Slave Compound<magenta>21) <reset>GenClone Bio Labs        <cyan>|\n")
+  cecho("<cyan>| <magenta>22) <reset>Kiddie Kandy, Inc. <magenta>23) <reset>Kromguard            <magenta>24) <reset>Luxare                   <cyan>|\n")
+  cecho("<cyan>| <magenta>25) <reset>Merqury City       <magenta>26) <reset>NETWORK  Tower       <magenta>27) <reset>Equipment Reinforcer     <cyan>|\n")
+  cecho("<cyan>| <magenta>28) <reset>Ruins of HTOM      <magenta>29) <reset>Silver Tower  Ruins  <magenta>30) <reset>Simeon the Cybernetic     <cyan>|\n")
+  cecho("<cyan>| <magenta>31) <red>Triskin Asylum     <magenta>32) <reset>Virtual  World       <magenta>33) <reset>Zul'Dane                  <cyan>|\n")
+  cecho("<cyan>|                                                                              <cyan>|\n")
+  cecho("<cyan>└------------------------------------------------------------------------------┘\n")
+end
+
+function showPlanesMenu()
+  cecho("\n<cyan>┌------------------------------------------------------------------------------┐\n")
+  cecho("<cyan>|                           <orange>Planes Locations                                   <cyan>|\n")
+  cecho("<cyan>├------------------------------------------------------------------------------┤\n")
+  cecho("<cyan>|  <magenta>1) <reset>Abyss/Unholy Mod    <magenta>2) <reset>Amoria                <magenta>3) <reset>Avernus, Hell Level 1    <cyan>|\n")
+  cecho("<cyan>|  <magenta>4) <reset>Plane of Air        <magenta>5) <reset>Plane of Earth        <magenta>6) <reset>Plane of Fire            <cyan>|\n")
+  cecho("<cyan>|  <magenta>7) <reset>Plane of Ice        <magenta>8) <reset>Plane of Ooze         <magenta>9) <reset>Plane of Smoke           <cyan>|\n")
+  cecho("<cyan>| <magenta>10) <reset>Plane of Water     <magenta>11) <reset>Lunia, Heaven Level 1<magenta>12) <reset>Immoth                    <cyan>|\n")
+  cecho("<cyan>| <magenta>13) <reset>Castle Mahlhevik   <magenta>14) <reset>Githyanki Fortress                                 <cyan>|\n")
+  cecho("<cyan>|                                                                              <cyan>|\n")
+  cecho("<cyan>└------------------------------------------------------------------------------┘\n")
+end
+
+function showTrainersMenu()
+  cecho("\n<cyan>┌------------------------------------------------------------------------------┐\n")
+  cecho("<cyan>|                          <white>Trainers Locations                                  <cyan>|\n")
+  cecho("<cyan>├------------------------------------------------------------------------------┤\n")
+  cecho("<cyan>|  <magenta>1) <reset>Charisma           <magenta>2) <reset>Constitution           <magenta>3) <reset>Dexterity                <cyan>|\n")
+  cecho("<cyan>|  <magenta>4) <reset>Intelligence       <magenta>5) <reset>Strength               <magenta>6) <reset>Wisdom                   <cyan>|\n")
+  cecho("<cyan>|  <magenta>7) <reset>Weapon Enhancer    <magenta>8) <reset>Weapon Specializer     <magenta>9) <reset>Weapon Un-Specializer    <cyan>|\n")
+  cecho("<cyan>| <magenta>10) <reset>The Gainer        <magenta>11) <reset>Electronics School                                                       <cyan>|\n")
+  cecho("<cyan>|                                                                              <cyan>|\n")
+  cecho("<cyan>└------------------------------------------------------------------------------┘\n")
+end
+
+function showGuildsMenu()
+  cecho("\n<cyan>┌------------------------------------------------------------------------------┐\n")
+  cecho("<cyan>|                          <red>Guilds Locations                                    <cyan>|\n")
+  cecho("<cyan>├------------------------------------------------------------------------------┤\n")
+  cecho("<cyan>|  <magenta>1) <reset>Barbarian         <magenta>2) <reset>Bard                    <magenta>3) <reset>Cleric (<red>Evil<reset>)            <cyan>|\n")
+  cecho("<cyan>|  <magenta>4) <reset>Cleric (<green>Good<reset>)     <magenta>5) <reset>Cyborg                  <magenta>6) <reset>Knight (<red>Evil<reset>)            <cyan>|\n")
+  cecho("<cyan>|  <magenta>7) <reset>Knight (<green>Good<reset>)     <magenta>8) <reset>Mage                    <magenta>9) <reset>Mercenary                <cyan>|\n")
+  cecho("<cyan>| <magenta>10) <reset>Monk             <magenta>11) <reset>Physic                 <magenta>12) <reset>Psionicist               <cyan>|\n")
+  cecho("<cyan>| <magenta>13) <reset>Ranger           <magenta>14) <reset>Thief                                                  <cyan>|\n")
+  cecho("<cyan>|                                                                              <cyan>|\n")
+  cecho("<cyan>└------------------------------------------------------------------------------┘\n")
+end
+
+function showUnderdarkMenu()
+  cecho("\n<cyan>┌------------------------------------------------------------------------------┐\n")
+  cecho("<cyan>|                        <dark_gray>Underdark                                              <cyan>|\n")
+  cecho("<cyan>├------------------------------------------------------------------------------┤\n")
+  cecho("<cyan>|  <magenta>1) <reset>Head Shrinker <magenta>2) <reset>Lizard Caverns  <magenta>3) <reset>Wyllowwood\n")
+  cecho("<cyan>|                                                                              <cyan>|\n")
+  cecho("<cyan>└------------------------------------------------------------------------------┘\n")
+end
+
+function showAllMenu()
+  cecho("\n<cyan>┌------------------------------------------------------------------------------┐\n")
+  cecho("<cyan>|                          <brown> ALL Locations                                      <cyan>|\n")
+  cecho("<cyan>├------------------------------------------------------------------------------┤\n")
+  cecho("<cyan>|                                                                              <cyan>|\n")
+  cecho("<cyan>|                          <red>Under Construction                                  <cyan>|\n")
+  cecho("<cyan>|                                                                              <cyan>|\n")
+  cecho("<cyan>└------------------------------------------------------------------------------┘\n")
+end
+
+-- =============================================
+-- Main Travel Command Function
+-- =============================================
+
 function travel(plane, zone)
   if not plane then
-    cecho("\n<cyan>Travel Menu: Use travel <plane> <zone>\n")
-    cecho("1=past 2=future 3=planes 4=trainers 5=guilds 6=underdark\n")
+    showMainMenu()
     return
   end
+  
   local p = string.lower(tostring(plane))
+  
+  -- Check for help request
+  if p == "help" or p == "?" then
+    showHelpMenu()
+    return
+  end
+  
   if not zone then
     if p == "past" or p == "1" then
-      cecho("\n<yellow>Past Locations: Use travel past <1-43>\n")
+      showPastMenu()
     elseif p == "future" or p == "2" then
-      cecho("\n<yellow>Future Locations: Use travel future <1-33>\n")
+      showFutureMenu()
     elseif p == "planes" or p == "3" then
-      cecho("\n<yellow>Planes Locations: Use travel planes <1-14>\n")
+      showPlanesMenu()
     elseif p == "trainers" or p == "4" then
-      cecho("\n<yellow>Trainers: Use travel trainers <1-10>\n")
+      showTrainersMenu()
     elseif p == "guilds" or p == "5" then
-      cecho("\n<yellow>Guilds: Use travel guilds <1-14>\n")
+      showGuildsMenu()
     elseif p == "underdark" or p == "6" then
-      cecho("\n<yellow>Underdark: Use travel underdark <1-4>\n")
+      showUnderdarkMenu()
+    elseif p == "all" or p == "7" then
+      showAllMenu()
     else
-      cecho("\n<yellow>Unknown category. Use: travel <category> <number>\n")
+      cecho("\n<red>Travel Warning: <reset>The value '<cyan>" .. tostring(plane) .. "<reset>' is not a valid travel destination.\n")
     end
     return
   end
