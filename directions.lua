@@ -48,13 +48,38 @@ githZ = 0
 -- =============================================
 
 function sendDirs(dirString)
+  -- Direction shorthand to full command mapping
+  local dirMap = {
+    n = "north", s = "south", e = "east", w = "west",
+    u = "up",    d = "down"
+  }
+
   local cmds = {}
-  for cmd in dirString:gmatch('[^";]+') do
-    cmd = cmd:match("^%s*(.-)%s*$")
-    if cmd ~= "" then
-      table.insert(cmds, cmd)
+
+  -- Split on semicolons first to separate special commands (e.g., "open gate e")
+  for segment in dirString:gmatch('[^;]+') do
+    segment = segment:match('^%s*(.-)%s*$')  -- trim whitespace
+    if segment ~= '' then
+      -- Try to parse as speedwalk notation (e.g., "22n4e5n3su2d")
+      -- Check if the segment is ONLY composed of digits + direction letters
+      if segment:match('^[%dnsewud]+$') then
+        -- Parse each (optional_number)(direction) pair
+        for count, dir in segment:gmatch('(%d*)([nsewud])') do
+          local times = tonumber(count) or 1
+          local fullDir = dirMap[dir]
+          if fullDir then
+            for i = 1, times do
+              table.insert(cmds, fullDir)
+            end
+          end
+        end
+      else
+        -- It's a special command like "open gate e" or "enter door"
+        table.insert(cmds, segment)
+      end
     end
   end
+
   if #cmds > 0 then
     sendAll(unpack(cmds))
   end
