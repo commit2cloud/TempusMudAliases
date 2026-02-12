@@ -5,29 +5,46 @@
 -- =============================================================================
 
 -- =============================================
--- Configuration - EDIT THESE VARS ONLY!
+-- Load Configuration
 -- =============================================
-myStartingRoomName = "The Beginning of Misery"
+-- Load config.lua file from Mudlet home directory if it exists
+local configPath = getMudletHomeDir() .. "/config.lua"
+local configFile = io.open(configPath, "r")
 
-function directionsToHolySquare()
-  sendAll("north", "look modrian", "north", "north")
-end
-
-function directionsToStarPlaza()
-  sendAll("north", "look ec")
-end
-
-function directionsToSlaveSquare()
-  sendAll("north", "look skullport")
-end
-
-function directionsToAstralManse()
-  sendAll("north", "look astral")
+if configFile then
+  configFile:close()
+  dofile(configPath)
+  cecho("<green>Config loaded from: " .. configPath .. "\n")
+else
+  -- Default configuration if config.lua doesn't exist
+  cecho("<yellow>Warning: config.lua not found. Using default configuration.\n")
+  cecho("<yellow>Expected location: " .. configPath .. "\n")
+  cecho("<yellow>You can copy config.lua to this location to customize settings.\n")
+  
+  -- Default configuration values
+  myStartingRoomName = "The Beginning of Misery"
+  
+  function directionsToHolySquare()
+    sendAll("north", "look modrian", "north", "north")
+  end
+  
+  function directionsToStarPlaza()
+    sendAll("north", "look ec")
+  end
+  
+  function directionsToSlaveSquare()
+    sendAll("north", "look skullport")
+  end
+  
+  function directionsToAstralManse()
+    sendAll("north", "look astral")
+  end
 end
 
 -- =============================================
--- State Variables
+-- State Variables (Runtime State)
 -- =============================================
+-- These are initialized here and managed by the script
 currentRoom = ""
 travelerror = 0
 travelling = 0
@@ -706,7 +723,7 @@ function showMainMenu()
   cecho("<cyan>├------------------------------------------------------------------------------┤\n")
   cecho("<cyan>|                                                                              |\n")
   cecho("<cyan>|               1) <magenta>Past      <cyan>2) <yellow>Future      <cyan>3) <orange>Planes                          <cyan>|\n")
-  cecho("<cyan>|               4) <white>Trainers  <cyan>5) <red>Guilds      <cyan>6) <dark_gray>Underdark                       <cyan>|\n")
+  cecho("<cyan>|               4) <white>Trainers  <cyan>5) <red>Guilds      <cyan>6) <ansi_light_black>Underdark                       <cyan>|\n")
   cecho("<cyan>|                               7) <brown>All                                         <cyan>|\n")
   cecho("<cyan>|                                                                              <cyan>|\n")
   cecho("<cyan>└------------------------------------------------------------------------------┘\n")
@@ -810,9 +827,10 @@ end
 
 function showUnderdarkMenu()
   cecho("\n<cyan>┌------------------------------------------------------------------------------┐\n")
-  cecho("<cyan>|                        <dark_gray>Underdark                                              <cyan>|\n")
+  cecho("<cyan>|                        <ansi_light_black>Underdark                                              <cyan>|\n")
   cecho("<cyan>├------------------------------------------------------------------------------┤\n")
-  cecho("<cyan>|  <magenta>1) <reset>Head Shrinker <magenta>2) <reset>Lizard Caverns  <magenta>3) <reset>Wyllowwood\n")
+  cecho("<cyan>|  <magenta>1) <reset>Head Shrinker      <magenta>2) <reset>Lizard Caverns      <magenta>3) <reset>Wyllowwood               <cyan>|\n")
+  cecho("<cyan>|  <magenta>4) <reset>Undead Shark                                                                <cyan>|\n")
   cecho("<cyan>|                                                                              <cyan>|\n")
   cecho("<cyan>└------------------------------------------------------------------------------┘\n")
 end
