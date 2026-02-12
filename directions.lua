@@ -338,6 +338,37 @@ end
 
 function gotoFassanSlaveCompound() travelTo("star", "Fassan Slave Compound", "2ds2dwd27wuwu3n4w3nwun") end
 function gotoGenCloneBioMechanicalLabs() travelTo("star", "GenClone BioMechanical Labs", "16w9nen4w8n") end
+
+function gotoHitpointIncreaser()
+  gotostar(function()
+    tempTimer(2, function()
+      if travelerror == 0 then
+        cecho("\n<green>Okay!<reset> Travelling to the <yellow>Hitpoints Increaser<reset>!\n")
+        sendDirs("3n1e;open door s;1s1u")
+        send("where")
+        send("challenge area")
+      else
+        resettravel()
+      end
+    end)
+  end)
+end
+
+function gotoImplantChamber()
+  gotostar(function()
+    tempTimer(2, function()
+      if travelerror == 0 then
+        cecho("\n<green>Okay!<reset> Travelling to the <yellow>Implant Chamber<reset>!\n")
+        sendDirs("4w3n3w")
+        send("where")
+        send("challenge area")
+      else
+        resettravel()
+      end
+    end)
+  end)
+end
+
 function gotoKiddieKandy() travelTo("star", "Kiddie Kandy Incorporated", "4n2wn;open gate n;n") end
 function gotoKromguard() travelTo("star", "Kromguard", "19w3n;enter fortress") end
 function gotoLuxare() travelTo("star", "Luxare", "4w4nen") end
