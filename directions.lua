@@ -62,6 +62,13 @@ function resettravel()
   travelling = 0
 end
 
+-- Helper function to check if player is in combat
+function isInFight()
+  -- This should be implemented based on your MUD's combat indicators
+  -- For now, return false as a safe default
+  return false
+end
+
 -- =============================================
 -- Room Tracking Trigger
 -- =============================================
@@ -773,9 +780,89 @@ end
 
 cecho("\n<cyan>Directions Script Loaded! Use: travel <plane> <zone>\n")
 
--- Trigger for EPOS Craftsman workshop (exact room title from EPOS)
-if eposCraftsmanTrigger then
-  killTrigger(eposCraftsmanTrigger)
-end
+-- =============================================
+-- Additional Triggers
+-- =============================================
+
+-- Trigger for Shade Tiltin's room
+if shadeTiltinTrigger then killTrigger(shadeTiltinTrigger) end
+shadeTiltinTrigger = tempRegexTrigger("^This is the room of Tiltin, the Mage of Shade", function()
+  cecho("\n<orange>************************ <magenta>Help Shade <orange>************************\n")
+  cecho("<orange>gotoShadeRebel: <reset>To Rebel Leader From Tiltin\n")
+  cecho("<orange>gotoShadeSelset: <reset>To Selset from Rebel Leader\n")
+  cecho("<orange>************************************************************\n")
+end)
+
+-- Trigger for Gith Island Detection
+if githIslandTrigger then killTrigger(githIslandTrigger) end
+githIslandTrigger = tempRegexTrigger("^A huge island of matter is floating here\\.$", function()
+  if findGith == 1 then
+    cecho("\n<white>***** GITH FOUND! *****\n")
+    send("revoke")
+    send("revoke")
+    githFound = 1
+    findGith = 0
+    send("enter island")
+    send("challenge area")
+  end
+end)
+
+-- Trigger for Astral Plane Gith Search
+if astralPlaneGithTrigger then killTrigger(astralPlaneGithTrigger) end
+astralPlaneGithTrigger = tempRegexTrigger("^The Astral Plane$", function()
+  if findGith == 1 and not isInFight() then
+    if debug then cecho("\n<magenta>Debug: <reset>Astral Plane Action triggered.\n") end
+    
+    if githX < 8 then
+      if debug then cecho("\n<magenta>Debug: <reset>Gith X = " .. githX .. "\n") end
+      if githFound == 0 then
+        send("north")
+        githX = githX + 1
+      else
+        send("enter island")
+        send("challenge area")
+      end
+      
+      if githY < 8 and githX == 7 then
+        githX = 0
+        if debug then cecho("\n<magenta>Debug: <reset>Gith Y = " .. githY .. "\n") end
+        if githFound == 0 then
+          send("west")
+          githY = githY + 1
+        else
+          send("enter island")
+          send("challenge area")
+        end
+        
+        if githZ < 8 and githY == 7 then
+          if debug then cecho("\n<magenta>Debug: <reset>Gith Z = " .. githZ .. "\n") end
+          if githFound == 0 then
+            send("up")
+            githZ = githZ + 1
+            githY = 0
+            githX = 0
+          else
+            send("enter island")
+            send("challenge area")
+          end
+        end
+      end
+    end
+    
+    if githZ == 8 then
+      cecho("\n<red>Warning! <reset>Unable to locate the Githyanki Fortress!\n")
+      findGith = 0
+    end
+  end
+end)
+
+-- Trigger for "In the area" (resets travelling flag)
+if inAreaTrigger then killTrigger(inAreaTrigger) end
+inAreaTrigger = tempRegexTrigger("^In the area: (.+)$", function()
+  travelling = 0
+end)
+
+-- Trigger for EPOS Craftsman workshop
+if eposCraftsmanTrigger then killTrigger(eposCraftsmanTrigger) end
 eposCraftsmanTrigger = tempRegexTrigger("^A Large Workshop$", helpEPOSCraftsman)
 
