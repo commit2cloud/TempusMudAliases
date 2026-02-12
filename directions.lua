@@ -33,6 +33,9 @@ travelerror = 0
 travelling = 0
 debug = false
 
+-- Combat state variable
+isFighting = false
+
 -- Gith search variables
 githFound = 0
 findGith = 0
@@ -63,21 +66,14 @@ function resettravel()
 end
 
 -- =============================================
--- Combat Detection Helper (STUB - Needs Implementation)
+-- Combat Detection Helper
 -- =============================================
 -- Helper function to check if player is in combat
--- TODO: This is a STUB implementation that always returns false
--- To properly implement:
--- 1. Add global variable: isFighting = false
--- 2. Add triggers for TempusMUD combat start messages
--- 3. Add triggers for TempusMUD combat end messages
--- 4. Update this function to return isFighting variable
--- Example triggers:
---   tempRegexTrigger("^You attack", function() isFighting = true end)
---   tempRegexTrigger("^You are no longer fighting", function() isFighting = false end)
+-- Combat state is tracked via triggers that detect TempusMUD combat messages
+-- Combat end is detected by "R.I.P." message when a mob dies
+-- Note: This may not work perfectly when fighting multiple mobs simultaneously
 function isInFight()
-  -- STUB: Always returns false - does not detect actual combat
-  return false
+  return isFighting
 end
 
 -- =============================================
@@ -987,4 +983,36 @@ end)
 -- Trigger for EPOS Craftsman workshop
 if eposCraftsmanTrigger then killTrigger(eposCraftsmanTrigger) end
 eposCraftsmanTrigger = tempRegexTrigger("^A Large Workshop$", helpEPOSCraftsman)
+
+-- Trigger for Combat Start Detection
+-- Detects when combat begins based on common TempusMUD combat messages
+-- You may need to adjust these patterns based on your specific combat messages
+if combatStartTrigger then killTrigger(combatStartTrigger) end
+combatStartTrigger = tempRegexTrigger("^You (attack|massacre|hit|miss|pierce|slash|crush) ", function()
+  isFighting = true
+  if debug then
+    cecho("\n<cyan>Debug: Combat started (attack detected)\n")
+  end
+end)
+
+-- Additional combat start trigger for being attacked
+if combatAttackedTrigger then killTrigger(combatAttackedTrigger) end
+combatAttackedTrigger = tempRegexTrigger("^.+ (attacks|hits|misses|pierces|slashes|crushes) you", function()
+  isFighting = true
+  if debug then
+    cecho("\n<cyan>Debug: Combat started (being attacked)\n")
+  end
+end)
+
+-- Trigger for Combat End Detection (R.I.P. message)
+-- Detects when a mob dies based on TempusMUD death message format:
+-- "A little boy is dead!  R.I.P."
+-- Note: May not perfectly handle multiple mob combat scenarios
+if combatEndTrigger then killTrigger(combatEndTrigger) end
+combatEndTrigger = tempRegexTrigger("^.+ is dead!  R\\.I\\.P\\.$", function()
+  isFighting = false
+  if debug then
+    cecho("\n<cyan>Debug: Combat ended (R.I.P. detected)\n")
+  end
+end)
 
