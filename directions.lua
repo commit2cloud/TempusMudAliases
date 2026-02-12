@@ -311,7 +311,7 @@ function gotoGenCloneBioMechanicalLabs() travelTo("star", "GenClone BioMechanica
 function gotoKiddieKandy() travelTo("star", "Kiddie Kandy Incorporated", "4n2wn;open gate n;n") end
 function gotoKromguard() travelTo("star", "Kromguard", "19w3n;enter fortress") end
 function gotoLuxare() travelTo("star", "Luxare", "4w4nen") end
-function gotoMerquryCity() travelTo("star", "Merqury City", "19w3n;enter fortress") end
+function gotoMerquryCity() travelTo("star", "Mercury City", "19w3n;enter fortress") end
 function gotoNETWORKCommunicationsTower() travelTo("star", "NETWORK Communications Tower", "4w4ne;open door s;s") end
 function gotoReinforcer() travelTo("star", "Reinforcer", "4w5n2w") end
 function gotoRuinsOfHTOM() travelTo("star", "Ruins of the High Tower of Magic", "34w3n2w7n") end
@@ -325,7 +325,7 @@ function gotoZulDane() travelTo("star", "City of Zul'Dane", "26n4e") end
 
 -- Underdark
 function gotoUndeadShark() travelTo("skull", "Undead Shark", "2es2u;open plant e;es") end
-function gotoHeadShrinker() travelTo("skull", "head Shrinker", "11s2wdnund2sundwun2d3ws;open hide;1w") end
+function gotoHeadShrinker() travelTo("skull", "Head Shrinker", "11s2wdnund2sundwun2d3ws;open hide;1w") end
 function gotoLizardCaverns() travelTo("skull", "Lizard Caverns", "11s2wdnund2sundwun2dw4n") end
 function gotoWyllowwood() travelTo("skull", "Wyllowwood", "6s2w4sedwun2dw4n") end
 
@@ -378,14 +378,17 @@ end
 -- Trainers
 function gotoCharismaTrainer() travelTo("star", "Charisma Trainer", "3n1e;open door s;1s1w") end
 function gotoConstitutionTrainer() travelTo("hs", "Constitution Trainer", "2nunw;open tapestry;3e4ne") end
-function gotoDexterityTrainer() travelTo("hs", "Dexterity Trainer", "") end
+function gotoDexterityTrainer() travelTo("hs", "Dexterity Trainer", "") end -- TODO: Add directions
 function gotoIntelligenceTrainer() travelTo("hs", "Intelligence Trainer", "2nu;open door west;w") end
 function gotoStrengthTrainer() travelTo("hs", "Strength Trainer", "2nune;open tapestry;3nen") end
 function gotoWisdomTrainer() travelTo("hs", "Wisdom Trainer", "6e11s;open door s;3s1u2s1e") end
 function gotoWeaponEnhancer() travelTo("star", "Weapons Enhancer", "5n2w1s1e") end
 function gotoWeaponSpecializer() travelTo("skull", "Weapon Specializer", "4sd2enen2e4nw3nen2w2n2e2n2e2un4eu;open ebony;ws2w") end
 function gotoWeaponUnSpecializer() travelTo("star", "Weapon UNSpecializer", "3n1e;open door s;1s1u1e") end
-function gotoGainer() cecho("\n<yellow>Gainer is 1w of Grand Mistress at top of HTOM\n") end
+function gotoGainer()
+  cecho("\n<yellow>Note: Gainer (Nohunger & Nothirst) is 1w of Grand Mistress at top of HTOM\n")
+  cecho("Portal to him is at the top of High Tower of Magic\n")
+end
 
 -- Guilds
 function gotoBarbarianGuildmaster() travelTo("hs", "Barbarian Guildmaster", "57w11n") end
@@ -394,13 +397,13 @@ function gotoClericEvilGuildmaster() travelTo("skull", "Evil Cleric Guildmaster"
 function gotoClericGoodGuildmaster() travelTo("hs", "Good Cleric Guildmaster", "6e11s;open door s;3s;5u2s") end
 function gotoCyborgGuildmaster() travelTo("star", "Cyborg Guildmaster", "4w2nws") end
 function gotoKnightEvilGuildmaster() travelTo("skull", "Evil Knight Guildmaster", "2w2ne") end
-function gotoKnightGoodGuildmaster() travelTo("hs", "Good Knight Guildmaster", "") end
+function gotoKnightGoodGuildmaster() travelTo("hs", "Good Knight Guildmaster", "") end -- TODO: Add directions
 function gotoMageGuildmaster() travelTo("hs", "Mage Guildmaster", "4nu;open door west;w") end
 function gotoMercenaryGuildmaster() travelTo("star", "Mercenary Guildmaster", "2d4e5nes") end
 function gotoMonkGuildmaster() travelTo("hs", "Monk Guildmaster", "37e41n;open gate n;4n3w") end
 function gotoPhysicGuildmaster() travelTo("star", "Physics Guildmaster", "3s2uswn") end
 function gotoPsionicistGuildmaster() travelTo("hs", "Psionic Guildmaster", "2nune;open tapestry;3w") end
-function gotoRangerGuildmaster() travelTo("hs", "Ranger Guildmaster", "") end
+function gotoRangerGuildmaster() travelTo("hs", "Ranger Guildmaster", "") end -- TODO: Add directions
 function gotoThiefGuildmaster() travelTo("skull", "Thief Guildmaster", "4e;open portrait;2ene2s") end
 
 -- Menu Functions
@@ -446,7 +449,7 @@ function travel(plane, zone)
   
   local trainers = {gotoCharismaTrainer, gotoConstitutionTrainer, gotoDexterityTrainer,
     gotoIntelligenceTrainer, gotoStrengthTrainer, gotoWisdomTrainer, gotoWeaponEnhancer,
-    gotoWeaponSpecializer, gotoWeaponUnSpecializer, gotoGainer, gotoElectronicsSchool}
+    gotoWeaponSpecializer, gotoWeaponUnSpecializer, gotoGainer}
   
   local guilds = {gotoBarbarianGuildmaster, gotoBardGuildmaster, gotoClericEvilGuildmaster,
     gotoClericGoodGuildmaster, gotoCyborgGuildmaster, gotoKnightEvilGuildmaster,
@@ -454,7 +457,7 @@ function travel(plane, zone)
     gotoMonkGuildmaster, gotoPhysicGuildmaster, gotoPsionicistGuildmaster,
     gotoRangerGuildmaster, gotoThiefGuildmaster}
   
-  local under = {gotoHeadShrinker, gotoLizardCaverns, gotoWyllowwood}
+  local under = {gotoHeadShrinker, gotoLizardCaverns, gotoWyllowwood, gotoUndeadShark}
   
   if p == "past" or p == "1" then
     if past[z] then past[z]() end
