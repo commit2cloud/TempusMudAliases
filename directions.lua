@@ -888,6 +888,14 @@ function speakDirections(plane, zone)
   end
 
   local data = travelData[key][z]
+  
+  -- Check if the zone has valid directions
+  if data.dirs:match("^%(.*%)$") then
+    -- Directions are in parentheses, indicating unavailable/info only
+    cecho("\n<red>Speak Error: <reset>" .. data.name .. " does not have valid directions available.\n")
+    return
+  end
+  
   local hubDisplay = hubNames[data.hub] or data.hub
 
   send("say Directions to " .. data.name .. ": From " .. hubDisplay .. ", go: " .. data.dirs)
@@ -1032,13 +1040,20 @@ end
 
 function travel(plane, zone, action)
   -- Handle speak mode
-  if action and string.lower(action) == "speak" then
-    if plane and zone then
-      speakDirections(plane, zone)
+  if action then
+    local actionLower = string.lower(action)
+    if actionLower == "speak" then
+      if plane and zone then
+        speakDirections(plane, zone)
+      else
+        cecho("\n<red>Speak Error: <reset>Usage: travel <plane> <zone> speak\n")
+      end
+      return
     else
-      cecho("\n<red>Speak Error: <reset>Usage: travel <plane> <zone> speak\n")
+      -- Invalid action provided
+      cecho("\n<red>Travel Error: <reset>Invalid action '" .. action .. "'. Valid actions: speak\n")
+      return
     end
-    return
   end
 
   if not plane then
