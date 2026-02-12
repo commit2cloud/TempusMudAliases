@@ -1,20 +1,211 @@
-Easily use the directions menu with the `travel` command!
+# TempusMUD Travel Aliases
 
-# Setup
-## Tintin++ and Tinframe
- Download the directions.tt file saving in your Tintin root directory and use the `#read directions.tt` command.
-## ZMud
-Save the file to your Zmud root directory and load the same way with `#read directions.tt`.
+Easily navigate TempusMUD zones using a travel menu system. Originally written for TinTin++, now also available as a **Lua script for [Mudlet](https://www.mudlet.org/)**.
 
-# Usage
-Once the script loads, use the `travel` command to view the main menu.
+---
 
-Corresponding travel commands can show subsequent menus, i.e. to view past plane zones to travel to, type `travel 1`
+## Table of Contents
 
-To travel to zone associated with a plane, use the `travel <plane> <zone>` syntax, i.e. `travel 2 5` to travel to `Cybertech Labs`.
+- [Available Clients](#available-clients)
+- [Setup: TinTin++ / Tinframe](#setup-tintin--tinframe)
+- [Setup: ZMud](#setup-zmud)
+- [Setup: Mudlet (Lua)](#setup-mudlet-lua)
+  - [Installation](#installation)
+  - [Personalization](#personalization)
+  - [Registering the Aliases](#registering-the-aliases)
+- [Usage](#usage)
+- [Files](#files)
+- [Screenshots](#screenshots)
 
-![TempusMud Aliases Main Travel Menu.](https://github.com/dracken/TempusMudAliases/blob/main/Main%20Travel%20Menu.png)
+---
 
-![TempusMud Aliases Past Travel Menu.](https://github.com/dracken/TempusMudAliases/blob/main/Travel%20Menu%20Past.png)
+## Available Clients
 
-![TempusMud Aliases Future Travel Menu.](https://github.com/dracken/TempusMudAliases/blob/main/Travel%20Menu%20Future.png)
+| Client | Script File | Status |
+|---|---|---|
+| TinTin++ / Tinframe | `directions.tt` | ✅ Original |
+| ZMud | `directions.tt` | ✅ Compatible |
+| Mudlet | `directions.lua` | ✅ Lua Port |
+
+---
+
+## Setup: TinTin++ / Tinframe
+
+1. Download `directions.tt` and save it in your TinTin root directory.
+2. Load the script with:
+   ```
+   #read directions.tt
+   ```
+
+## Setup: ZMud
+
+1. Save `directions.tt` to your ZMud root directory.
+2. Load it with:
+   ```
+   #read directions.tt
+   ```
+
+## Setup: Mudlet (Lua)
+
+### Installation
+
+1. **Download** the `directions.lua` file from this repository.
+2. **Open Mudlet** and connect to TempusMUD.
+3. **Load the script** using one of these methods:
+
+#### Method A: Script Editor (Recommended)
+
+1. Go to the **Script Editor** (click the `<>` Scripts button on the toolbar, or press `Alt+S`).
+2. Click the **Scripts** icon on the left sidebar.
+3. Click the **Add** button to create a new script entry.
+4. Name it `TempusMUD Directions`.
+5. **Paste** the entire contents of `directions.lua` into the script body.
+6. Click **Save**.
+
+#### Method B: Lua `dofile()` (Advanced)
+
+1. Place `directions.lua` in your Mudlet profile directory.
+   - On **Windows**: `%APPDATA%\Mudlet\profiles\<profile_name>\`
+   - On **macOS**: `~/.config/mudlet/profiles/<profile_name>/`
+   - On **Linux**: `~/.config/mudlet/profiles/<profile_name>/`
+2. In Mudlet's command line, run:
+   ```
+   lua dofile(getMudletHomeDir() .. "/directions.lua")
+   ```
+3. To auto-load on every session, add that `dofile()` line to a **Script** in the Script Editor so it runs at profile load.
+
+### Personalization
+
+Before using the script, **you must edit the configuration section** at the very top of `directions.lua` to match your character's starting location. Look for this block:
+
+```lua
+-- =============================================
+-- Configuration - EDIT THESE VARS ONLY!
+-- =============================================
+myStartingRoomName = "The Beginning of Misery"
+```
+
+**Change `myStartingRoomName`** to whatever room name is displayed when you type `where` at your character's recall/start location. The script uses this to verify you are in the correct room before initiating travel. If this value does not match your actual starting room, all travel commands will fail with a warning.
+
+The four `directionsTo...()` functions below that variable control how the script navigates from your start room to each hub (Holy Square, Star Plaza, Slave Square, Astral Manse). If your starting room is different from the default, you may need to update these functions with the correct movement commands as well:
+
+```lua
+function directionsToHolySquare()
+  sendAll("north", "look modrian", "north", "north")
+end
+
+function directionsToStarPlaza()
+  sendAll("north", "look ec")
+end
+
+function directionsToSlaveSquare()
+  sendAll("north", "look skullport")
+end
+
+function directionsToAstralManse()
+  sendAll("north", "look astral")
+end
+```
+
+### Registering the Aliases
+
+After loading the script, you need to create **aliases** in Mudlet so you can type commands like `travel`, `travel 1 5`, etc. in the command line.
+
+1. Open the **Script Editor** (`Alt+S`) and click **Aliases** on the left sidebar.
+2. Create the following aliases:
+
+#### Alias: `travel` (main menu and navigation)
+
+| Field | Value |
+|---|---|
+| **Name** | `travel` |
+| **Pattern** | `^travel\s*(\w*)\s*(\d*)$` |
+| **Type** | Regex |
+
+**Command / Script body:**
+
+```lua
+local plane = matches[2] or ""
+local zone  = tonumber(matches[3])
+
+if plane == "" then
+  showMainMenu()
+elseif zone == nil then
+  -- Show a submenu
+  local menuMap = {
+    ["1"] = showPastMenu,     past     = showPastMenu,
+    ["2"] = showFutureMenu,   future   = showFutureMenu,
+    ["3"] = showPlanesMenu,   planes   = showPlanesMenu,
+    ["4"] = showTrainersMenu, trainers = showTrainersMenu,
+    ["5"] = showGuildsMenu,   guilds   = showGuildsMenu,
+    ["6"] = showUnderdarkMenu, underdark = showUnderdarkMenu,
+    ["7"] = showAllMenu,       all       = showAllMenu,
+  }
+  local fn = menuMap[plane]
+  if fn then fn() else cecho("\n<red>Unknown plane: " .. plane .. "<reset>\n") end
+else
+  -- Travel to a specific zone
+  local planeMap = {
+    ["1"] = pastDestinations,      past      = pastDestinations,
+    ["2"] = futureDestinations,    future    = futureDestinations,
+    ["3"] = planesDestinations,    planes    = planesDestinations,
+    ["4"] = trainerDestinations,   trainers  = trainerDestinations,
+    ["5"] = guildDestinations,     guilds    = guildDestinations,
+    ["6"] = underdarkDestinations, underdark = underdarkDestinations,
+  }
+  local destTable = planeMap[plane]
+  if destTable and destTable[zone] then
+    destTable[zone]()
+  else
+    cecho("\n<red>Invalid destination: plane=" .. plane .. " zone=" .. tostring(zone) .. "<reset>\n")
+  end
+end
+```
+
+3. Click **Save**.
+
+> **Tip:** You can also create shortcut aliases for frequently visited zones. For example, create an alias with pattern `^gotoShade$` that calls `gotoShade()` in the script body.
+
+---
+
+## Usage
+
+Once everything is set up, use the `travel` command in your MUD client:
+
+| Command | Action |
+|---|---|
+| `travel` | Show the main travel menu |
+| `travel 1` | Show Past locations |
+| `travel 2` | Show Future locations |
+| `travel 3` | Show Planes locations |
+| `travel 4` | Show Trainers |
+| `travel 5` | Show Guilds |
+| `travel 6` | Show Underdark locations |
+| `travel past` | Show Past locations (by name) |
+| `travel future` | Show Future locations (by name) |
+| `travel 1 17` | Travel to High Tower of Magic (Past #17) |
+| `travel 2 5` | Travel to Cybertech Labs (Future #5) |
+| `travel 3 11` | Travel to Lunia Heaven (Planes #11) |
+
+Some zones also have dedicated helper aliases for multi-step navigation (e.g., `gotoShadeRebel`, `gotoShadeSelset`, `gotoFailFamilyLegacyFreddy`, `gotoThor`, `gotoDiancecht`, etc.). These must be called after you have already travelled to the parent zone.
+
+---
+
+## Files
+
+| File | Description |
+|---|---|
+| `directions.tt` | Original TinTin++ script |
+| `directions.lua` | Mudlet Lua port of the travel system |
+| `LICENSE` | License file |
+| `README.md` | This file |
+
+---
+
+## Screenshots
+
+![TempusMud Aliases Main Travel Menu.](Main%20Travel%20Menu.png)
+
+![TempusMud Aliases Past Travel Menu.](Travel%20Menu%20Past.png)
+
+![TempusMud Aliases Future Travel Menu.](Travel%20Menu%20Future.png)
