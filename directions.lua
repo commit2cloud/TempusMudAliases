@@ -714,6 +714,195 @@ function gotoRangerGuildmaster() travelTo("hs", "Ranger Guildmaster", "nnune;ope
 function gotoThiefGuildmaster() travelTo("skull", "Thief Guildmaster", "4e;open portrait;2ene2s") end
 
 -- =============================================
+-- Travel Data Table for Speak Functionality
+-- =============================================
+
+-- Hub display names
+hubNames = {
+  hs     = "Holy Square",
+  star   = "Star Plaza",
+  skull  = "Slave Square",
+  astral = "Astral Manse",
+}
+
+-- Travel data organized by plane category
+travelData = {
+  past = {
+    {hub = "hs", name = "Abandoned Keep", dirs = "21w14s2w;wind winch"},
+    {hub = "hs", name = "Old Monastery", dirs = "12n7en"},
+    {hub = "hs", name = "Castle Slivendark", dirs = "32w4sw2s2w3sese3sw3sd"},
+    {hub = "hs", name = "Chessboard of Araken", dirs = "9w8s;open porticullis;s;open door;2swsw2se"},
+    {hub = "hs", name = "Dismal Delve", dirs = "67w12seseds6wndnd;enter portal;nw2n2ed"},
+    {hub = "hs", name = "Draconians and Dragon Highlords", dirs = "32wswsw2se2s2w2sw2sws2w4sws2w"},
+    {hub = "hs", name = "Duke Araken", dirs = "9w8s;open porticullis;s;open door;2sese4sw2se3sw3u3s"},
+    {hub = "hs", name = "Elven Village", dirs = "22n4e5n"},
+    {hub = "hs", name = "Forgotten Valley", dirs = "60n2e3nwnwn3e4s2d"},
+    {hub = "hs", name = "Font of Modrian", dirs = "7e4ne;enter font"},
+    {hub = "hs", name = "Frozen Tundras", dirs = "37e41n;open gate;8n;open gate;17n3w2nw9n7e3nw2ue2wunwndw2nwue3n3w5ne2n"},
+    {hub = "hs", name = "Glacial Rift", dirs = "37e41n;open gate;8n;open gate;17n3w2nw9n7e3nw2ue2wunwndw2nwue3n3w5ne2n4n2wnwn2w3nd"},
+    {hub = "hs", name = "Great Pyramid", dirs = "74w7s3e9s3wuenu"},
+    {hub = "hs", name = "Guiharian Festival of Lights", dirs = "4w3se4s"},
+    {hub = "hs", name = "Halfling Village", dirs = "15e10s4e"},
+    {hub = "hs", name = "Harpell House", dirs = "19e2n;enter house"},
+    {hub = "hs", name = "High Tower of Magic", dirs = "34w3nw3n"},
+    {hub = "hs", name = "Hill Giant Steading", dirs = "37e41n;open gate;8n;open gate;17nenw;open door w;w"},
+    {hub = "hs", name = "Hobgoblin Tunnels", dirs = "15n2ese;open door n;n"},
+    {hub = "hs", name = "Holy Grail", dirs = "38w2nw3nw8nw3n2wn3ed2nednd2ndn2e3n2e3nwu"},
+    {hub = "hs", name = "City of Istan", dirs = "37e41n"},
+    {hub = "hs", name = "Kobold Tunnels", dirs = "3w8swse10s3e2s4en"},
+    {hub = "hs", name = "Caves of Learander", dirs = "56w27s6ws10w3s4d2e"},
+    {hub = "hs", name = "Crystal Fortress", dirs = "46w24su5s10w3s4d2en2n2wn2w2s;open rock;2se2swswsese;pull lever;2w3s"},
+    {hub = "hs", name = "Malevolent Circle", dirs = "39e21s3es3es2eswses2e"},
+    {hub = "hs", name = "City of Mavernal", dirs = "26n15e1n3e1n1e2n5es;open gate e"},
+    {hub = "hs", name = "Realm of Neverwhere", dirs = "50w9s4w2s6w11s3e2s2e2und"},
+    {hub = "hs", name = "Ogre Encampment", dirs = "7w4n17ws3w3ne2nene2nw3n7e5nw2n2w"},
+    {hub = "hs", name = "City of Old Thalos", dirs = "67w22s12w"},
+    {hub = "hs", name = "Pit Fiend", dirs = "13w4s2w2s3w"},
+    {hub = "hs", name = "Pool of Evil", dirs = "3w8swse10s3e2s4e5nw3n2es"},
+    {hub = "hs", name = "Reed Swamp", dirs = "32w4sws"},
+    {hub = "hs", name = "Sewers of Modrian", dirs = "2n3w;open grate;d"},
+    {hub = "hs", name = "Shadow City of Shade", dirs = "61n2e2n8e"},
+    {hub = "hs", name = "Silver Tower", dirs = "7e11s"},
+    {hub = "hs", name = "City of Solace Cove", dirs = "104w"},
+    {hub = "hs", name = "City of Skullport", dirs = "17e7s2w8sd6e7nen2e2nw3ne6ne6n4e7nw3n2wne5nse9n"},
+    {hub = "hs", name = "Temple of Ancients", dirs = "39e25s"},
+    {hub = "hs", name = "Tower of the Renegade Mage", dirs = "125w3n9ws4e"},
+    {hub = "hs", name = "Treetops of Arachna", dirs = "7w2n2w2n13w2s2wn3wu;2w2n1e1n1e1n1e1u"},
+    {hub = "hs", name = "Undermountain", dirs = "37e41n;open gate;3nesend"},
+    {hub = "hs", name = "Wemic Plains", dirs = "81wn"},
+    {hub = "hs", name = "Zhengi's Castle", dirs = "39w3s3w4s1u2w2s9w"},
+  },
+  future = {
+    {hub = "star", name = "Polluted Village", dirs = "10w2sw2s5w"},
+    {hub = "star", name = "Archeological Dig", dirs = "22n8e5s"},
+    {hub = "star", name = "Blasted Swamp", dirs = "16w8n"},
+    {hub = "star", name = "Colony", dirs = "e4swe7s2e4sd13e2n"},
+    {hub = "star", name = "Cybertech Labs", dirs = "5e3s2w1s"},
+    {hub = "star", name = "Cybertech Preparatory School", dirs = "5e3s2w4n"},
+    {hub = "star", name = "Death Row", dirs = "8n;w;du"},
+    {hub = "star", name = "Dracharnos", dirs = "25wnuwununend2n3ed2nw;open grate;u"},
+    {hub = "star", name = "Drug Dealer", dirs = "8w5n4w;enter door"},
+    {hub = "star", name = "Junk Yard", dirs = "8w2n"},
+    {hub = "star", name = "E.C. Military", dirs = "9w3sw;push button;e2se"},
+    {hub = "star", name = "E.C. Vampires", dirs = "5e11n;open door e;6es"},
+    {hub = "star", name = "E.C. Nuclear Power Plant", dirs = "17n3e;open gate e;e"},
+    {hub = "star", name = "E.C. Power and Plumbing", dirs = "10en"},
+    {hub = "star", name = "E.C. Security Compound", dirs = "4n7e6n2en"},
+    {hub = "star", name = "E.C. University", dirs = "4w6s2ws"},
+    {hub = "star", name = "Electronics School", dirs = "4w4n1w1n"},
+    {hub = "star", name = "Electronics Shop", dirs = "5nes"},
+    {hub = "star", name = "Fail Family Legacy", dirs = "e9s3e"},
+    {hub = "star", name = "Fassan Slave Compound", dirs = "2ds2dwd27wuwu3n4w3nwun"},
+    {hub = "star", name = "GenClone BioMechanical Labs", dirs = "16w9nen4w8n"},
+    {hub = "star", name = "Kiddie Kandy Incorporated", dirs = "4n2wn;open gate n;n"},
+    {hub = "star", name = "Kromguard", dirs = "19w3n;enter fortress"},
+    {hub = "star", name = "Luxare", dirs = "4w4nen"},
+    {hub = "star", name = "Merqury City", dirs = "19w3n;enter fortress"},
+    {hub = "star", name = "NETWORK Communications Tower", dirs = "4w4ne;open door s;s"},
+    {hub = "star", name = "Reinforcer", dirs = "4w5n2w"},
+    {hub = "star", name = "Ruins of the High Tower of Magic", dirs = "34w3n2w7n"},
+    {hub = "star", name = "Ruins of the Silver Tower", dirs = "9e11s"},
+    {hub = "star", name = "Simeon the Cybernetic", dirs = "4w3n1e"},
+    {hub = "star", name = "Triskin Asylum", dirs = "(CLOSED - no directions)"},
+    {hub = "star", name = "Virtual World of NETWORK", dirs = "4w4ne;open door s;3s"},
+    {hub = "star", name = "City of Zul'Dane", dirs = "26n4e"},
+  },
+  planes = {
+    {hub = "astral", name = "City of Unholy Modrian", dirs = "5nu3w;enter void"},
+    {hub = "astral", name = "Amoria", dirs = "5n3u2n3e;enter light"},
+    {hub = "astral", name = "Level 1 Hell: Avernus", dirs = "5wdes;enter flame"},
+    {hub = "hs", name = "Elemental Plane of Air", dirs = "7e4ne;enter font;3u;enter portal"},
+    {hub = "hs", name = "Elemental Plane of Earth", dirs = "67w12seseds6wndnd;enter portal;nw2n2ed;enter portal"},
+    {hub = "hs", name = "Elemental Plane of Fire", dirs = "7e4ne;enter font;3u;enter portal"},
+    {hub = "hs", name = "Elemental Plane of Ice", dirs = "7e4ne;enter font;3u;enter portal"},
+    {hub = "hs", name = "Elemental Plane of Ooze", dirs = "7e4ne;enter font;3u;enter portal"},
+    {hub = "hs", name = "Elemental Plane of Smoke", dirs = "7e4ne;enter font;3u;enter portal"},
+    {hub = "hs", name = "Elemental Plane of Water", dirs = "7e3n2enw;enter portal"},
+    {hub = "astral", name = "Lunia Heaven", dirs = "5n3d2sw;enter pool"},
+    {hub = "hs", name = "Immoth Hallow", dirs = "2nu;open door west;w"},
+    {hub = "astral", name = "Castle Mahlhevik", dirs = "5n3u2n3e;enter light;e3s2enuseuene"},
+    {hub = "astral", name = "Githyanki Fortress", dirs = "5n"},
+  },
+  trainers = {
+    {hub = "star", name = "Charisma Trainer", dirs = "3n1e;open door s;1s1w"},
+    {hub = "hs", name = "Constitution Trainer", dirs = "2nunw;open tapestry;3e4ne"},
+    {hub = "hs", name = "Dexterity Trainer", dirs = "nnwwww;open grate;dessesusseuswnw"},
+    {hub = "hs", name = "Intelligence Trainer", dirs = "2nu;open door west;w"},
+    {hub = "hs", name = "Strength Trainer", dirs = "2nune;open tapestry;3nen"},
+    {hub = "hs", name = "Wisdom Trainer", dirs = "6e11s;open door s;3s1u2s1e"},
+    {hub = "star", name = "Weapons Enhancer", dirs = "5n2w1s1e"},
+    {hub = "skull", name = "Weapon Specializer", dirs = "4sd2enen2e4nw3nen2w2n2e2n2e2un4eu;open ebony;ws2w"},
+    {hub = "star", name = "Weapon UNSpecializer", dirs = "3n1e;open door s;1s1u1e"},
+    {hub = "star", name = "The Gainer", dirs = "(Info only - no directions)"},
+  },
+  guilds = {
+    {hub = "hs", name = "Barbarian Guildmaster", dirs = "57w11n"},
+    {hub = "hs", name = "Bard Guildmaster", dirs = "3w2swn"},
+    {hub = "skull", name = "Evil Cleric Guildmaster", dirs = "7n2w;open door w;2w"},
+    {hub = "hs", name = "Good Cleric Guildmaster", dirs = "6e11s;open door s;3s;5u2s"},
+    {hub = "star", name = "Cyborg Guildmaster", dirs = "4w2nws"},
+    {hub = "skull", name = "Evil Knight Guildmaster", dirs = "2w2ne"},
+    {hub = "hs", name = "Good Knight Guildmaster", dirs = "2nunw;open tap;4wn3e"},
+    {hub = "hs", name = "Mage Guildmaster", dirs = "4nu;open door west;w"},
+    {hub = "star", name = "Mercenary Guildmaster", dirs = "2d4e5nes"},
+    {hub = "hs", name = "Monk Guildmaster", dirs = "37e41n;open gate n;4n3w"},
+    {hub = "star", name = "Physics Guildmaster", dirs = "3s2uswn"},
+    {hub = "hs", name = "Psionic Guildmaster", dirs = "2nune;open tapestry;3w"},
+    {hub = "hs", name = "Ranger Guildmaster", dirs = "nnune;open tapestry;ssswwse"},
+    {hub = "skull", name = "Thief Guildmaster", dirs = "4e;open portrait;2ene2s"},
+  },
+  underdark = {
+    {hub = "skull", name = "Head Shrinker", dirs = "11s2wdnund2sundwun2d3ws;open hide;1w"},
+    {hub = "skull", name = "Lizard Caverns", dirs = "11s2wdnund2sundwun2dw4n"},
+    {hub = "skull", name = "Wyllowwood", dirs = "6s2w4sedwun2dw4n"},
+    {hub = "skull", name = "Undead Shark", dirs = "2es2u;open plant e;es"},
+  },
+}
+
+-- =============================================
+-- Speak Directions Function
+-- =============================================
+
+function speakDirections(plane, zone)
+  local planeKeys = {
+    ["1"] = "past",   past = "past",
+    ["2"] = "future", future = "future",
+    ["3"] = "planes", planes = "planes",
+    ["4"] = "trainers", trainers = "trainers",
+    ["5"] = "guilds", guilds = "guilds",
+    ["6"] = "underdark", underdark = "underdark",
+  }
+
+  local p = string.lower(tostring(plane))
+  local key = planeKeys[p]
+
+  if not key or not travelData[key] then
+    cecho("\n<red>Speak Error: <reset>Invalid plane '" .. tostring(plane) .. "'.\n")
+    return
+  end
+
+  local z = tonumber(zone)
+  if not z or not travelData[key][z] then
+    cecho("\n<red>Speak Error: <reset>Invalid zone number '" .. tostring(zone) .. "' for " .. key .. ".\n")
+    return
+  end
+
+  local data = travelData[key][z]
+  
+  -- Check if the zone has valid directions
+  if data.dirs:match("^%(.*%)$") then
+    -- Directions are in parentheses, indicating unavailable/info only
+    cecho("\n<red>Speak Error: <reset>" .. data.name .. " does not have valid directions available.\n")
+    return
+  end
+  
+  local hubDisplay = hubNames[data.hub] or data.hub
+
+  send("say Directions to " .. data.name .. ": From " .. hubDisplay .. ", go: " .. data.dirs)
+  cecho("\n<green>Spoke directions for <yellow>" .. data.name .. "<reset>!\n")
+end
+
+-- =============================================
 -- Menu Display Functions
 -- =============================================
 
@@ -849,7 +1038,24 @@ end
 -- Main Travel Command Function
 -- =============================================
 
-function travel(plane, zone)
+function travel(plane, zone, action)
+  -- Handle speak mode
+  if action then
+    local actionLower = string.lower(action)
+    if actionLower == "speak" then
+      if plane and zone then
+        speakDirections(plane, zone)
+      else
+        cecho("\n<red>Speak Error: <reset>Usage: travel <plane> <zone> speak\n")
+      end
+      return
+    else
+      -- Invalid action provided
+      cecho("\n<red>Travel Error: <reset>Invalid action '" .. action .. "'. Valid actions: speak\n")
+      return
+    end
+  end
+
   if not plane then
     showMainMenu()
     return

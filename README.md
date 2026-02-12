@@ -218,25 +218,21 @@ After loading the script, you need to create **aliases** in Mudlet so you can ty
 | Field | Value |
 |---|---|
 | **Name** | `travel` |
-| **Pattern** | `^travel\s*(\w*)\s*(\d*)$` |
+| **Pattern** | `^travel\s*(\w*)\s*(\d*)\s*(\w*)$` |
 | **Type** | Regex |
 
 **Command / Script body:**
 
 ```lua
-local plane = matches[2] or ""
-local zone  = matches[3] or ""
+local plane  = matches[2] or ""
+local zone   = matches[3] or ""
+local action = matches[4] or ""
 
-if plane == "" then
-  plane = nil
-end
-if zone == "" then
-  zone = nil
-else
-  zone = tonumber(zone)
-end
+if plane == "" then plane = nil end
+if zone == "" then zone = nil else zone = tonumber(zone) end
+if action == "" then action = nil end
 
-travel(plane, zone)
+travel(plane, zone, action)
 ```
 
 3. Click **Save**.
@@ -268,6 +264,21 @@ Once everything is set up, use the `travel` command in your MUD client:
 | `travel 1 17` | Travel to High Tower of Magic (Past #17) |
 | `travel 2 5` | Travel to Cybertech Labs (Future #5) |
 | `travel 3 11` | Travel to Lunia Heaven (Planes #11) |
+| `travel 1 15 speak` | Say directions to Halfling Village in-game |
+| `travel past 17 speak` | Say directions to High Tower of Magic in-game |
+| `travel 2 5 speak` | Say directions to Cybertech Labs in-game |
+
+### Speak Feature
+
+The `speak` action allows you to share zone directions with other players by saying them aloud in-game instead of actually traveling there. This is useful for helping other players navigate to specific zones.
+
+**Usage:** `travel <plane> <zone> speak`
+
+**Examples:**
+- `travel 1 15 speak` → Your character says: "Directions to Halfling Village: From Holy Square, go: 15e10s4e"
+- `travel past 17 speak` → Your character says: "Directions to High Tower of Magic: From Holy Square, go: 34w3nw3n"
+- `travel 2 5 speak` → Your character says: "Directions to Cybertech Labs: From Star Plaza, go: 5e3s2w1s"
+- `travel 3 11 speak` → Your character says: "Directions to Lunia Heaven: From Astral Manse, go: 5n3d2sw;enter pool"
 
 Some zones also have dedicated helper aliases for multi-step navigation (e.g., `gotoShadeRebel`, `gotoShadeSelset`, `gotoFailFamilyLegacyFreddy`, `gotoThor`, `gotoDiancecht`, etc.). These must be called after you have already travelled to the parent zone.
 
