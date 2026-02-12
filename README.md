@@ -133,9 +133,9 @@ The script now supports **external configuration** through a separate `config.lu
 
 When `config.lua` is present, you'll see: `Config loaded from: <path>`
 
-#### Option 2: Editing directions.lua directly (Legacy)
+#### Option 2: Using inline defaults (No external file)
 
-If you prefer, you can still edit the configuration directly in `directions.lua`. If no `config.lua` file is found, the script will use default values embedded in `directions.lua` and display a warning message.
+If no `config.lua` file is found, the script will automatically use default configuration values embedded in `directions.lua`. You'll see a warning message indicating the expected location for `config.lua`. This option works out-of-the-box but is less convenient for customization since you'd need to edit the default values inside `directions.lua` itself (not recommended for ease of updates).
 
 #### Configuration Values
 

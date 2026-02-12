@@ -7,7 +7,7 @@
 -- =============================================
 -- Load Configuration
 -- =============================================
--- Load config.lua file. If it doesn't exist, fall back to defaults.
+-- Load config.lua file from Mudlet home directory if it exists
 local configPath = getMudletHomeDir() .. "/config.lua"
 local configFile = io.open(configPath, "r")
 
@@ -19,9 +19,9 @@ else
   -- Default configuration if config.lua doesn't exist
   cecho("<yellow>Warning: config.lua not found. Using default configuration.\n")
   cecho("<yellow>Expected location: " .. configPath .. "\n")
-  cecho("<yellow>Copy config.lua to this location or use inline defaults below.\n")
+  cecho("<yellow>You can copy config.lua to this location to customize settings.\n")
   
-  -- Default values (same as original)
+  -- Default configuration values
   myStartingRoomName = "The Beginning of Misery"
   
   function directionsToHolySquare()
@@ -39,19 +39,26 @@ else
   function directionsToAstralManse()
     sendAll("north", "look astral")
   end
-  
-  -- State Variables
-  currentRoom = ""
-  travelerror = 0
-  travelling = 0
-  debug = false
-  isFighting = false
-  githFound = 0
-  findGith = 0
-  githX = 0
-  githY = 0
-  githZ = 0
 end
+
+-- =============================================
+-- State Variables (Runtime State)
+-- =============================================
+-- These are initialized here and managed by the script
+currentRoom = ""
+travelerror = 0
+travelling = 0
+debug = false
+
+-- Combat state variable
+isFighting = false
+
+-- Gith search variables
+githFound = 0
+findGith = 0
+githX = 0
+githY = 0
+githZ = 0
 
 -- =============================================
 -- Helper Functions
