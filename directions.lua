@@ -260,6 +260,8 @@ function gotoSolaceCove() travelTo("hs", "City of Solace Cove", "104w") end
 function gotoSkullport() travelTo("hs", "City of Skullport", "17e7s2w8sd6e7nen2e2nw3ne6ne6n4e7nw3n2wne5nse9n") end
 function gotoTempleOfAncients() travelTo("hs", "Temple of Ancients", "39e25s") end
 function gotoTowerOfTheRenegadeMage() travelTo("hs", "Tower of the Renegade Mage", "125w3n9ws4e") end
+
+-- Sub-destination within Tower of Renegade Mage
 function gotoTowerOfTheRenegadeMageBlue()
   sendAll("enter blue", "3w3s3ewwsw", "pull lever", "push blue library", "where")
 end
@@ -318,7 +320,8 @@ function gotoRuinsOfHTOM() travelTo("star", "Ruins of the High Tower of Magic", 
 function gotoRuinsOfTheSilverTower() travelTo("star", "Ruins of the Silver Tower", "9e11s") end
 function gotoSimeonTheCybernetic() travelTo("star", "Simeon the Cybernetic", "4w3n1e") end
 function gotoTriskinAsylum()
-  cecho("\n<red>ZONE CLOSED<reset>\n")
+  cecho("\n<red>Note: Triskin Asylum zone is currently CLOSED<reset>\n")
+  -- Kept for reference in case zone reopens in future
 end
 function gotoVirtualWorldOfNETWORK() travelTo("star", "Virtual World of NETWORK", "4w4ne;open door s;3s") end
 function gotoZulDane() travelTo("star", "City of Zul'Dane", "26n4e") end
@@ -413,7 +416,7 @@ function gotoDiancecht()
       cecho("\n<green>Okay!<reset> Travelling to <yellow>Diancecht<reset>!\n")
       sendDirs("2w2n4esene3ne3nws")
     else
-      cecho("\n<red>Error<cyan>: You're not in the correct room 'Before the Palatial Estate'!\n")
+      cecho("\n<red>Error<cyan>: You're not in the correct room 'Before a Palatial Estate'!\n")
     end
   end)
 end
@@ -627,9 +630,9 @@ end
 
 cecho("\n<cyan>Directions Script Loaded! Use: travel <plane> <zone>\n")
 
--- Trigger for EPOS Craftsman workshop
+-- Trigger for EPOS Craftsman workshop (exact room title from EPOS)
 if eposCraftsmanTrigger then
   killTrigger(eposCraftsmanTrigger)
 end
-eposCraftsmanTrigger = tempRegexTrigger("^A Large Workshop", helpEPOSCraftsman)
+eposCraftsmanTrigger = tempRegexTrigger("^A Large Workshop$", helpEPOSCraftsman)
 
