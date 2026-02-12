@@ -62,10 +62,21 @@ function resettravel()
   travelling = 0
 end
 
+-- =============================================
+-- Combat Detection Helper (STUB - Needs Implementation)
+-- =============================================
 -- Helper function to check if player is in combat
+-- TODO: This is a STUB implementation that always returns false
+-- To properly implement:
+-- 1. Add global variable: isFighting = false
+-- 2. Add triggers for TempusMUD combat start messages
+-- 3. Add triggers for TempusMUD combat end messages
+-- 4. Update this function to return isFighting variable
+-- Example triggers:
+--   tempRegexTrigger("^You attack", function() isFighting = true end)
+--   tempRegexTrigger("^You are no longer fighting", function() isFighting = false end)
 function isInFight()
-  -- This should be implemented based on your MUD's combat indicators
-  -- For now, return false as a safe default
+  -- STUB: Always returns false - does not detect actual combat
   return false
 end
 
