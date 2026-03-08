@@ -140,7 +140,7 @@
 #ALIAS {travel %1 %2} {
 	#VAR {travelInput1} @lower(%1);
 
-	#IF {$travelInput1  = "past" || %1 = 1} 
+	#IF {$travelInput1 = "past" || %1 = 1} 
 	{
 		#SWITCH {"%2"} {
 			#CASE {"1"} { gotoAbandonedKeep; };
@@ -331,7 +331,7 @@
 		#VAR {travelInput1Upper} @upper(%1);
 		#IF {debug} {
 			#SHOW {Travel Destination: '$travelInput1'};
-			#SHOW {Travel Destination Upper: '$travelInput1Upper};
+			#SHOW {Travel Destination Upper: '$travelInput1Upper'};
 		};
 	        #IF {$travelInput1 = "help" || $travelInput1 = "?"}
 		{
@@ -350,7 +350,7 @@
 	        	#SHOW { @C******************************************************************************************@w };
 	        };
 
-		#ELSEIF {$travelInput1  = "past" || %1 = 1}
+		#ELSEIF {$travelInput1 = "past" || %1 = 1}
 		{
 			#SHOW { @C┌------------------------------------------------------------------------------┐@w };
 			#SHOW { @C|                           @CPast Locations@w                                     @C|@w };
@@ -650,7 +650,7 @@
 
 #ALIAS {gotoDraconiansAndDragonHighlord} {
     gotohs;
-	#SHOW {@GOkay!@w Travelling to the @YDraconians a:nd Dragon Highlords@w!};
+	#SHOW {@GOkay!@w Travelling to the @YDraconians and Dragon Highlords@w!};
 	#DELAY {2} {
 	    #IF {!$travelerror}{
 			32wswsw2se2s2w2sw2sws2w4sws2w;
@@ -1521,7 +1521,7 @@
 
 #ALIAS {gotoECSecurityCompound} {
 	gotostar;
-	#SHOW {@GOlay1@w Traveling to the @YE.C. Security Compound@w!};
+	#SHOW {@GOkay!@w Travelling to the @YE.C. Security Compound@w!};
 	#DELAY {2} {
 		#IF {!$travelerror}{
 			9w3s;
