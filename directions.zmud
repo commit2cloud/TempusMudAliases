@@ -1,0 +1,2865 @@
+#NOP =============================================================================
+#NOP  Directions File for TempusMUD - zMUD Compatible Version
+#NOP  Original TinTin++ script by Dracken - derek@sanctuary.org
+#NOP  https://github.com/dracken/TempusMudAliases/
+#NOP =============================================================================
+#NOP  SETUP:
+#NOP    1. Save this file in your zMUD directory as directions.zmud
+#NOP    2. In zMUD, load with:  #read directions.zmud
+#NOP
+#NOP  KEY CHANGES FROM TinTin++ (directions.tt):
+#NOP    * Color codes: <RGB> hex converted to zMUD @color notation
+#NOP    * #SH / #SHOWME replaced with #SHOW
+#NOP    * TinTin++ priority numbers ({5},{4},{3},{1}) removed
+#NOP    * #FORMAT %l/%u replaced with @lower()/@upper() functions
+#NOP    * Condition operators: === and == replaced with =
+#NOP    * Condition variable syntax: {{"$var"}} simplified to {$var}
+#NOP    * Inline #ACTION triggers extracted to top-level #TRIGGER (end of file)
+#NOP    * #VARIABLE replaced with #VAR
+#NOP =============================================================================
+
+#NOP Directions File for TempusMUD by Dracken - derek@sanctuary.org dracken@drackenslair.com
+#NOP https://github.com/dracken/TempusMudAliases/
+#SHOW { @C******************************************************************************************@w };
+#SHOW { @C*                            Directions Script Loaded!                                   *@w };
+#SHOW { @C******************************************************************************************@w };
+#SHOW { @C*@w                                                                                        @C*@w};
+#SHOW { @C*@C Usage:@w travel <plane> <zone>                                                           @C*@w};
+#SHOW { @C*@Y Example:@w travel planes 9                                                               @C*@w};
+#SHOW { @C*@w      Travel to the Elemental Plane of Smoke                                            @C*@w};
+#SHOW { @C*@Y Example:@w travel 2 15                                                                   @C*@w};
+#SHOW { @C*@w      Travel to the Future's EC Universty                                               @C*@w};
+#SHOW { @C*@w                                                                                        @C*@w};
+#SHOW { @C*@M Recommendations:@w Make an alias in your own scriping config for locations you use       @C*@w };
+#SHOW { @C*@w    regularly!                                                                          @C*@w };
+#SHOW { @C******************************************************************************************@w };
+
+#NOP ----- vvvv EDIT THESE VARS ONLY! vvvv -----
+
+#VAR {myStartingRoomName} {The Beginning of Misery};
+#ALIAS {directionsToHolySquare} {north;look modrian;north;north};
+#ALIAS {directionsToStarPlaza} {north;look ec};
+#ALIAS {directionsToSlaveSquare} {north;look skullport};
+#ALIAS {directionsToAstralManse} {north;look astral};
+
+#NOP ----- ^^^^ EDIT THESE VARS ONLY! ^^^^ -----
+
+#NOP ----------------------------------------------------------------------------------------------
+#NOP                                    Display Possible Directions
+
+#VAR {PastLocations[gotoAbandonedKeep]} {};
+#VAR {PastLocations[gotoOldMonastery]} {};
+#VAR {PastLocations[gotoCastleSilvendark]} {};
+#VAR {PastLocations[gotoChessboardOfAraken]} {};
+#VAR {PastLocations[gotoDismalDelve]} {};
+#VAR {PastLocations[gotoDraconiansAndDragonHighlord]} {};
+#VAR {PastLocations[gotoDukeAraken]} {};
+#VAR {PastLocations[gotoElvenVillage]} {};
+#VAR {PastLocations[gotoForgottenValley]} {};
+#VAR {PastLocations[gotoFontOfModrian]} {};
+#VAR {PastLocations[gotoFrozenTundras]} {};
+#VAR {PastLocations[gotoGlacialRift]} {};
+#VAR {PastLocations[gotoGreatPyramid]} {};
+#VAR {PastLocations[gotoGuiharianFestivalOfLights]} {};
+#VAR {PastLocations[gotoHalflingVillage]} {};
+#VAR {PastLocations[gotoHarpellHouse]} {};
+#VAR {PastLocations[gotoHighTowerOfMagic]} {};
+#VAR {PastLocations[gotoHillGiantSteadin]} {};
+#VAR {PastLocations[gotoHobgoblins]} {};
+#VAR {PastLocations[gotoHolyGrail]} {};
+#VAR {PastLocations[gotoIstan]} {};
+#VAR {PastLocations[gotoKoboldTunnels]} {};
+#VAR {PastLocations[gotoLearander]} {};
+#VAR {PastLocations[gotoCrystalFortress]} {};
+#VAR {PastLocations[gotoMalevolentCircle]} {};
+#VAR {PastLocations[gotoMavernal]} {};
+#VAR {PastLocations[gotoNeverwhere]} {};
+#VAR {PastLocations[gotoOgreEncampment]} {};
+#VAR {PastLocations[gotoOldThalos]} {};
+#VAR {PastLocations[gotoPitFiend]} {};
+#VAR {PastLocations[gotoPoolOfEvil]} {};
+#VAR {PastLocations[gotoReedSwamp]} {};
+#VAR {PastLocations[gotoSewersOfModrian]} {};
+#VAR {PastLocations[gotoShade]} {};
+#VAR {PastLocations[gotoSilverTower]} {};
+#VAR {PastLocations[gotoSolaceCove]} {};
+#VAR {PastLocations[gotoSkullport]} {};
+#VAR {PastLocations[gotoTempleOfAncients]} {};
+#VAR {PastLocations[gotoTowerOfTheRenegadeMage]} {};
+#VAR {PastLocations[gotoUndermountain]} {};
+#VAR {PastLocations[gotoWemicPlains]} {};
+#VAR {PastLocations[gotoZhengisCastle]} {};
+
+#VAR {FutureLocations[gotoAPollutedVillage]} {};
+#VAR {FutureLocations[gotoArcheologicalDig]} {};
+#VAR {FutureLocations[gotoBlastedSwamp]} {};
+#VAR {FutureLocations[gotoColony]} {};
+#VAR {FutureLocations[gotoCybertechLabs]} {};
+#VAR {FutureLocations[gotoCybertechPreparatorySchool]} {};
+#VAR {FutureLocations[gotoDeathRow]} {};
+#VAR {FutureLocations[gotoDracharnos]} {};
+#VAR {FutureLocations[gotoDrugDealer]} {};
+#VAR {FutureLocations[gotoECJunkyard]} {};
+#VAR {FutureLocations[gotoECMilitary]} {};
+#VAR {FutureLocations[gotoECVamps]} {};
+#VAR {FutureLocations[gotoECNuclearPower]} {};
+#VAR {FutureLocations[gotoECPowerAndPlumbing]} {};
+#VAR {FutureLocations[gotoECUniversity]} {};
+#VAR {FutureLocations[gotoElectronicsSchool]} {};
+#VAR {FutureLocations[gotoElectronicsShop]} {};
+#VAR {FutureLocations[gotoFailFamilyLegacy]} {};
+#VAR {FutureLocations[gotoFassanSlaveCompound]} {};
+#VAR {FutureLocations[gotoGenCloneBioMechanicalLabs]} {};
+#VAR {FutureLocations[gotoKiddieKandy]} {#NOP (zMUD: custom directions, see alias body)};
+#VAR {FutureLocations[gotoKromguard]} {};
+#VAR {FutureLocations[gotoLuxare]} {};
+#VAR {FutureLocations[gotoMerquryCity]} {};
+#VAR {FutureLocations[gotoNETWORKCommunicationsTower]} {};
+#VAR {FutureLocations[gotoReinforcer]} {};
+#VAR {FutureLocations[gotoRuinsOfHTOM]} {};
+#VAR {FutureLocations[gotoRuinsOfTheSilverTower]} {};
+#VAR {FutureLocations[gotoSimeonTheCybernetic]} {};
+#VAR {FutureLocations[gotoTriskinAsylum]} {};
+#VAR {FutureLocations[gotoVirtualWorldOfNETWORK]} {};
+#VAR {FutureLocations[gotoZulDane]} {};
+
+#VAR {PlanesLocations[gotoAbyssUnholyModrian]} {};
+#VAR {PlanesLocations[gotoAmoria]} {};
+#VAR {PlanesLocations[gotoAvernusHell]} {};
+#VAR {PlanesLocations[gotoElementalPlaneOfAir]} {};
+#VAR {PlanesLocations[gotoElementalPlaneOfEarth]} { };
+#VAR {PlanesLocations[gotoElementalPlaneOfFire]} {};
+#VAR {PlanesLocations[gotoElementalPlaneOfIce]} {};
+#VAR {PlanesLocations[gotoElementalPlaneOfOoze]} {};
+#VAR {PlanesLocations[gotoElementalPlaneOfSmoke]} {};
+#VAR {PlanesLocations[gotoElementalPlaneOfWater]} {};
+#VAR {PlanesLocations[gotoLuniaHeaven]} {};
+#VAR {PlanesLocations[gotoImmoth]} {};
+#VAR {PlanesLocations[gotoCastleMahlhevik]} {};
+
+#ALIAS {travel %1 %2} {
+	#VAR {travelInput1} @lower(%1);
+
+	#IF {$travelInput1  = "past" || %1 = 1} 
+	{
+		#SWITCH {"%2"} {
+			#CASE {"1"} { gotoAbandonedKeep; };
+			#CASE {"2"} { gotoOldMonastery; };
+		    #CASE {"3"} { gotoCastleSlivendark; };
+			#CASE {"4"} { gotoChessboardOfAraken; };
+			#CASE {"5"} { gotoDismalDelve; };
+			#CASE {"6"} { gotoDraconiansAndDragonHighlord; };
+			#CASE {"7"} { gotoDukeAraken; };
+			#CASE {"8"} { gotoElvenVillage; };
+			#CASE {"9"} { gotoForgottenValley; };
+			#CASE {"10"} { gotoFontOfModrian; };
+			#CASE {"11"} { gotoFrozenTundras; };
+			#CASE {"12"} { gotoGlacialRift; };
+			#CASE {"13"} { gotoGreatPyramid };
+			#CASE {"14"} { gotoGuiharianFestivalOfLights; };
+			#CASE {"15"} { gotoHalflingVillage; };
+			#CASE {"16"} { gotoHarpellHouse; };
+			#CASE {"17"} { gotoHighTowerOfMagic; };
+			#CASE {"18"} { gotoHillGiantSteading; };
+			#CASE {"19"} { gotoHobgoblins; };
+			#CASE {"20"} { gotoHolyGrail; };
+			#CASE {"21"} { gotoIstan; };
+			#CASE {"22"} { gotoKoboldTunnels; };
+			#CASE {"23"} { gotoLearander; };
+			#CASE {"24"} { gotoCrystalFortress; };
+			#CASE {"25"} { gotoMalevolentCircle; };
+			#CASE {"26"} { gotoMavernal; };
+			#CASE {"27"} { gotoNeverwhere; };
+			#CASE {"28"} { gotoOgreEncampment; };
+			#CASE {"29"} { gotoOldThalos; };
+			#CASE {"30"} { gotoPitFiend; };
+			#CASE {"31"} { gotoPoolOfEvil; };
+			#CASE {"32"} { gotoReedSwamp; };
+			#CASE {"33"} { gotoSewersOfModrian; };
+			#CASE {"34"} { gotoShade; };
+			#CASE {"35"} { gotoSilverTower; };
+			#CASE {"36"} { gotoSolaceCove; };
+			#CASE {"37"} { gotoSkullport; };
+			#CASE {"38"} { gotoTempleOfAncients; };
+			#CASE {"39"} { gotoTowerOfTheRenegadeMage; };
+			#CASE {"40"} { gotoTheTreetopsOfArachna; };
+			#CASE {"41"} { gotoUndermountain; };
+			#CASE {"42"} { gotoWemicPlains; };
+			#CASE {"43"} { gotoZhengisCastle; };
+			#DEFAULT {
+				#VAR {travelerror} {1};
+				#SHOW {Invalid Destination Combination '@R%1@w' and '@R%2@w'};
+				};
+			};
+		};
+
+	#ELSEIF {$travelInput1 = "future" || %1 = 2} {
+		#SWITCH {"%2"} {
+			#CASE {"1"} { gotoAPollutedVillage };
+			#CASE {"2"} { gotoArcheologicalDig };
+			#CASE {"3"} { gotoBlastedSwamp };
+			#CASE {"4"} { gotoColony };
+			#CASE {"5"} { gotoCybertechLabs };
+			#CASE {"6"} { gotoCybertechPreparatorySchool };
+			#CASE {"7"} { gotoDeathRow };
+			#CASE {"8"} { gotoDracharnos };
+			#CASE {"9"}  { gotoDrugDealer };
+			#CASE {"10"} { gotoECJunkyard };
+			#CASE {"11"} { gotoECMilitary };
+			#CASE {"12"} { gotoECVamps };
+			#CASE {"13"} { gotoECNuclearPower };
+			#CASE {"14"} { gotoECPowerAndPlumbing };
+			#CASE {"15"} { gotoECSecurityCompound };
+			#CASE {"16"} { gotoECUniversity };
+			#CASE {"17"} { gotoElectronicsSchool };
+			#CASE {"18"} { gotoElectronicsShop };
+			#CASE {"19"} { gotoFailFamilyLegacy };
+			#CASE {"20"} { gotoFassanSlaveCompound };
+			#CASE {"21"} { gotoGenCloneBioMechanicalLabs };
+			#CASE {"22"} { gotoKiddieKandy };
+			#CASE {"23"} { gotoKromguard };
+			#CASE {"24"} { gotoLuxare };
+			#CASE {"25"} { gotoMerquryCity };
+			#CASE {"26"} { gotoNETWORKCommunicationsTower };
+			#CASE {"27"} { gotoReinforcer };
+			#CASE {"28"} { gotoRuinsOfHTOM };
+			#CASE {"29"} { gotoRuinsOfTheSilverTower };
+			#CASE {"30"} { gotoSimeonTheCybernetic };
+			#CASE {"31"} { gotoTriskinAsylum };
+			#CASE {"32"} { gotoVirtualWorldOfNETWORK };
+			#CASE {"33"} { gotoZulDane };
+			#DEFAULT {
+	            #VAR {travelerror} {1};
+	    #SHOW {Invalid Destination Combination '@R%1@w' and '@R%2@w'};
+	        };
+		};
+	};
+
+	#ELSEIF {$travelInput1 = "planes" || %1 = 3} 
+	{
+		#SWITCH {"%2"} 
+		{
+			#CASE {"1"} { gotoAbyssUnholyModrian; };
+			#CASE {"2"} { gotoAmoria; };
+			#CASE {"3"} { gotoAvernusHell; };
+			#CASE {"4"} { gotoElementalPlaneOfAir; };
+			#CASE {"5"} { gotoElementalPlaneOfEarth; };
+			#CASE {"6"} { gotoElementalPlaneOfFire; };
+			#CASE {"7"} { gotoElementalPlaneOfIce; };
+			#CASE {"8"} { gotoElementalPlaneOfOoze; };
+			#CASE {"9"} { gotoElementalPlaneOfSmoke; };
+			#CASE {"10"} { gotoElementalPlaneOfWater; };
+			#CASE {"11"} { gotoLuniaHeaven; };
+			#CASE {"12"} { gotoImmoth; };
+		   	#CASE {"13"} { gotoCastleMahlhevik; };
+			#CASE {"14"} { gotoGith; };
+		    #DEFAULT 
+			{
+				#VAR {travelerror} {1};
+				#SHOW {Invalid Destination Combination '@R%1@w' and '@R%2@w'};
+			};
+		};
+	};
+
+		#ELSEIF {$travelInput1 = "trainers" || %1 = 4} {
+			#SWITCH {"%2"} {
+				#CASE {"1"} { gotoCharismaTrainer;};
+				#CASE {"2"} { gotoConstitutionTrainer; };
+				#CASE {"3"} { gotoDexterityTrainer; };
+				#CASE {"4"} { gotoIntelligenceTrainer; };
+				#CASE {"5"} { gotoStrengthTrainer; };
+				#CASE {"6"} { gotoWisdomTrainer; };
+				#CASE {"7"} { gotoWeaponEnhancer };
+				#CASE {"8"} { gotoWeaponSpecializer };
+				#CASE {"9"} { gotoWeaponUnSpecializer };
+				#CASE {"10"} { gotoGainer };
+				#CASE {"11"} { gotoElectronicsSchool };
+				#DEFAULT {
+					#VAR {travelerror} {1};
+			#SHOW {Invalid Destination Combination '@R%1@w' and '@R%2@w'};
+				};
+			};
+		};
+
+		#ELSEIF {$travelInput1 = "guilds" || %1 = 5} {
+			#SWITCH {"%2"} {
+				#CASE {"1"} { gotoBarbarianGuildmsater;};
+				#CASE {"2"} { gotoBardGuildmaster; };
+				#CASE {"3"} { gotoClericEvilGuildmaster; };
+				#CASE {"4"} { gotoClericGoodGuildmaster; };
+				#CASE {"5"} { gotoCyborgGuildmaster; };
+				#CASE {"6"} { gotoKnightEvilGuildmaster; };
+				#CASE {"7"} { gotoKnightGoodGuildmaster; };
+				#CASE {"8"} { gotoMageGuildmaster; };
+				#CASE {"9"} { gotoMercenaryGuildmaster; };
+				#CASE {"10"} { gotoMonkGuildmaster; };
+				#CASE {"11"} { gotoPhysicGuildmaster; };
+				#CASE {"12"} { gotoPsionicistGuildmaster; };
+				#CASE {"13"} { gotoRangerGuildmaster; };
+				#CASE {"14"} { gotoThiefGuildmaster; };
+				#DEFAULT {
+					#VAR {travelerror} {1};
+			#SHOW {Invalid Destination Combination '@R%1@w' and '@R%2@w'};
+				};
+			};
+		};
+
+		#ELSEIF {$travelInput1 = "underdark" || %1 = 6} {
+			#SWITCH {"%2"} {
+				#CASE {"1"} { gotoHeadShrinker };
+				#CASE {"2"} { gotoLizardCaverns };
+				#CASE {"3"} { gotoWyllowwood };
+				#DEFAULT {
+					#VAR {travelerror} {1};
+			#SHOW {Invalid Destination Combination '@R%1@w' and '@R%2@w'};
+				};
+			};
+		};
+
+		#ELSEIF {$travelInput1 = "all" || %1 = 7} {
+			#NOP //Todo - Use the different lists to formulate a list of available directions
+		};
+
+		#ELSE {
+			#VAR {travelerror} {1};
+		#SHOW {Invalid Planar Destination '@R%1@w'};
+		};
+	}
+
+	#ALIAS {travel %1} {
+		#VAR {travelInput1} @lower(%1);
+		#VAR {travelInput1Upper} @upper(%1);
+		#IF {debug} {
+			#SHOW {Travel Destination: '$travelInput1'};
+			#SHOW {Travel Destination Upper: '$travelInput1Upper};
+		};
+	        #IF {$travelInput1 = "help" || $travelInput1 = "?"}
+		{
+	            	#SHOW { @C******************************************************************************************@w };
+	            	#SHOW { @C*                                Directions Help!                                        *@w };
+	            	#SHOW { @C******************************************************************************************@w };
+	            	#SHOW { @C*@w                                                                                        @C*@w};
+	            	#SHOW { @C*@C Usage:@w travel <plane> <zone>                                                           @C*@w};
+	            	#SHOW { @C*@Y Example:@w travel planes 9                                                               @C*@w};
+	            	#SHOW { @C*@w      Travel to the Elemental Plane of Smoke                                            @C*@w};
+	            	#SHOW { @C*@Y Example:@w travel 2 15                                                                   @C*@w};
+	            	#SHOW { @C*@w      Travel to the Future's EC Universty                                               @C*@w};
+	            	#SHOW { @C*@w                                                                                        @C*@w};
+	            	#SHOW { @C*@M Recommendations:@w Make an alias in your own scriping config for locations you use       @C*@w };
+	            	#SHOW { @C*@w    regularly!                                                                          @C*@w };
+	        	#SHOW { @C******************************************************************************************@w };
+	        };
+
+		#ELSEIF {$travelInput1  = "past" || %1 = 1}
+		{
+			#SHOW { @C┌------------------------------------------------------------------------------┐@w };
+			#SHOW { @C|                           @CPast Locations@w                                     @C|@w };
+			#SHOW { @C├------------------------------------------------------------------------------┤@w };
+			#SHOW { @C|  @C1)@w Abandoned Keep       @C2)@w Old Monastery        @C3)@w Castle Slivendark        @C|@w };
+			#SHOW { @C|  @C4)@w Chessboard of Araken @C5)@w Dismal Delve         @C6)@w Draconians and Highlords @C|@w };
+			#SHOW { @C|  @C7)@w Duke Araken          @C8)@w Elven Village        @C9)@w Forgotten Valley         @C|@w };
+			#SHOW { @C| @C10)@w Font of Modrian     @C11)@w Frozen Tundras      @C12)@w Glacial Rift             @C|@w };
+			#SHOW { @C| @C13)@w Great Pyramid       @C14)@w Guiharian Festival  @C15)@w Halfling Village         @C|@w };
+			#SHOW { @C| @C16)@w Harpell House       @C17)@w High Tower of Magic @C18)@w Hill Giant Steading      @C|@w };
+			#SHOW { @C| @C19)@w Hobgoblins          @C20)@w Holy Grail          @C21)@w Istan                    @C|@w };
+			#SHOW { @C| @C22)@w Kobold Tunnels      @C23)@w Caves of Learander  @C24)@w Crystal Fortress         @C|@w };
+			#SHOW { @C| @C25)@w Malevolent Circle   @C26)@w Mavernal            @C27)@w Neverwhere               @C|@w };
+			#SHOW { @C| @C28)@w Ogre Encampment     @C29)@w Old Thalos          @C30)@w Pit Fiend                @C|@w };
+			#SHOW { @C| @C31)@w Pool of Evil        @C32)@w Reed Swamp/Lizards  @C33)@w Sewers of Modrian        @C|@w };
+			#SHOW { @C| @C34)@w Shade               @C35)@w Silver Tower        @C36)@w Solace Cove              @C|@w };
+			#SHOW { @C| @C37)@w Skullport (River)   @C38)@w Temple of Ancients  @C39)@w Tower of Renegade Mage   @C|@w };
+			#SHOW { @C| @C40)@w Treetops of Arachna @C41)@w Undermountain       @C42)@w Wemic Plains             @C|@w };
+			#SHOW { @C| @C43)@w Zhengi's Castle                                                          @C|@w };
+			#SHOW { @C|                                                                              @C|@w };
+			#SHOW { @C└------------------------------------------------------------------------------┘@w }; 
+		};
+
+		#ELSEIF {$travelInput1 = "future" || %1 = 2}
+		{
+			#SHOW { @C┌------------------------------------------------------------------------------┐@w };
+			#SHOW { @C|                           @CFuture Locations@w                                   @C|@w };
+			#SHOW { @C├------------------------------------------------------------------------------┤@w };
+			#SHOW { @C|  @C1)@w Polluted Village    @C2)@w Archeolgial Dig      @C3)@w Blasted Swamp             @C|@w };
+			#SHOW { @C|  @C4)@w Colony              @C5)@w Cybertech Labs       @C6)@w Cybertech Preparatory     @C|@w };
+			#SHOW { @C|  @C7)@w Death Row           @C8)@w Dracharnos           @C9)@w Drug Dealer               @C|@w };
+			#SHOW { @C| @C10)@w EC Junkyard        @C11)@w EC Military          @C12)@w EC Vampires              @C|@w };
+			#SHOW { @C| @C13)@w EC Nuclear Power   @C14)@w EC Power & Plubming  @C15)@w EC Security Compound     @C|@w };
+			#SHOW { @C| @C16)@w EC University      @C17)@w Electronics School   @C18)@w Electronics Shop         @C|@w };
+			#SHOW { @C| @C19)@w Fail Family Legacy @C20)@w Fassan Slave Compound@C21)@w GenClone Bio Labs        @C|@w };
+			#SHOW { @C| @C22)@w Kiddie Kandy, Inc. @C23)@w Kromguard            @C24)@w Luxare                   @C|@w };
+			#SHOW { @C| @C25)@w Merqury City       @C26)@w NETWORK  Tower       @C27)@w Equipment Reinforcer     @C|@w };
+			#SHOW { @C| @C28)@w Ruins of HTOM      @C29)@w Silver Tower  Ruins  @C30)@wSimeon the Cybernetic     @C|@w };
+			#SHOW { @C| @C31)@w @RTriskin Asylum@w     @C32)@w Virtual  World       @C33)@wZul’Dane                  @C|@w };
+			#SHOW { @C|                                                                              @C|@w };
+			#SHOW { @C└------------------------------------------------------------------------------┘@w };
+		};
+
+		#ELSEIF {$travelInput1 = "planes" || %1 = 3}
+		{
+			#SHOW { @C┌------------------------------------------------------------------------------┐@w };
+			#SHOW { @C|                           @MPlanes Locations@w                                   @C|@w };
+			#SHOW { @C├------------------------------------------------------------------------------┤@w };
+			#SHOW { @C|  @C1)@w Abyss/Unholy Mod    @C2)@w Amoria                @C3)@w Avernus, Hell Level 1    @C|@w };
+			#SHOW { @C|  @C4)@w Plane of Air        @C5)@w Plane of Earth        @C6)@w Plane of Fire            @C|@w };
+			#SHOW { @C|  @C7)@w Plane of Ice        @C8)@w Plane of Ooze         @C9)@w Plane of Smoke           @C|@w };
+			#SHOW { @C| @C10)@w Plane of Water     @C11)@w Lunia, Heaven Level 1@C12)@wImmoth                    @C|@w };
+			#SHOW { @C| @C13)@w Castle Mahlhevik   @C14)@w Githyanki Fortress   @C@w                             @C|@w };
+			#SHOW { @C|                                                                              @C|@w };
+			#SHOW { @C└------------------------------------------------------------------------------┘@w };
+		};
+	
+		#ELSEIF {$travelInput1 = "trainers" || %1 = 4}
+		{
+			#SHOW { @C┌------------------------------------------------------------------------------┐@w };
+			#SHOW { @C|                          @YTrainers Locations@w                                  @C|@w };
+			#SHOW { @C├------------------------------------------------------------------------------┤@w };
+			#SHOW { @C|  @C1)@w Charisma           @C2)@w Constitution           @C3)@w Dexterity                @C|@w };
+			#SHOW { @C|  @C4)@w Intelligence       @C5)@w Strength               @C6)@w Wisdom                   @C|@w };
+			#SHOW { @C|  @C7)@w Weapon Enhancer    @C8)@w Weapon Specializer     @C9)@w Weapon Un-Specializer    @C|@w };
+			#SHOW { @C| @C10)@w The Gainer        @C11)@w Electronics School                                                       @C|@w };
+			#SHOW { @C|                                                                              @C|@w };
+			#SHOW { @C└------------------------------------------------------------------------------┘@w };
+		};
+
+		#ELSEIF {$travelInput1 = "guilds" || %1 = 5}
+		{
+        		#SHOW { @C┌------------------------------------------------------------------------------┐@w };
+		        #SHOW { @C|                          @MGuilds Locations@w                                    @C|@w };
+		        #SHOW { @C├------------------------------------------------------------------------------┤@w };
+		        #SHOW { @C|  @C1)@w Barbarian         @C2)@w Bard                    @C3)@w Cleric (@REvil@w)            @C|@w };
+			#SHOW { @C|  @C4)@w Cleric (@CGood@w)     @C5)@w Cyborg                  @C6)@w Knight (@REvil@w)            @C|@w };
+			#SHOW { @C|  @C7)@w Knight (@CGood@w)     @C8)@w Mage                    @C9)@w Mercenary                @C|@w };
+			#SHOW { @C| @C10)@w Monk             @C11)@w Physic                 @C12)@w Psionicist               @C|@w };
+			#SHOW { @C| @C13)@w Ranger           @C14)@w Thief                  @C@w                             @C|@w };
+			#SHOW { @C|                                                                              @C|@w };
+        		#SHOW { @C└------------------------------------------------------------------------------┘@w };
+		};
+
+		#ELSEIF {$travelInput1 = "underdark" || %1 = 6}
+		{
+			#SHOW { @C┌------------------------------------------------------------------------------┐@w };
+			#SHOW { @C|                        @bUnderdark@w                                              @C|@w };
+			#SHOW { @C├------------------------------------------------------------------------------┤@w };
+			#SHOW { @C|  @C1)@w Head Shrinker @C2)@w Lizard Caverns  @C3)@w Wyllowwood@w };
+			#SHOW { @C|                                                                              @C|@w };
+			#SHOW { @C└------------------------------------------------------------------------------┘@w };
+		};
+
+		#ELSEIF {$travelInput1 = "all" || %1 = 7}
+		{
+			#SHOW { @C┌------------------------------------------------------------------------------┐@w };
+			#SHOW { @C|                          @w ALL Locations@w                                      @C|@w };
+			#SHOW { @C├------------------------------------------------------------------------------┤@w };
+			#SHOW { @C|                                                                              @C|@w };
+			#SHOW { @C|                          @RUnder Construction@w                                  @C|@w };
+			#SHOW { @C|                                                                              @C|@w };
+			#SHOW { @C└------------------------------------------------------------------------------┘@w };
+		};
+
+		#ELSE {
+			#SHOW { @RTravel Warning:@w The value '@M%1@w' is not a valid travel destination. };
+		}
+	}
+
+#ALIAS {travel} {
+	#SHOW { @C┌------------------------------------------------------------------------------┐@w };
+	#SHOW { @C|                          @Y Where To Travel@w                                    @C|@w };
+	#SHOW { @C├------------------------------------------------------------------------------┤@w };
+	#SHOW { @C|                                                                              |@w };
+	#SHOW { @C|@w               1) @CPast@w      2) @CFuture@w      3) @MPlanes@w                          @C|@w };
+	#SHOW { @C|@w               4) @YTrainers@w  5) @MGuilds@w      6) @bUnderdark@w                       @C|@w }; 
+	#SHOW { @C|@w                               7) @wAll@w                                         @C|@w };
+	#SHOW { @C|                                                                              @C|@w };
+	#SHOW { @C└------------------------------------------------------------------------------┘@w };
+
+}
+
+#NOP ----------------------------------------------------------------------------------------------
+#NOP                                      Anchor Start Locations
+
+#TRIGGER {^You are located: %1}
+{
+	#VAR {currentRoom} {%1};
+}
+
+#ALIAS {resettravel} {
+	#VAR {travelerror}{0};
+	#VAR {travelling}{0};
+}
+
+#ALIAS {gotohs} {
+	fly;
+	where;
+	#DELAY {1} {
+		#IF {$currentRoom = $myStartingRoomName}
+		{
+			#VAR {travelling} {1};
+			directionsToHolySquare;
+		};
+		#ELSE {
+			#SHOW {@RWarning!@w The current starting room is @RNOT@w your default start room '$myStartingRoomName'!};
+			#VAR {travelerror} {1};
+			#VAR {travelling} {0};
+		}
+	}
+}
+
+#ALIAS {gotoskull} {
+	fly;
+    where;
+	#DELAY {1} {
+		#IF {$currentRoom = $myStartingRoomName}
+		{
+			#VAR {travelling} {1};
+			directionsToSlaveSquare;
+		};
+	    #ELSE {
+	        #SHOW {@RWarning!@w The current starting room is @RNOT@w your default start room '$myStartingRoomName'!};
+			#VAR {travelerror} {1};
+			#VAR {travelling} {0};
+	    }
+	}
+}
+
+#ALIAS {gotostar} {
+	fly;
+	where;
+	#DELAY {1} {
+		#IF {$currentRoom = $myStartingRoomName}
+		{
+			#VAR {travelling} {1};
+			directionsToStarPlaza;
+		};
+		#ELSE {
+			#SHOW {@RWarning!@w The current starting room is @RNOT@w your default start room '$myStartingRoomName'!};
+			#VAR {travelerror} {1};
+			#VAR {travelling} {0};
+		}
+	}
+}
+
+#ALIAS {gotoastral} {
+	fly;
+	where;
+	#DELAY {1} {
+        #IF {$currentRoom = $myStartingRoomName}
+        {
+            #VAR {travelling} {1};
+			directionsToAstralManse;
+        };
+		#ELSE {
+    	#SHOW {@RWarning!@w The current starting room is @RNOT@w your default start room '$myStartingRoomName'!};
+            #VAR {travelerror} {1};
+            #VAR {travelling} {0};		
+		}
+	}
+}
+
+#NOP ----------------------------------------------------------------------------------------------
+#NOP                                       Past Locations
+
+#ALIAS {gotoAbandonedKeep} {
+	gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YAbandoned Keep@w!};
+	#DELAY {2} {
+		#IF {!$travelerror}{
+			21w14s2w;wind winch;
+			where;
+			challenge area;
+		};
+		#ELSE {
+	        resettravel;
+	    };
+	};
+}
+
+#ALIAS {gotoOldMonastery} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YOld Monastery@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			12n7en;
+			where;
+			challenge area;
+		};
+		#ELSE {
+	        resettravel;
+	    };
+	};
+}
+
+#ALIAS {gotoCastleSlivendark} {
+	gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YCastle Slivendark@w!};
+	#DELAY {2} {
+		#IF {!$travelerror}{
+			32w4sw2s2w3sese3sw3sd;
+			where;
+			challenge area;
+	    };
+		#ELSE {
+	        resettravel;
+	    };
+	};
+}
+
+#ALIAS {gotoChessboardOfAraken} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YChessboard of Araken@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			9w8s;open porticullis;s;open door;2swsw2se;
+			where;
+			challenge area;
+	    };
+		#ELSE {
+	        resettravel;
+    	};
+	};
+}
+
+#ALIAS {gotoCrystalFortress} {
+	gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YCrystal Fortress@w!};
+	#DELAY {2} {
+		#IF {!$travelerror} {
+			46w24su5s10w3s4d2en2n2wn2w2s;open rock;2se2swswsese;pull lever;2w3s
+			where;
+			challenge area;
+		};
+		#ELSE {
+			resettravel;
+		};
+	};
+}
+
+#ALIAS {gotoDismalDelve} {
+	gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YDismal Delve@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			67w12seseds6wndnd;enter portal;nw2n2ed;
+			where;
+			challenge area;
+	    };
+		#ELSE {
+	        resettravel;
+		}
+    }	
+}
+
+#ALIAS {gotoDraconiansAndDragonHighlord} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YDraconians a:nd Dragon Highlords@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			32wswsw2se2s2w2sw2sws2w4sws2w;
+			where;
+			challenge area;
+	    };
+		#ELSE {
+	        resettravel;
+		}
+    };
+}
+
+#ALIAS {gotoDukeAraken} {
+	gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YDuke Araken@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			9w8s;open porticullis;s;open door;2sese4sw2se3sw3u3s;
+			where;
+			challenge area;
+		};
+		#ELSE {
+    	    resettravel;
+		}
+    }	
+}
+
+#ALIAS {gotoElvenVillage} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YElven Village@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			22n4e5n;
+			where;
+			challenge area;
+		};
+		#ELSE {
+    	    resettravel;
+		}
+    };
+}
+
+#ALIAS {gotoForgottenValley} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YForgotten Valley@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			60n2e3nwnwn3e4s2d;
+			where;
+			challenge area;
+		};
+		#ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoFontOfModrian} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YFont of Modrian@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			7e4ne;enter font;
+			where;
+			challenge area;
+		};
+		#ELSE {
+    	    resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoFrozenTundras} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YFrozen Tundras@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			37e41n;open gate;8n;open gate;17n3w2nw9n7e3nw2ue2wunwndw2nwue3n3w5ne2n;
+			where;
+			challenge area;
+		};
+		#ELSE {
+	        resettravel;
+    	}
+	};
+}
+
+#ALIAS {gotoGlacialRift} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YGlacial Rift@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			#NOP 37e41n;open gate;8n;open gate;17n3w2nw9n7e3nw2ue2wunwndw2nwue3n3w5ne2n4n2wnwn2w3nd;
+			n;n;u;n;e;open tapestry;n;n;n;n;open gate n;n;n;n;n;n;n;n;n;n;n;n;n;n;n;n;n;n;w;w;w;n;n;w;n;n;n;n;n;n;n;n;n;e;e;e;e;e;e;e;n;n;n;w;u;u;e;w;w;u;n;w;n;d;w;n;n;w;u;e;n;n;n;w;w;w;n;n;n;n;n;e;n;n;n;n;n;n;w;w;w;n;n;w;w;w;n;n;n;d;
+			where;
+			challenge area;
+		};
+		#ELSE {
+    	    resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoGlaicialRiftPaingiver} {
+	#SHOW {@GOkay!@w Travelling to the @YGlacial Rift Paingiver@w!};
+	#NOP gotoGlacialRift;
+	n;n;u;n;e;open tapestry;n;n;n;n;open gate n;n;n;n;n;n;n;n;n;n;n;n;n;n;n;n;n;n;w;w;w;n;n;w;n;n;n;n;n;n;n;n;n;e;e;e;e;e;e;e;n;n;n;w;u;u;e;w;w;u;n;w;n;d;w;n;n;w;u;e;n;n;n;w;w;w;n;n;n;n;n;e;n;n;n;n;n;n;w;w;w;n;n;w;w;w;n;n;n;d;
+	w;w;n;n;n;u;e;e;u;n;e;s;s;e;e;n;n;n;e;e;s;s;s;s;s;s;s;s;w;w;w;w;w;w;s;s;e;e;n;e;e;e;s;s;s;e;
+}
+
+#ALIAS {gotoGreatPyramid} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YGreat Pyramid@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			74w7s3e9s3wuenu;
+			where;
+			challenge area;
+		};
+		#ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoGainer} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YGainer@w!};
+	#SHOW {Nohunger & Nothirst:	The portal to him is 1w of the Grand Mistress at the top of HTOM};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			where;
+			challenge area;
+		};
+		#ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoGuiharianFestivalOfLights} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YGuiharian Festival of Lights@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			4w3se4s;
+			where;
+			challenge area;
+		};
+		#ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoHalflingVillage} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YHalfling Village@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			15e10s4e;
+			where;
+			challenge area;
+		};
+		#ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoHarpellHouse} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YHarpell House@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			19e2n;enter house;
+			where;
+			challenge area;
+		};
+		#ELSE {
+	        resettravel;
+    	}
+	};
+}
+
+#ALIAS {gotoHighTowerOfMagic} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YHigh Tower of Magic@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			34w3nw3n;
+			where;
+			challenge area;
+		};
+		#ELSE {
+	        resettravel;
+    	}
+	};
+}
+
+#ALIAS {gotoHillGiantSteading} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YHill Giant Steading@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			37e41n;open gate;8n;open gate;17nenw;open door w;w;
+			where;
+			challenge area;
+		};
+		#ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoHobgoblins} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YHobgolbin Tunnels@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			15n2ese;open door n;n;
+			where;
+			challenge area;
+		};
+		#ELSE {
+	        resettravel;
+    	}
+	};
+}
+
+#ALIAS {gotoHolyGrail} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YHoly Grail@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			38w2nw3nw8nw3n2wn3ed2nednd2ndn2e3n2e3nwu;
+			where;
+			challenge area;
+		};
+		#ELSE {
+    	    resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoIstan} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YCity of Istan@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			37e41n;
+			where;
+			challenge area;
+		};
+		#ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoKoboldTunnels} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YKobold Tunnels@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			3w8swse10s3e2s4en;
+			where;
+			challenge area;
+		};
+		#ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoLearander} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YCaves of Learander@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			56w27s6ws10w3s4d2e;
+			where;
+			challenge area;
+		};
+		#ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoMalevolentCircle} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YMalevolent Circle@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			39e21s3es3es2eswses2e;
+			where;
+			challenge area;
+		};
+		#ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoMavernal} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YCity of Mavernal@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			26n15e1n3e1n1e2n5es;open gate e;
+			where;
+			challenge area;
+		};
+		#ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoNeverwhere} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YRealm of Neverwhere@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			50w9s4w2s6w11s3e2s2e2und;
+			where;
+			challenge area;
+		};
+		#ELSE {
+	        resettravel;
+		}
+    };
+}
+
+#ALIAS {gotoOgreEncampment} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YOgre Encampment@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			7w4n17ws3w3ne2nene2nw3n7e5nw2n2w;
+			where;
+			challenge area;
+		};
+		#ELSE {
+	        resettravel;
+    	}
+	};
+}
+
+#ALIAS {gotoOldThalos} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YCity of Old Thalos@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			67w22s12w;
+			where;
+			challenge area;
+		};
+		#ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoPitFiend} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YPit Fiend@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			13w4s2w2s3w;
+			where;
+			challenge area;
+		};
+		#ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoPoolOfEvil} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YPool of Evil@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			3w8swse10s3e2s4e5nw3n2es;
+			where;
+			challenge area;
+		};
+		#ELSE {
+	        resettravel;
+    	}
+	};
+}
+
+#ALIAS {gotoReedSwamp} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YReed Swamp@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			32w4sws;
+			where;
+			challenge area;
+		};
+		#ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoSewersOfModrian} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YSewers of Modrian@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			2n3w;open grate;d;
+			where;
+			challenge area;
+		};
+		#ELSE {
+	        resettravel;
+    	}
+	};
+}
+
+#ALIAS {gotoShade} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YShadow City of Shade@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror} {
+			61n2e2n8e;
+			where;
+			challenge area;
+			helpShade;
+		};
+		#ELSE {
+	        resettravel;
+    	}
+	};
+}
+
+#ALIAS {helpShade}
+{
+    #SHOW {@Y************************@C Help Shade @Y************************@w};
+    #SHOW {@YgotoShadeRebel - To Rebel Leader From Tiltin@w: };
+    #SHOW {    d;e;s;d;d;d;s;e;n;n;n;n;bash stone d;d;s;w;w;d;w;n;n;w;w;n;d;w;s;d;s;u;w};
+    #SHOW {@YgotoShadeSelset - To Selset from Rebel Leader@w: e;d;n;u;e;bash cage n};
+    #SHOW {@Y************************************************************@w};
+}
+
+#ALIAS {gotoShadeRebel}
+{
+    where;
+    #DELAY {2}
+    {
+        #IF {$currentRoom = "The Top of the Tower"}
+        {
+            #SHOW {@GOkay!@w Travelling to @YShade Rebel@w!};
+            fly;d;e;s;d;d;d;s;e;n;n;n;n;bash stone d;d;s;w;w;d;w;n;n;w;w;n;d;w;s;d;s;u;w;
+        };
+        #ELSE
+        {
+            #SHOW {@RError@w: You're not in the correct room 'The Top of the Tower'!}
+        };
+    };
+}
+
+#ALIAS {gotoShadeSelset}
+{
+    where;
+        #DELAY {2}
+    {
+        #IF {$currentRoom = "In the Catacombs"}
+        {
+            #SHOW {@GOkay!@w Travelling to @YShade Selset@w!};
+            fly;e;d;n;u;e;bash cage n;
+        };
+        #ELSE
+        {
+            #SHOW {@RError@w: You're not in the correct room 'In the Catacombs'!}
+        };
+    };
+}
+
+#TRIGGER {This is the room of Tiltin, the Mage of Shade.  The walls, and} {
+
+    #SHOW {@Y************************@C Help Shade @Y************************@w};
+    #SHOW {@YgotoShadeRebel@w:  To Rebel Leader From Tiltin};
+    #SHOW {@YgotoShadeSelset@w: To Selset from Rebel Leader};
+    #SHOW {@Y************************************************************@w};
+}
+
+#ALIAS {gotoSilverTower} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YSilver Tower@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			7e11s;
+			where;
+			challenge area;
+		};
+		#ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoSolaceCove} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YCity of Solace Cove@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			104w;
+			where;
+			challenge area;
+		};
+		#ELSE {
+	        resettravel;
+    	}
+	};
+}
+
+#ALIAS {gotoSkullport} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YCity of Skullport@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			17e7s2w8sd6e7nen2e2nw3ne6ne6n4e7nw3n2wne5nse9n;
+			where;
+			challenge area;
+		};
+		#ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoTempleOfAncients} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YTemple of Ancients@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			39e25s;
+			where;
+			challenge area;
+		};
+		#ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoTowerOfTheRenegadeMage} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YTower of the Renegade Mage@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			125w3n9ws4e;
+			where;
+			challenge area;
+		};
+		#ELSE {
+	        resettravel;
+    	}
+	};
+}
+
+#ALIAS {gotoTowerOfTheRenegadeMageBlue} {
+	enter blue;
+	3w3s3ewwsw;
+	pull lever;
+	push blue library;
+	where;
+}
+
+#ALIAS {gotoTheTreetopsOfArachna} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YTreetops of Arachna@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			7w2n2w2n13w2s2wn3wu;continue to the Drow area;2w2n1e1n1e1n1e1u;
+			where;
+			challenge area;
+		};
+		#ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoUndermountain} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YUndermountain@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			37e41n;open gate;3nesend;
+			where;
+			challenge area;
+		};
+		#ELSE {
+	        resettravel;
+    	}
+	};
+}
+
+#ALIAS {gotoVaporRats} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YVapor Rats of EPOW@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			8e4ne;enter font;3u;
+			where;
+			challenge area;
+		};
+		#ELSE {
+	        resettravel;
+    	}
+	};
+}
+
+#ALIAS {gotoWemicPlains} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YWemic Plains@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			81wn;
+			where;
+			challenge area;
+		};
+		#ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoZhengisCastle} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YZhengi's Castle@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			39w3s3w4s1u2w2s9w;
+			where;
+			challenge area;
+		};
+		#ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#NOP ----------------------------------------------------------------------------------------------
+#NOP                                     Future Directions
+#ALIAS {gotoAPollutedVillage} {
+    gotostar;
+	#SHOW {@GOkay!@w Travelling to the @YPolluted Village@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			10w2sw2s5w;
+			where;
+			challenge area;
+	    };
+	    #ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoArcheologicalDig} {
+    gotostar;
+	#SHOW {@GOkay!@w Travelling to the @YArcheological Dig@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			22n8e5s;
+			where;
+			challenge area;
+	    };
+	    #ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoBlastedSwamp} {
+    gotostar;
+	#SHOW {@GOkay!@w Travelling to the @YBlasted Swamp@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			16w8n;
+			where;
+			challenge area;
+	    };
+	    #ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoColony} {
+    gotostar;
+	#SHOW {@GOkay!@w Travelling to the @YColony@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			e4swe7s2e4sd13e2n;
+			where;
+			challenge area;
+	    };
+	    #ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoCybertechLabs} {
+    gotostar;
+	#SHOW {@GOkay!@w Travelling to the @YCybertech Labs@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			5e3s2w1s;
+			where;
+			challenge area;
+	    };
+	    #ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoCybertechPreparatorySchool} {
+	gotostar;
+	#SHOW {@GOkay!@w Travelling to the @YCybertech Preparatory School@w!};
+    #DELAY {2} {
+        #IF {!$travelerror}{
+            5e3s2w4n;look pedestal;
+			where;
+			challenge area;
+        };
+        #ELSE {
+            resettravel;
+        }
+    };
+}
+
+#ALIAS {gotoDeathRow} {
+    gotostar;
+	#SHOW {@GOkay!@w Travelling to the @YDeath Row@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			8n;w;duck tape;
+			where;
+			challenge area;
+	    };
+	    #ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoDracharnos} {
+    gotostar;
+	#SHOW {@GOkay!@w Travelling to the @YDracharnos@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			25wnuwununend2n3ed2nw;open grate;u;
+			where;
+			challenge area;
+			helpDracharnos;
+	    };
+	    #ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {helpDracharnos}
+{
+    #SHOW {@YTo Aged Dragon@w: enter tube n of Wzu; w;4n;drink stream;2swsw, Should be in 'A Rock Filled Tunnel'.  Remove adrenaline, rest, and wait for tick(s)};
+}
+
+#ALIAS {gotoDrugDealer} {
+    gotostar;
+	#SHOW {@GOkay!@w Travelling to the @YDrug Dealer@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			8w5n4w;enter chevy;d3s2e;
+			where;
+			challenge area;
+	    };
+	    #ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoECJunkyard} {
+    gotostar;
+	#SHOW {@GOkay!@w Travelling to the @YJunk Yard@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			8w2n;
+			where;
+			challenge area;
+	    };
+	    #ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoECMilitary} {
+    gotostar;
+	#SHOW {@GOkay!@w Travelling to the @YE.C. Military@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			9w3sw;push button;e2se;
+			where;
+			challenge area;
+	    };
+	    #ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoECVamps} {
+    gotostar;
+	#SHOW {@GOkay!@w Travelling to the @YE.C. Vampires@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			5e11n;open door e;6es;open cub;s;look latch;2se2nwsw2n2e;look wall;e2nw;look book;2d3n;
+			where;
+			challenge area;
+	    };
+	    #ELSE {
+	        resettravel;
+    	}
+	};
+}
+
+#ALIAS {gotoECNuclearPower} {
+    gotostar;
+	#SHOW {@GOkay!@w Travelling to the @YE.C. Nuclear Power Plant@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			17n3e;open gate e;e;
+			where;
+			challenge area;
+	    };
+	    #ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoECPowerAndPlumbing} {
+    gotostar;
+	#SHOW {@GOkay!@w Travelling to the @YE.C. Power and Plumbing@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			10en;
+			where;
+			challenge area;
+	    };
+	    #ELSE {
+	        resettravel;
+    	}
+	};
+}
+
+#ALIAS {gotoECSecurityCompound} {
+	gotostar;
+	#SHOW {@GOlay1@w Traveling to the @YE.C. Security Compound@w!};
+	#DELAY {2} {
+		#IF {!$travelerror}{
+			9w3s;
+			where;
+			challenge area;
+		};
+		#ELSE {
+			resettravel;
+		};
+	};
+}
+
+#ALIAS {gotoECUniversity} {
+    gotostar;
+	#SHOW {@GOkay!@w Travelling to the @YE.C. University@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			4w6s2ws;
+			where;
+			challenge area;
+	    };
+	    #ELSE {
+    	    resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoElectronicsSchool} {
+    gotostar;
+	#SHOW {@GOkay!@w Travelling to the @YElectronics School@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			4w4n1w1n;
+			where;
+			challenge area;
+    	};
+	    #ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoElectronicsShop} {
+    gotostar;
+	#SHOW {@GOkay!@w Travelling to the @YElectronics Shop@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			5nes;
+			where;
+			challenge area;
+	    };
+	    #ELSE {
+    	    resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoFailFamilyLegacy} {
+    gotostar;
+	#SHOW {@GOkay!@w Travelling to the @YFail Family Legacy@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			e9s3e;
+			where;
+			challenge area;
+			#NOP (zMUD: trigger "^Walkway to a Huge Mansion" defined at end of file)
+	    };
+    	#ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoFailFamilyLegacyFreddy} {
+	where;
+	#delay {2} {
+		#IF {$currentRoom = "Walkway to a Huge Mansion"}
+		{
+			#SHOW {@GOkay!@w Travelling to @Y Freddy Fail@w!};
+			e;e;n;n;n;open door n;n;search coat;s;d;unlock door w;open door w;w;n;e;n;e;e;n;w;push button;n;n;w;u;push 11;listen;e;s;s;w;n;enter tube;push blue;
+		};
+		#ELSE 
+		{
+			#SHOW {@RError@w: You're not in the correct room 'Walkway to a Huge Mansion'!};
+		};
+	}
+}
+
+#ALIAS {gotoFassanSlaveCompound} {
+    gotostar;
+    #SHOW {@GOkay!@w Travelling to the @YFassan Slave Compound@w!};
+    #SHOW {@RWarning!@w Lots of flows, DT flow in the Air Ducts!};
+    #DELAY {2} {
+        #IF {!$travelerror} {
+            2ds2dwd27wuwu3n4w3nwun;
+            where;
+            challenge area;
+        };
+        #ELSE {
+            resettravel;
+        };
+    }
+}
+
+#ALIAS {gotoGenCloneBioMechanicalLabs} {
+	gotostar;
+	#SHOW {@GOkay!@w Travelling to the @YGenClone BioMechanical Labs@w!};
+	#DELAY {2} {
+		#IF {!$travelerror}{
+			16w9nen4w8n;
+			where;
+			challenge area;
+		};
+		#ELSE {
+			resettravel;
+		};
+	};
+}
+
+#ALIAS {gotoHitpointIncreaser} {
+    gotostar;
+	#SHOW {@GOkay!@w Travelling to the @YHitpoints Increaser@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			#NOP (Xrr!yth);
+			3n1e;open door s;1s1u;
+			where;
+			challenge area;
+	    };
+	    #ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoImplantChamber} {
+    gotostar;
+	#SHOW {@GOkay!@w Travelling to the @YImplant Chamber@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			4w3n3w;
+			where;
+			challenge area;
+	    };
+	    #ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoKiddieKandy} {
+	gotostar;
+	#SHOW {@GOkay!@w Travelling to the @YKiddie Kandy Incorporated@w!};
+	#DELAY {2} {
+		#IF {!$travelerror} {
+			4n2wn;open gate n;n;
+			where;
+			challenge area;
+		};
+		#ELSE {
+			resettravel;
+		}
+	}
+}
+
+#ALIAS {gotoKromguard} {
+    gotostar;
+	#SHOW {@GOkay!@w Travelling to the @YKromguard@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			19w3n;enter tube;4u;enter port;
+			where;
+			challenge area;
+	    };
+	    #ELSE {
+	        resettravel;
+    	}
+	};
+}
+
+#ALIAS {gotoLuxare} {
+    gotostar;
+	#SHOW {@GOkay!@w Travelling to the @YLuxare@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			4w4nen;
+			where;
+			challenge area;
+	    };
+	    #ELSE {
+	        resettravel;
+    	}
+	};
+}
+
+#ALIAS {gotoMerquryCity} {
+    gotostar;
+	#SHOW {@GOkay!@w Travelling to the @YMerqury City@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			19w3n;enter tube;
+			where;
+			challenge area;
+	    };
+	    #ELSE {
+	        resettravel;
+    	}
+	};
+}
+
+#ALIAS {gotoNETWORKCommunicationsTower} {
+    gotostar;
+	#SHOW {@GOkay!@w Travelling to the @YNETWORK Communications Tower@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			4w4ne;open door s;s;
+			where;
+			challenge area;
+	    };
+	    #ELSE {
+    	    resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoReinforcer} {
+    gotostar;
+	#SHOW {@GOkay!@w Travelling to the @YReinforcer@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			4w5n2w;
+			where;
+			challenge area;
+	    };
+	    #ELSE {
+	        resettravel;
+    	}
+	};
+}
+
+#ALIAS {gotoRuinsOfHTOM} {
+    gotostar;
+	#SHOW {@GOkay!@w Travelling to the @YRuins of the High Tower of Magic@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			34w3n2w7n;
+			where;
+			challenge area;
+	    };
+	    #ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoRuinsOfTheSilverTower} {
+    gotostar;
+	#SHOW {@GOkay!@w Travelling to the @YRuins of the Silver Tower@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			9e11s;
+			where;
+			challenge area;
+	    };
+	    #ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoSimeonTheCybernetic} {
+    gotostar;
+	#SHOW {@GOkay!@w Travelling to the @YSimeon the Cybernetic@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			4w3n1e;
+			where;
+			challenge area;
+	    };
+	    #ELSE {
+	        resettravel;
+    	}
+	};
+}
+
+#ALIAS {gotoTriskinAsylum} {
+    gotostar;
+			#SHOW {ZONE CLOSED};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			where;
+	    };
+	    #ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoVirtualWorldOfNETWORK} {
+    gotostar;
+	#SHOW {@GOkay!@w Travelling to the @YVirtual World of NETWORK@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			4w4ne;open door s;3s;push 25;1n;kill secretary;push button;open door n;1n1e;push button;push 0316;1w1s;tweak nose;1e;pull latch;wear app;push button;
+			where;
+			challenge area;
+	    };
+	    #ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoWeaponEnhancer} {
+    gotostar;
+	#SHOW {@GOkay!@w Travelling to the @YWeapons Enhancer@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			5n2w1s1e;
+			where;
+	    };
+	    #ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoWeaponSpecializer} {
+    gotoskull;
+	#SHOW {@GOkay!@w Travelling to the @YWeapon Specializer@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			4sd2enen2e4nw3nen2w2n2e2n2e2un4eu;open ebony;ws2w;open door w;2w2ne2n2w;open door s;s;open tap;
+			where;
+	    };
+	    #ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoWeaponUnSpecializer} {
+    gotostar;
+	#SHOW {@GOkay!@w Travelling to the @YWeapon UNSpecializer@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			3n1e;open door s;1s1u1e;
+			where;
+	    };
+	    #ELSE {
+	        resettravel;
+	    }
+	};
+}
+
+#ALIAS {gotoZulDane} {
+    gotostar;
+	#SHOW {@GOkay!@w Travelling to the @YCity of Zul'Dane@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror} {
+			26n4e;
+			where;
+			challenge area;
+	    };
+	    #ELSE {
+	        resettravel;
+	    };
+	};
+}
+
+#NOP ----------------------------------------------------------------------------------------------
+#NOP                             Underdark Directions
+
+#ALIAS {gotoUndeadShark} {
+	gotoskull;
+	#NOP from slave square: sharkskin pants -2es2u open plank e es open door s 3s open door w ws3ene3n2en2en5esese4s open door s s open door s 6s open water e en2e2s open door s 2s2e;
+	#SHOW {@GOkay!@w Travelling to the @YUndead Shark@w!};
+	#DELAY {2} {
+		#IF {!$travelerror}
+		{
+			2es2u;open plant e;es;open door s;3s;open door w;ws3ene3n2en2en5esese4s;open door s;s;open door s;6s;open water e;en2e2s;open door s;2s2e;
+			where;
+			challenge area;
+		};
+		#ELSE {
+			resettravel;
+		};
+	}
+}
+
+#ALIAS {gotoHeadShrinker} {
+	gotoskull;
+	#SHOW {@GOkay!@w Travelling to the @Yhead Shrinker@w!};
+	#DELAY {2} {
+		#IF {!$travelerror} {
+			11s2wdnund2sundwun2d3ws;open hide;1w;
+			where;
+			challenge area;
+		};
+		#ELSE {
+			resettravel;
+		};
+	};
+}
+
+#ALIAS {gotoLizardCaverns} {
+	gotoskull;
+	#SHOW {@GOkay!@w Travelling to the @YLizard Caverns@w!};
+	#DELAY {2} {
+		#IF {!$travelerror} {
+			11s2wdnund2sundwun2dw4n;move lizard;take key;unlock door e;open door e;drop key;e;
+			where;
+			challenge area;
+		};
+		#ELSE {
+			resettravel;
+		};
+	};
+}
+
+#ALIAS {gotoWyllowwood} {
+	gotoskull;
+	#SHOW {@GOkay!@w Travelling to the @YWyllowwood@w!};
+	#DELAY {2} {
+		#IF {!$travelerror} {
+			6s2w4sedwun2dw4n;move lizard;get key;unlock door e;bash door e;open door e;drop key;2e2nes2en;enter arch;
+			where;
+			challenge area;
+		};
+		#ELSE {
+			resettravel;
+		};
+	};
+}
+
+#NOP ----------------------------------------------------------------------------------------------
+#NOP                                  Outer Planes Directions
+
+#ALIAS {gotoAbyssUnholyModrian} {
+    gotoastral;
+	#SHOW {@GOkay!@w Travelling to the @YCity of Unholy Modrian@w!};
+    #DELAY {2} {
+        #IF {!$travelerror} {
+       		5nu3w;enter pool;
+			where;
+			challenge area;
+        };
+        #ELSE {
+            resettravel;
+        };
+    };
+}
+
+#ALIAS {gotoAmoria} {
+    gotoastral;
+	#SHOW {@GOkay!@w Travelling to the @YAmoria@w!};
+    #DELAY {2} {
+        #IF {!$travelerror} {
+			5n3u2n3e;enter pool;
+			where;
+			challenge area;
+        };
+        #ELSE {
+            resettravel;
+        };
+    };
+}
+
+#ALIAS {gotoGith}
+{
+    #VAR {githFound}{0};
+    #VAR {findGith}{1};
+    #MATH githX 0;
+    #MATH githY 0;
+    #MATH githZ 0;
+    gotoastral;
+    #SHOW {@GOkay!@w Travelling to @YGith@w!};
+    #DELAY {2}
+    {
+        #IF {!$travelerror}
+        {
+            north;north;north;north;north;exits;
+            #NOP (zMUD: trigger "^The Astral Plane" defined at end of file)
+        #SHOW {@CWarning!@w Attacked, ceasing search.};
+        };
+        #ELSE
+        {
+            resettravel;
+        };
+    };
+}
+
+#ALIAS {gotoLuniaHeaven} {
+    gotoastral;
+	#SHOW {@GOkay!@w Travelling to the @YLunia Heaven 1@w!};
+    #DELAY {2} {
+        #IF {!$travelerror} {
+			5n3d2sw;enter pool;
+			#NOP (zMUD: trigger "^You step into a gold color pool." defined at end of file)
+			where;
+			challenge area;
+
+        };
+        #ELSE {
+            resettravel;
+        };
+    };
+}
+
+#ALIAS {helpHeaven}
+{
+	#SHOW { @Y------------------------@CHelp Heaven@Y---------------------------------@w};
+	#SHOW { @YTo Thor@w: nenenu5wn2wse - Use @wgotoThor@w};
+    #SHOW { @YTo Diancecht@w: 2w2n4esene3ne3nws - Use @wgotoDiancecht@w};
+    #SHOW { @YTo Ptah@w: ne7s2edeu4w2n4u - Use @wgotoPtah@w};
+	#SHOW { @YTo Ixlilton@w: 4d2s4edsu2e4n - Use @wgotoIxlilton@w};
+	#SHOW { @YTo Ushas@w: 4s2wdwu3ws3w3sw3sw - Use @w gotoUshas@w };
+	#SHOW { @YTo Fu-Hsiing@w: e3nenene - Use @w gotoFu@w };
+	#SHOW { @YTo Ebisu@w: unnww - Use @wgotoEbisu@w };
+	#SHOW { @YTo Castle Mahlhevik@w: e3s2enuseuene - Use @wgotoMahlhevik@w };
+	#SHOW { @Y--------------------------------------------------------------------@w};
+
+}
+
+#ALIAS {gotoThor} {
+	where;
+	#DELAY {2} {
+		#IF {$currentRoom = "In the Silver Sea"}
+		{
+			#SHOW {@GOkay!@w Travelling to @YThor, God of Lightning@w!};
+			nenenu5wn2wse;
+		};
+		#ELSE
+		{
+			#SHOW {@RError@w: You're not in the correct room 'In the Silver Sea'!};
+		};
+	};
+}
+
+#ALIAS {gotoDiancecht}
+{
+	where;
+	#DELAY {2} {
+		#IF {$currentRoom = "Before a Palatial Estate"}
+		{
+			#SHOW {@GOkay!@w Travelling to @YDiancecht@w!};
+			2w2n4esene3ne3nws;
+		};
+		#ELSE
+		{
+			#SHOW {@RError@w: You're not in the correct room 'Before the Palatial Estate'!};
+		};
+	};
+}
+
+#ALIAS {gotoPtah}
+{
+	where;
+	#DELAY {2} {
+		#IF {$currentRoom = "Before a Spiraling Tower"}
+		{
+			#SHOW {@GOkay!@w Travelling to @YPtah@w!};
+			ne7s2edeu4w2n4u;
+		};
+		#ELSE
+		{
+			#SHOW {@RError@w: You're not in the correct room 'Before a Spiraling Tower'!}
+		};
+	};
+}
+
+#ALIAS {gotoIxlilton}
+{
+	where;
+	#DELAY {2} {
+		#IF {$currentRoom = "A Garden Plateau"}
+		{
+			#SHOW {@GOkay!@w Travelling to @YIxlilton@w!};
+			4d2s4edsu2e4n;
+		};
+		#ELSE
+		{
+			#SHOW {@RError@w: You're not in the correct room 'A Garden Plateau'!};
+		};
+	};
+}
+
+#TRIGGER {^A huge island of matter is floating here.}
+{
+    #IF {$findGith = 1}
+    {
+        #SHOW {@Y***** GITH FOUND! *****@w};
+        revoke;
+        revoke;
+        #VAR {githFound}{1};
+        #VAR {findGith}{0};
+        enter island;
+        challenges area
+    };
+}
+
+#ALIAS {gotoGith}
+{
+    #VAR {githFound}{0};
+    #VAR {findGith}{1};
+    #MATH githX 0;
+    #MATH githY 0;
+    #MATH githZ 0;
+    gotoastral;
+    #SHOW {@GOkay!@w Travelling to @YGith@w!};
+    #DELAY {2}
+    {
+        #IF {!$travelerror}
+        {
+            north;north;north;north;north;exits;
+            #NOP (zMUD: trigger "^The Astral Plane" defined at end of file)
+        #SHOW {@CWarning!@w Attacked, ceasing search.};
+        };
+        #ELSE
+        {
+            resettravel;
+        };
+    };
+}
+
+#ALIAS {gotoAvernusHell} {
+    gotoastral;
+	#SHOW {@GOkay!@w Travelling to the @YLevel 1 Hell: Avernus@w!};
+    #DELAY {2} {
+        #IF {!$travelerror} {
+			 5wdes;enter pool;
+			 where;
+			challenge area;
+        };
+        #ELSE {
+            resettravel;
+        };
+    };
+}
+
+#ALIAS {gotoImmoth} {
+	gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YImmoth Hallow@w!};
+	#DELAY {2} {
+		#IF {!$travelerror} {
+		    2nu;open door west;w;read title73;
+			where;
+			challenge area;
+		};
+		#ELSE {
+			resettravel;
+		};
+	};
+}
+
+#ALIAS {gotoElementalPlaneOfAir} {
+	gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YElemental Plane of Air@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			7e4ne;enter font;uw4nwu4s3wnwsws4w;
+			#SHOW {@RWarning!@w Lots of flows.};
+			where;
+			challenge area;
+		};
+		#ELSE {
+	        resettravel;
+		}
+    }
+}
+
+#ALIAS {gotoElementalPlaneOfEarth} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YElemental Plane of Earth@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			67w12seseds6wndnd;enter portal;
+			where;
+			challenge area;
+		};
+		#ELSE {
+	        resettravel;
+		}
+    }
+}
+
+#ALIAS {gotoElementalPlaneOfFire} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YElemental Plane of Fire@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			7e4ne;enter font;uw4nwu4s3wnwsws18wd2s4w;
+			#SHOW {@RWarning!@w Lots of flows.};
+			where;
+			challenge area;
+		};
+		#ELSE {
+	        resettravel;
+		}
+    }
+}
+
+#ALIAS {gotoElementalPlaneOfIce} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YElemental Plane of Ice@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			7e4ne;enter font;uw4nwu4s3wne;
+			where;
+			challenge area;
+		};
+		#ELSE {
+	        resettravel;
+		}
+    }
+}
+
+#ALIAS {gotoElementalPlaneOfOoze} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YElemental Plane of Ooze@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			7e4ne;enter font;3ese;
+			where;
+			challenge area;
+		};
+		#ELSE {
+        	resettravel;
+	    }
+	}
+}
+
+#ALIAS {gotoElementalPlaneOfSmoke} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YElemental Plane of Smoke@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			7e4ne;enter font;uw4nwu4s3wnwsws13w;
+			#SHOW {@RWarning!@w Lots of flows.};
+			where;
+			challenge area;
+			#IF {$currentRoom = "The Border of the Para-Elemental Plane of Smoke"}
+			{
+				helpEPOS;
+			};
+		};
+		#ELSE {
+    	    resettravel;
+		}
+    }
+}
+
+#ALIAS {helpEPOS}
+{
+	#SHOW { @Y--------------@CHelp Elemental Plane of Smoke@Y-----------------------@w};
+	#SHOW { @YStart All directions from@w: "Pitch Black"@w};
+    #SHOW { @YTo Chocking Palace@w: 2dn;enter palace - Use @wgotoEPOSPalace@w};
+    #SHOW { @YTo The Fortress@w: 3d2se;enter cloud - Use @wgotoEPOSFortress@w};
+	#SHOW { @YTo The Camp@w: dwn;enter cloud - Use @wgotoEPOSCamp@w};
+	#SHOW { @Y--------------------------------------------------------------------@w};
+}
+
+#ALIAS {gotoEPOSPalace}
+{
+	where;
+	#DELAY {2} {
+		#IF {$currentRoom = "Pitch Black"}
+		{
+			#SHOW {@GOkay!@w Travelling to @YEPOS Palace@w!};
+			2dn;enter palace
+		};
+		#ELSE
+		{
+			#SHOW {@RError@w: You're not in the correct room 'Pitch Black'!};
+		};
+	};
+}
+
+#ALIAS {gotoEPOSFortress}
+{
+	where;
+	#DELAY {2} {
+		#IF {$currentRoom = "Pitch Black"}
+		{
+			#SHOW {@GOkay!@w Travelling to @YEPOS Fortress@w!};
+			3d2se;enter cloud
+		};
+		#ELSE
+		{
+			#SHOW {@RError@w: You're not in the correct room 'Pitch Black'!};
+		};
+	};
+}
+
+#ALIAS {gotoEPOSCamp}
+{
+	where;
+	#DELAY {2} {
+		#IF {$currentRoom = "Pitch Black"}
+		{
+			#SHOW {@GOkay!@w Travelling to @YEPOS Camp@w!};
+			dwn;enter cloud
+		};
+		#ELSE
+		{
+			#SHOW {@RError@w: You're not in the correct room 'Pitch Black'!};
+		};
+	};
+}
+
+#TRIGGER {^A Large Workshop}
+{
+	helpEPOSCraftsman;
+}
+
+#ALIAS {helpEPOSCraftsman}
+{
+	#SHOW { @Y--------------@CElemental Plane of Smoke Craftsman@Y-----------------------@w};
+	#SHOW { @YA smoking helm@w: some smoke dragon scales + a smokey potion};
+	#SHOW { @YSome scale-plated gauntlets@w: some smoke dragon scales + gauntlets of ogre power (Ogre Village)};
+	#SHOW { @YSome smoky colored scalemail@w: some smoke dragon scales + scalemail jacket };
+	#SHOW { @YSome scaled leggings@w: some smoke dragon scales + jeweled leggings (Malevolent Circle)};
+	#SHOW { @YA dragonshaped shield@w: some smoke dragon scales + heavy megal shield};
+	#SHOW { @YA dragon-hilted longsword@w: a dragon's claw + silver bastard sword};
+	#SHOW { @YA smoking dagger@w: a dragon's claw + flaming spear + vial of thick grey liquid};
+	#SHOW { @YA dragon's claw polearm@w: a dragon's claw + charred scroll + large smoked-steel halberd};
+	#SHOW { @YA set of dragon's talons@w: a dragon's claw + cat's claw gloves (Skullport) + smokey potion};
+	#SHOW { @YSome talon studded boots@w: a dragon's claw + hard leather boots (Modrian)};
+	#SHOW { @Y--------------------------------------------------------------------@w};
+}
+
+#ALIAS {gotoElementalPlaneOfWater} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YElemental Plane of Water@w!};
+	#DELAY {2} {
+	    #IF {!$travelerror}{
+			7e3n2enw;enter sphere;
+			where;
+			challenge area;
+		};
+		#ELSE {
+	        resettravel;
+		}
+    };
+}
+
+#ALIAS {gotoCastleMahlhevik} {
+    #NOP gotohs;
+	#SHOW { Directions Pending. };
+    #DELAY {2} {
+	    #IF {!$travelerror}{
+			where;
+			challenge area;
+		};
+		#ELSE {
+	        resettravel;
+		}
+    };
+}
+
+#NOP ----------------------------------------------------------------------------------------------
+#NOP                                 Class Practice Teachers
+
+#ALIAS {gotoBarbarianGuildmaster} {
+	gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YBarbarian Guildmaster@w!};
+	#DELAY {2} {
+		#IF {!$travelerror} {
+			57w11n;
+			where;
+			challenge area;
+		};
+		#ELSE {
+			resettravel;
+		};
+	};
+}
+
+#ALIAS {gotoBardGuildmaster} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YBard Guildmaster@w!};
+    #DELAY {2} {
+        #IF {!$travelerror} {
+			3w2swn;
+			where;
+			challenge area;
+        };
+        #ELSE {
+            resettravel;
+        };
+    };
+}
+
+#ALIAS {gotoClericEvilGuildmaster} {
+    gotoskull;
+	#SHOW {@GOkay!@w Travelling to the @YEvil Cleric Guildmaster@w!};
+    #DELAY {2} {
+        #IF {!$travelerror} {
+			7n2w;open door w;2w;
+			where;
+			challenge area;
+        };
+        #ELSE {
+            resettravel;
+        };
+    };
+}
+
+#ALIAS {gotoClericGoodGuildmaster} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YGood Cleric Guildmaster@w!};
+    #DELAY {2} {
+        #IF {!$travelerror} {
+			6e11s;open door s;3s;5u2s;#SHOW {Guildmaster wanders in this area.};
+			where;
+			challenge area;
+        };
+        #ELSE {
+            resettravel;
+        };
+    };
+}
+
+#ALIAS {gotoCyborgGuildmaster} {
+    gotostar;
+	#SHOW {@GOkay!@w Travelling to the @YCyborg Guildmaster@w!};
+    #DELAY {2} {
+        #IF {!$travelerror} {
+			4w2nws;login;
+			where;
+			challenge area;
+        };
+        #ELSE {
+            resettravel;
+        };
+    };
+}
+
+#ALIAS {gotoKnightEvilGuildmaster} {
+    gotoskull;
+	#SHOW {@GOkay!@w Travelling to the @YEvil Knight Guildmaster@w!};
+    #DELAY {2} {
+        #IF {!$travelerror} {
+			2w2ne;
+			where;
+			challenge area;
+        };
+        #ELSE {
+            resettravel;
+        };
+    };
+}
+
+	#ALIAS {gotoKnightGoodGuildmaster} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YGood Knight Guildmaster@w!};
+    #DELAY {2} {
+        #IF {!$travelerror} {
+			2nunw;open tap;4wn3e;
+			where;
+			challenge area;
+        };
+        #ELSE {
+            resettravel;
+        };
+    };
+}
+
+#ALIAS {gotoMageGuildmaster} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YMage Guildmaster@w!};
+    #DELAY {2} {
+        #IF {!$travelerror} {
+			4nu;open door west;w;read title31;e;open door east;
+			where;
+			challenge area;
+        };
+        #ELSE {
+            resettravel;
+        };
+    };
+}
+
+#ALIAS {gotoMercenaryGuildmaster} {
+    gotostar;
+	#SHOW {@GOkay!@w Travelling to the @YMercenary Guildmaster@w!};
+    #DELAY {2} {
+        #IF {!$travelerror} {
+			2d4e5nes;
+			where;
+			challenge area;
+        };
+        #ELSE {
+            resettravel;
+        };
+    };
+}
+
+#ALIAS {gotoMonkGuildmaster} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YMonk Guildmaster@w!};
+    #DELAY {2} {
+        #IF {!$travelerror} {
+			37e41n;open gate n;4n3w;open gate w;11w8ne3nws;
+			where;
+			challenge area;
+        };
+        #ELSE {
+            resettravel;
+        };
+    };
+}
+
+#ALIAS {gotoPhysicGuildmaster} {
+    gotostar;
+	#SHOW {@GOkay!@w Travelling to the @YPhysics Guildmaster@w!};
+    #DELAY {2} {
+        #IF {!$travelerror} {
+			3s2uswn;
+			where;
+			challenge area;
+        };
+        #ELSE {
+            resettravel;
+        };
+    };
+}
+
+#ALIAS {gotoPsionicistGuildmaster} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YPsionic Guildmaster@w!};
+    #DELAY {2} {
+        #IF {!$travelerror} {
+			2nune;open tapestry;3w;open gate w;11w8ne3nws;
+			where;
+			challenge area;
+        };
+        #ELSE {
+            resettravel;
+        };
+    };
+}
+
+#ALIAS {gotoRangerGuildmaster} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YRanger Guildmaster@w!};
+    #DELAY {2} {
+        #IF {!$travelerror} {
+			nnune;open tapestry;ssswwse;
+			where;
+			challenge area;
+        };
+        #ELSE {
+            resettravel;
+        };
+    };
+}
+
+#ALIAS {gotoThiefGuildmaster} {
+    gotoskull;
+	#SHOW {@GOkay!@w Travelling to the @YThief Guildmaster@w!};
+    #DELAY {2} {
+        #IF {!$travelerror} {
+			4e;open portrait;2ene2s;open door e;8e;
+			where;
+			challenge area;
+        };
+        #ELSE {
+            resettravel;
+        };
+    };
+}
+
+#NOP ----------------------------------------------------------------------------------------------
+#NOP                                    Stats Increaser
+
+#ALIAS {gotoCharismaTrainer} {
+    gotostar;
+	#SHOW {@GOkay!@w Travelling to the @YCharisma Trainer@w!};
+    #DELAY {2} {
+        #IF {!$travelerror} {
+			 3n1e;open door s;1s1w;
+			 where;
+			challenge area;
+        };
+        #ELSE {
+            resettravel;
+        };
+    };
+}
+
+#ALIAS {gotoConstitutionTrainer} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YConstitution Trainer@w!};
+    #DELAY {2} {
+        #IF {!$travelerror} {
+			 2nunw;open tapestry;3e4ne;
+			 where;
+			challenge area;
+        };
+        #ELSE {
+            resettravel;
+        };
+    };
+}
+
+#ALIAS {gotoDexterityTrainer} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YDexterity Trainer@w!};
+    #DELAY {2} {
+        #IF {!$travelerror} {
+			nnwwww;open grate;dessesusseuswnw;#SHOW {@CKill the Assassin and go two west!@w};
+			where;
+			challenge area;
+        };
+        #ELSE {
+            resettravel;
+        };
+    };
+}
+
+#ALIAS {gotoIntelligenceTrainer} {
+    gotohs;
+	#SHOW {@GOkay!@w Travelling to the @YIntelligence Trainer@w!};
+    #DELAY {2} {
+        #IF {!$travelerror} {
+			2nu;open door west;w;read title31;e;open door east;2e2n2ed4s2w;open door south;s;
+			where;
+			challenge area;
+        };
+        #ELSE {
+            resettravel;
+        };
+    };
+}
+
+#ALIAS {gotoStrengthTrainer} {
+    gotohs;
+		#SHOW {@GOkay!@w Travelling to the @YStrength Trainer@w!};
+    #DELAY {2} {
+        #IF {!$travelerror} {
+			2nune;open tapestry;3nen;
+			where;
+			challenge area;
+        };
+        #ELSE {
+            resettravel;
+        };
+    };
+}
+
+#ALIAS {gotoWisdomTrainer} {
+    gotohs;
+		#SHOW {@GOkay!@w Travelling to the @YWisdom Trainer@w!};
+    #DELAY {2} {
+        #IF {!$travelerror} {
+			6e11s;open door s;3s1u2s1e;open door s;2s1w1u;
+			where;
+			challenge area;
+        };
+        #ELSE {
+            resettravel;
+        };
+    };
+}
+
+#NOP ----------------------------------------------------------------------------------------------
+#NOP                                 Language Trainers
+
+#ALIAS {gotoModriadicTrainer} {
+    gotohs;
+		#SHOW {@GOkay!@w Travelling to the @YModriadic Trainer@w!};
+    #DELAY {2} {
+        #IF {!$travelerror} {
+			where;
+			challenge area;
+        };
+        #ELSE {
+            resettravel;
+        };
+    };
+}
+
+#ALIAS {gotoElvishTrainer} {
+    gotohs;
+		#SHOW {@GOkay!@w Travelling to the @YElvish Trainer@w!};
+    #DELAY {2} {
+        #IF {!$travelerror} {
+			22n4e9n3w;offer elvish;
+			where;
+			challenge area;
+        };
+        #ELSE {
+            resettravel;
+        };
+    };
+}
+
+#ALIAS {gotoOrcishTrainer} {
+    gotostar;
+		#SHOW {@GOkay!@w Travelling to the @YOrcish Trainer@w!};
+    #DELAY {2} {
+        #IF {!$travelerror} {
+			where;
+			challenge area;
+        };
+        #ELSE {
+            resettravel;
+        };
+    };
+}
+
+#ALIAS {gotoHobbishTrainer} {
+	gotohs;
+		#SHOW {@GOkay!@w Travelling to the @YHobbish Trainer@w!};
+	#DELAY {2} {
+		#IF {!$travelerror} {
+		    15e10s6e3n;open door north;2n;offer hobbish;
+			where;
+			challenge area;
+		};
+		#ELSE {
+			resettravel;
+		};
+	};
+}
+
+#NOP #ALIAS {goto} {
+#NOP    goto;
+#NOP    #DELAY {2} {
+#NOP        #IF {!$travelerror} {
+#NOP		#SHOW {@GOkay!@w Travelling to the @Y@w!};
+#NOP        };
+#NOP        #ELSE {
+#NOP            resettravel;
+#NOP        };
+#NOP    };
+#NOP }
+#NOP {5}
+
+#NOP ----------------------------------------------------------------------------------------------
+
+#NOP ----------------------------------------------------------------------------------------------
+#NOP                                    Utilities
+
+#ALIAS {showcolors} {#SHOW @R'FF00' Red <F0F0>'F0F0' Green @C'F00F' Blue @Y'FFF0' Yellow @C'F0FF' Cyan @M'FF0F' Purple @C'acf' Azure @C'afc' Jade @M'caf' Violet @G'cfa' Lime @M'fac' Pink @Y'fca' Orange@w}
+#TRIGGER {^In the area: %1}
+{
+	#VAR {travelling}{0};
+}
+
+#VAR {travelerror} {0}
+#VAR {travelling} {0};
+
+#NOP ============================================================
+#NOP  zMUD COMPATIBILITY TRIGGERS
+#NOP  These were inline #ACTION blocks in the original TinTin++ file.
+#NOP  In zMUD all triggers must be defined at the top level.
+#NOP  The $findGith flag guards the Astral Plane trigger.
+#NOP ============================================================
+
+#TRIGGER {^Walkway to a Huge Mansion} {
+				#SHOW {To get to Freddy: e;e;n;n;n;open door n;n;search coat;s;d;unlock door w;open door w;w;n;e;n;e;e;n;w;push button;n;n;w;u;push 11;listen;e;s;s;w;n;enter tube;push blue};
+				#SHOW {Use the alias 'gotoFailFamilyLegacyFreddy'};
+			}
+
+#TRIGGER {^The Astral Plane} {
+                #IF {$debug = 1}
+                {
+                    #SHOW {@CDebug:@w Astral Plane Action triggered.};
+                };
+                #IF {$findGith = 1 && !$isFighting}
+                {
+                    #IF {$debug = 1}
+                    {
+                        #SHOW {@CDebug:@w Find Gith is @GON@w!};
+                    };
+                    #IF {$githX < 8}
+                    {
+                        #IF {$debug = 1}
+                        {
+                            #SHOW {@CDebug:@w Gith X = $githX};
+                        };
+                        #IF {$githFound = 0}
+                        {
+                            north;
+                            #MATH githX $githX + 1;
+                        };
+                        #ELSE
+                        {
+                            enter island;
+                            challenges area;
+                        };
+                        #IF {$githY < 8 && $githX = 7}
+                        {
+                            #MATH githX 0;
+                            #IF {$debug = 1}
+                            {
+                                #SHOW {@CDebug:@w Gith Y = $githY};
+                            };
+                            #IF {$githFound = 0}
+                            {
+                                west;
+                                #MATH githY $githY + 1;
+                            };
+                            #ELSE
+                            {
+                                enter island;
+                                challenges area;
+                            };
+                            #IF {$githZ < 8 && $githY = 7}
+                            {
+                                #IF {$debug = 1}
+                                {
+                                    #SHOW {@CDebug:@w Gith Z = $githZ};
+                                };
+                                #IF {$githFound = 0}
+                                {
+                                    up;
+                                    #MATH githZ $githZ + 1;
+                                    #MATH githY 0;
+                                    #MATH githX 0;
+                                };
+                                #ELSE
+                                {
+                                    enter island;
+                                    challenges area;
+                                };
+                            };
+                        };
+                    };
+                    #IF {$githZ = 8}
+                    {
+                        #SHOW {@GWarning!@w Unable to locate the Githyanki Fortress!};
+                        #VAR {findGith} {0};
+                    };
+                };
+            }
+
+#TRIGGER {^You step into a gold color pool.} {helpHeaven}
+

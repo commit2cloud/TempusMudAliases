@@ -1,6 +1,6 @@
 # TempusMUD Travel Aliases
 
-Easily navigate TempusMUD zones using a travel menu system. Originally written for TinTin++, now also available as a **Lua script for [Mudlet](https://www.mudlet.org/)**.
+Easily navigate TempusMUD zones using a travel menu system. Originally written for TinTin++, now also available as a **dedicated zMUD script** and a **Lua script for [Mudlet](https://www.mudlet.org/)**.
 
 ---
 
@@ -25,7 +25,7 @@ Easily navigate TempusMUD zones using a travel menu system. Originally written f
 | Client | Script File | Status |
 |---|---|---|
 | TinTin++ / Tinframe | `directions.tt` | ✅ Original |
-| ZMud | `directions.tt` | ✅ Compatible |
+| zMUD | `directions.zmud` | ✅ Dedicated zMUD Port |
 | Mudlet | `directions.lua` | ✅ Lua Port |
 
 ---
@@ -38,13 +38,41 @@ Easily navigate TempusMUD zones using a travel menu system. Originally written f
    #read directions.tt
    ````
 
-## Setup: ZMud
+## Setup: zMUD
 
-1. Save `directions.tt` to your ZMud root directory.
-2. Load it with:
+`directions.zmud` is a dedicated zMUD port of the travel script with the following adaptations from the original TinTin++ version:
+
+- Color codes converted from TinTin++ `<RGB>` hex format to zMUD `@color` notation
+- `#SH` / `#SHOWME` replaced with zMUD's `#SHOW`
+- TinTin++ alias/trigger priority numbers (`{5}`, `{4}`, `{3}`, `{1}`) removed
+- `#FORMAT` case-conversion replaced with zMUD's `@lower()` / `@upper()` functions
+- Condition operators `===` and `==` replaced with zMUD's `=`
+- Condition variable syntax `{{"$var"}}` simplified to `{$var}`
+- Inline `#ACTION` triggers extracted to top-level `#TRIGGER` definitions (at the end of the file)
+- `#VARIABLE` replaced with `#VAR`
+
+### Installation
+
+1. Download `directions.zmud` and save it in your zMUD directory.
+2. In zMUD, load the script with:
    ````
-   #read directions.tt
+   #read directions.zmud
    ````
+
+### Personalization
+
+Edit the variables near the top of `directions.zmud` (between the `EDIT THESE VARS ONLY` markers):
+
+```
+#VAR {myStartingRoomName} {The Beginning of Misery}
+#ALIAS {directionsToHolySquare} {north;look modrian;north;north}
+#ALIAS {directionsToStarPlaza} {north;look ec}
+#ALIAS {directionsToSlaveSquare} {north;look skullport}
+#ALIAS {directionsToAstralManse} {north;look astral}
+```
+
+- Change `myStartingRoomName` to match the room name shown by `where` at your character's recall point.
+- Update the four `directionsTo...` aliases with the movement commands needed to reach each hub from your starting room.
 
 ## Setup: Mudlet (Lua)
 
@@ -289,6 +317,7 @@ Some zones also have dedicated helper aliases for multi-step navigation (e.g., `
 | File | Description |
 |---|---|
 | `directions.tt` | Original TinTin++ script |
+| `directions.zmud` | Dedicated zMUD port of the travel system |
 | `directions.lua` | Mudlet Lua port of the travel system |
 | `config.lua` | Configuration file (optional) - place in Mudlet home directory |
 | `LICENSE` | License file |
