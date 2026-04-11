@@ -53,6 +53,33 @@ debug = false
 -- Combat state variable
 isFighting = false
 
+-- AutoPractice state variables
+apRunning = false
+apPracticeDelay = 1.5  -- seconds between practice commands
+-- Bard skill/spell list (can be overridden in config.lua with apSkillList = {...})
+if not apSkillList then
+  apSkillList = {
+    {name = "lullaby",      enabled = true},
+    {name = "chant",        enabled = true},
+    {name = "ballad",       enabled = true},
+    {name = "hymn",         enabled = true},
+    {name = "melody",       enabled = true},
+    {name = "verse",        enabled = true},
+    {name = "kick",         enabled = true},
+    {name = "dodge",        enabled = true},
+    {name = "rescue",       enabled = true},
+    {name = "long blade",   enabled = true},
+    {name = "short blade",  enabled = true},
+    {name = "blunt weapon", enabled = true},
+  }
+end
+
+-- Combat Log / XP tracking state variables
+combatLogEnabled = true
+combatLogSessionStart = nil
+combatLogTotalXP = 0
+combatLogKills = 0
+
 -- Gith search variables
 githFound = 0
 findGith = 0
@@ -63,6 +90,12 @@ githZ = 0
 -- =============================================
 -- Helper Functions
 -- =============================================
+
+-- Trim leading/trailing whitespace and lower-case a string.
+-- Used to normalise command arguments consistently across modules.
+function trimAndLower(s)
+  return string.lower(s:match("^%s*(.-)%s*$"))
+end
 
 function sendDirs(dirString)
   -- Direction shorthand to full command mapping
@@ -116,6 +149,244 @@ end
 -- Note: This may not work perfectly when fighting multiple mobs simultaneously
 function isInFight()
   return isFighting
+end
+
+-- =============================================
+-- AutoPractice Module
+-- =============================================
+-- Automates skill/spell practice for bard characters at the Guildmaster.
+--
+-- Usage (register an alias with pattern "^ap(.*)$", script body below):
+--   ap                  - Navigate to Bard Guildmaster and practice all enabled skills
+--   ap status           - Display practice list and running state
+--   ap toggle <skill>   - Toggle a skill on/off
+--   ap add <skill>      - Add a skill to the practice list
+--   ap remove <skill>   - Remove a skill from the practice list
+--   ap stop             - Abort a running practice session
+--   ap help             - Show usage help
+
+function apGetEnabledSkills()
+  local enabled = {}
+  for _, skill in ipairs(apSkillList) do
+    if skill.enabled then
+      table.insert(enabled, skill.name)
+    end
+  end
+  return enabled
+end
+
+function apShowStatus()
+  cecho("\n<cyan>┌──────────────────────────────────────────┐\n")
+  cecho("<cyan>│         <yellow>AutoPractice Status              <cyan>│\n")
+  cecho("<cyan>├──────────────────────────────────────────┤\n")
+  local enabledCount = 0
+  for _, skill in ipairs(apSkillList) do
+    if skill.enabled then enabledCount = enabledCount + 1 end
+    local col = skill.enabled and "<green>" or "<red>"
+    local tag = skill.enabled and "[ON ] " or "[OFF] "
+    cecho("<cyan>│  " .. col .. tag .. "<reset>" .. skill.name .. "\n")
+  end
+  cecho("<cyan>├──────────────────────────────────────────┤\n")
+  local runState = apRunning and "<green>RUNNING" or "<red>STOPPED"
+  cecho("<cyan>│  Status: " .. runState .. "<reset>  │  Enabled: <yellow>" .. enabledCount .. "<reset> skill(s)\n")
+  cecho("<cyan>└──────────────────────────────────────────┘\n")
+end
+
+function apToggleSkill(skillName)
+  skillName = string.lower(skillName)
+  for _, skill in ipairs(apSkillList) do
+    if string.lower(skill.name) == skillName then
+      skill.enabled = not skill.enabled
+      local col = skill.enabled and "<green>ON" or "<red>OFF"
+      cecho("\n<cyan>AutoPractice: <reset>" .. skill.name .. " toggled " .. col .. "<reset>\n")
+      return
+    end
+  end
+  cecho("\n<red>AutoPractice: <reset>Skill '" .. skillName .. "' not found. Use 'ap add " .. skillName .. "' to add it.\n")
+end
+
+function apAddSkill(skillName)
+  skillName = string.lower(skillName)
+  for _, skill in ipairs(apSkillList) do
+    if string.lower(skill.name) == skillName then
+      cecho("\n<yellow>AutoPractice: <reset>'" .. skillName .. "' is already in the list.\n")
+      return
+    end
+  end
+  table.insert(apSkillList, {name = skillName, enabled = true})
+  cecho("\n<green>AutoPractice: <reset>'" .. skillName .. "' added.\n")
+end
+
+function apRemoveSkill(skillName)
+  skillName = string.lower(skillName)
+  for i, skill in ipairs(apSkillList) do
+    if string.lower(skill.name) == skillName then
+      table.remove(apSkillList, i)
+      cecho("\n<green>AutoPractice: <reset>'" .. skillName .. "' removed.\n")
+      return
+    end
+  end
+  cecho("\n<red>AutoPractice: <reset>Skill '" .. skillName .. "' not found.\n")
+end
+
+function apShowHelp()
+  cecho("\n<yellow>AutoPractice (ap) Help\n")
+  cecho("<cyan>────────────────────────────────────────────\n")
+  cecho("<white>Commands:<reset>\n")
+  cecho("  ap                 - Navigate to Bard Guildmaster & practice all enabled skills\n")
+  cecho("  ap status          - Show practice list and running state\n")
+  cecho("  ap toggle <skill>  - Toggle a skill on/off\n")
+  cecho("  ap add <skill>     - Add a skill to the list\n")
+  cecho("  ap remove <skill>  - Remove a skill from the list\n")
+  cecho("  ap stop            - Abort a running practice session\n")
+  cecho("  ap help            - Show this help message\n")
+  cecho("<cyan>────────────────────────────────────────────\n")
+end
+
+function apStop()
+  apRunning = false
+  cecho("\n<red>AutoPractice: <reset>Session stopped.\n")
+end
+
+-- Internal: practice each skill sequentially with delay
+function apPracticeNext(skills, index)
+  if not apRunning then return end
+  if index > #skills then
+    apRunning = false
+    cecho("\n<green>AutoPractice: <reset>All " .. #skills .. " skill(s) practiced. Session complete!\n")
+    return
+  end
+  local skill = skills[index]
+  cecho("\n<cyan>AutoPractice: <reset>Practicing '<yellow>" .. skill .. "<reset>' (" .. index .. "/" .. #skills .. ")...\n")
+  send("practice " .. skill)
+  tempTimer(apPracticeDelay, function()
+    apPracticeNext(skills, index + 1)
+  end)
+end
+
+-- Internal: poll until navigation finishes, then start practicing
+function apWaitForArrival(skills)
+  if travelerror ~= 0 then
+    cecho("\n<red>AutoPractice: <reset>Navigation failed! Aborting.\n")
+    apRunning = false
+    return
+  end
+  if travelling ~= 0 then
+    tempTimer(0.5, function() apWaitForArrival(skills) end)
+    return
+  end
+  -- Arrived – begin practicing
+  apPracticeNext(skills, 1)
+end
+
+function apStart()
+  if apRunning then
+    cecho("\n<yellow>AutoPractice: <reset>Already running. Use 'ap stop' to abort.\n")
+    return
+  end
+  local skills = apGetEnabledSkills()
+  if #skills == 0 then
+    cecho("\n<red>AutoPractice: <reset>No skills enabled! Use 'ap toggle <skill>' to enable skills.\n")
+    return
+  end
+  cecho("\n<green>AutoPractice: <reset>Starting session – " .. #skills .. " skill(s) queued.\n")
+  cecho("<yellow>Navigating to Bard Guildmaster...\n")
+  apRunning = true
+  gotoBardGuildmaster()
+  -- Poll until travel completes, then practice
+  tempTimer(1.5, function() apWaitForArrival(skills) end)
+end
+
+function ap(cmd, arg)
+  if not cmd or cmd == "" then
+    apStart()
+    return
+  end
+  local c = trimAndLower(cmd)
+  if c == "status" then
+    apShowStatus()
+  elseif c == "toggle" then
+    if arg and arg ~= "" then apToggleSkill(arg)
+    else cecho("\n<red>AutoPractice: <reset>Usage: ap toggle <skill>\n") end
+  elseif c == "add" then
+    if arg and arg ~= "" then apAddSkill(arg)
+    else cecho("\n<red>AutoPractice: <reset>Usage: ap add <skill>\n") end
+  elseif c == "remove" then
+    if arg and arg ~= "" then apRemoveSkill(arg)
+    else cecho("\n<red>AutoPractice: <reset>Usage: ap remove <skill>\n") end
+  elseif c == "stop" then
+    apStop()
+  elseif c == "help" then
+    apShowHelp()
+  else
+    cecho("\n<red>AutoPractice: <reset>Unknown command '" .. cmd .. "'. Type 'ap help' for usage.\n")
+  end
+end
+
+-- =============================================
+-- Combat Log / XP-per-Hour Tracking Module
+-- =============================================
+-- Tracks experience gained during a play session and reports XP/hour.
+--
+-- Usage (register an alias with pattern "^combatlog(.*)$", script body below):
+--   combatlog           - Show current session metrics
+--   combatlog start     - Begin a new tracking session
+--   combatlog reset     - Reset counters for the current session
+--   combatlog stop      - Pause XP tracking
+
+function combatLogStart()
+  combatLogSessionStart = os.time()
+  combatLogTotalXP = 0
+  combatLogKills = 0
+  combatLogEnabled = true
+  cecho("\n<green>Combat Log: <reset>Session started.\n")
+end
+
+function combatLogReset()
+  combatLogSessionStart = os.time()
+  combatLogTotalXP = 0
+  combatLogKills = 0
+  cecho("\n<yellow>Combat Log: <reset>Session counters reset.\n")
+end
+
+function combatLogShow()
+  if not combatLogSessionStart then
+    cecho("\n<yellow>Combat Log: <reset>No active session. Use 'combatlog start' to begin tracking.\n")
+    return
+  end
+  local elapsed = os.time() - combatLogSessionStart
+  local minutes = math.floor(elapsed / 60)
+  local seconds = elapsed % 60
+  local xpPerHour = 0
+  if elapsed > 0 then
+    xpPerHour = math.floor(combatLogTotalXP * 3600 / elapsed)
+  end
+  cecho("\n<cyan>┌──────────────────────────────────────────┐\n")
+  cecho("<cyan>│         <yellow>Combat Log Summary              <cyan>│\n")
+  cecho("<cyan>├──────────────────────────────────────────┤\n")
+  cecho("<cyan>│  <white>Session Time: <reset>" .. minutes .. "m " .. seconds .. "s\n")
+  cecho("<cyan>│  <white>Total XP:     <green>" .. combatLogTotalXP .. "\n")
+  cecho("<cyan>│  <white>XP / Hour:    <green>" .. xpPerHour .. "\n")
+  cecho("<cyan>│  <white>Kills:        <yellow>" .. combatLogKills .. "\n")
+  cecho("<cyan>└──────────────────────────────────────────┘\n")
+end
+
+function combatlog(cmd)
+  if not cmd or cmd == "" then
+    combatLogShow()
+    return
+  end
+  local c = trimAndLower(cmd)
+  if c == "start" then
+    combatLogStart()
+  elseif c == "reset" then
+    combatLogReset()
+  elseif c == "stop" then
+    combatLogEnabled = false
+    cecho("\n<red>Combat Log: <reset>Tracking paused.\n")
+  else
+    cecho("\n<red>Combat Log: <reset>Unknown command. Use: combatlog [start|reset|stop]\n")
+  end
 end
 
 -- =============================================
@@ -1259,9 +1530,28 @@ end)
 -- R.I.P. is the keyword that definitively indicates a death occurred
 if combatEndTrigger then killTrigger(combatEndTrigger) end
 combatEndTrigger = tempRegexTrigger("R\\.I\\.P\\.", function()
+  if combatLogEnabled and isFighting then
+    combatLogKills = combatLogKills + 1
+  end
   isFighting = false
   if debug then
     cecho("\n<cyan>Debug: Combat ended (R.I.P. detected)\n")
   end
 end)
 
+-- Trigger for XP Gain Detection
+-- Captures "You gain XXXX experience points." style messages from TempusMUD
+if xpGainTrigger then killTrigger(xpGainTrigger) end
+xpGainTrigger = tempRegexTrigger("^You gain (\\d[\\d,]*) experience", function()
+  if combatLogEnabled then
+    local rawNum = matches[2]:gsub(",", "")
+    local xp = tonumber(rawNum) or 0
+    combatLogTotalXP = combatLogTotalXP + xp
+    if not combatLogSessionStart then
+      combatLogSessionStart = os.time()
+    end
+    if debug then
+      cecho("\n<cyan>Debug: XP gained: " .. xp .. " (session total: " .. combatLogTotalXP .. ")\n")
+    end
+  end
+end)
