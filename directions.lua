@@ -53,6 +53,14 @@ debug = false
 -- Combat state variable
 isFighting = false
 
+-- =============================================
+-- XP Tracking State Variables
+-- =============================================
+xpTracking       = false   -- true while a tracking session is active
+xpSessionStart   = 0       -- os.time() when the session started
+xpSessionGained  = 0       -- total XP gained this session
+xpLastKillXP     = 0       -- XP from the most recent kill
+
 -- Gith search variables
 githFound = 0
 findGith = 0
@@ -1262,6 +1270,89 @@ combatEndTrigger = tempRegexTrigger("R\\.I\\.P\\.", function()
   isFighting = false
   if debug then
     cecho("\n<cyan>Debug: Combat ended (R.I.P. detected)\n")
+  end
+end)
+
+-- =============================================
+-- XP Tracking Functions
+-- =============================================
+
+-- xpStart()  -- begin a new tracking session
+function xpStart()
+  xpSessionStart  = os.time()
+  xpSessionGained = 0
+  xpLastKillXP    = 0
+  xpTracking      = true
+  cecho("\n<green>XP Tracking:<reset> Session started. Use xpStatus() to check progress or xpStop() to end.\n")
+end
+
+-- xpStop()  -- end the session and print a final summary
+function xpStop()
+  if not xpTracking then
+    cecho("\n<yellow>XP Tracking:<reset> No session is currently running. Use xpStart() to begin.\n")
+    return
+  end
+  xpTracking = false
+  local elapsed = os.time() - xpSessionStart
+  local hours   = elapsed / 3600
+  local xpph    = hours > 0 and math.floor(xpSessionGained / hours) or 0
+  cecho("\n<cyan>========== XP Tracking Session Summary ==========<reset>\n")
+  cecho(string.format("  Total XP gained : <yellow>%d<reset>\n", xpSessionGained))
+  cecho(string.format("  Session duration: <yellow>%s<reset>\n", xpFormatTime(elapsed)))
+  cecho(string.format("  XP per hour     : <yellow>%d<reset>\n", xpph))
+  cecho("<cyan>=================================================<reset>\n")
+end
+
+-- xpStatus()  -- print current progress without ending the session
+function xpStatus()
+  if not xpTracking then
+    cecho("\n<yellow>XP Tracking:<reset> No session is currently running. Use xpStart() to begin.\n")
+    return
+  end
+  local elapsed = os.time() - xpSessionStart
+  local hours   = elapsed / 3600
+  local xpph    = hours > 0 and math.floor(xpSessionGained / hours) or 0
+  cecho("\n<cyan>========== XP Tracking Status ==========<reset>\n")
+  cecho(string.format("  XP gained so far: <yellow>%d<reset>\n", xpSessionGained))
+  cecho(string.format("  Session duration: <yellow>%s<reset>\n", xpFormatTime(elapsed)))
+  cecho(string.format("  XP per hour     : <yellow>%d<reset>\n", xpph))
+  cecho(string.format("  Last kill XP    : <yellow>%d<reset>\n", xpLastKillXP))
+  cecho("<cyan>========================================<reset>\n")
+end
+
+-- Helper: format seconds into "Xh Ym Zs"
+function xpFormatTime(secs)
+  local h = math.floor(secs / 3600)
+  local m = math.floor((secs % 3600) / 60)
+  local s = secs % 60
+  if h > 0 then
+    return string.format("%dh %dm %ds", h, m, s)
+  elseif m > 0 then
+    return string.format("%dm %ds", m, s)
+  else
+    return string.format("%ds", s)
+  end
+end
+
+-- =============================================
+-- XP Gain Trigger
+-- =============================================
+-- Detects TempusMUD XP gain messages, e.g.:
+--   "You receive 1234 experience points."
+--   "You receive 1234 experience."
+if xpGainTrigger then killTrigger(xpGainTrigger) end
+xpGainTrigger = tempRegexTrigger("^You receive (\\d+) experience", function()
+  local xp = tonumber(matches[2]) or 0
+  if xpTracking and xp > 0 then
+    xpSessionGained = xpSessionGained + xp
+    xpLastKillXP    = xp
+    if debug then
+      local elapsed = os.time() - xpSessionStart
+      local hours   = elapsed / 3600
+      local xpph    = hours > 0 and math.floor(xpSessionGained / hours) or 0
+      cecho(string.format("\n<cyan>XP Tracking:<reset> +%d XP  (total: %d, %.0f XP/hr)\n",
+        xp, xpSessionGained, xpph))
+    end
   end
 end)
 
