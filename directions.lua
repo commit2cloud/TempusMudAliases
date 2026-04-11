@@ -1145,6 +1145,123 @@ function travel(plane, zone, action)
   end
 end
 
+-- =============================================
+-- Bard Social Stories
+-- =============================================
+-- Sequences story lines in-game with a 3-second pause between each send.
+-- Each element of `lines` is sent as a MUD command (say, emote, etc.).
+local function tellStoryLines(lines)
+  for i, line in ipairs(lines) do
+    tempTimer((i - 1) * 3.0, function()
+      send(line)
+    end)
+  end
+end
+
+-- Story 1: The High Tower of Magic
+-- References: High Tower of Magic (Past), Ruins of the High Tower of Magic (Future),
+--             Grand Mistress, Elven Village, Mavernal, Istan
+function bardTaleHTOM()
+  cecho("\n<cyan>Performing: <yellow>The High Tower of Magic<reset>\n")
+  local lines = {
+    "emote strums a haunting melody on his lute and clears his throat.",
+    "say Heed me, good travelers! I shall tell you the tale of the High Tower of Magic!",
+    "say In the days of Past Tempus, a tower of unparalleled beauty stretched toward the heavens...",
+    "say Its stones were laid by the greatest archmages of the age, each brick imbued with raw power.",
+    "say The Grand Mistress ruled from its highest chamber, keeper of all arcane knowledge.",
+    "say Mages would travel for months -- from Elven Village, from Mavernal, from Istan itself...",
+    "say ...just to study within those hallowed halls for a single season.",
+    "say But power draws shadows, and shadows breed envy.",
+    "say The wars of the Future tore across time itself, unraveling what centuries had built.",
+    "say Today, in the age to come, only ruins remain where that great tower once stood.",
+    "say The Ruins of the High Tower -- a monument to ambition and its terrible price.",
+    "emote wipes a single dramatic tear from his eye.",
+    "say So lift your cups to the Grand Mistress! May her wisdom echo through the ages!",
+    "emote strums a final, fading chord and gives a sweeping bow.",
+  }
+  tellStoryLines(lines)
+end
+
+-- Story 2: The Fall of King Learander
+-- References: Caves of Learander (Past), Holy Square, Istan, Great Pyramid, Frozen Tundras
+function bardTaleLearander()
+  cecho("\n<cyan>Performing: <yellow>The Fall of King Learander<reset>\n")
+  local lines = {
+    "emote settles onto a nearby crate, plucking the opening notes of an old ballad.",
+    "say Friends, do you know the name Learander? No? Then listen well!",
+    "say Once he was called the King of the Northern Reaches -- proud, powerful, and just.",
+    "say His armies marched from Holy Square to the frozen tundras of the far north.",
+    "say They said no gate could hold against him -- not the gates of Istan, not the Great Pyramid.",
+    "say But the king's heart was his undoing. He sought power beyond mortal reckoning.",
+    "say He delved into the old magic -- the kind that rots the soul from the inside out.",
+    "say His advisors fled. His knights abandoned him. His people wept.",
+    "say Now his caves fester in the western reaches, fifty-six leagues from Holy Square.",
+    "say Twisted servants patrol his halls, loyal only to a master long lost to madness.",
+    "emote grins and winks at the crowd.",
+    "say I've walked those caves myself, and I'll tell you this for free:",
+    "say The Caves of Learander are no place for the faint of heart... or the foolish.",
+    "say Though if you're bold enough, the king's lost treasures await the worthy!",
+    "emote stands with a flourish and tips his hat.",
+  }
+  tellStoryLines(lines)
+end
+
+-- Story 3: The Shadow City of Shade
+-- References: Shadow City of Shade (Past), Tiltin the Mage of Shade, Rebel Leader, Selset
+function bardTaleShade()
+  cecho("\n<cyan>Performing: <yellow>The Shadow City of Shade<reset>\n")
+  local lines = {
+    "emote lowers his voice to barely above a whisper and begins to play a haunting minor key.",
+    "say What do you know of Shade? The Shadow City? The Realm Between Worlds?",
+    "say Sixty-one leagues north of Holy Square, east through realms of twilight...",
+    "say ...there exists a city where no sun has ever shone.",
+    "say Tiltin, the Mage of Shade, watches from his tower with eyes like cold fire.",
+    "say He knows every shadow, every whisper, every secret carried on the dark wind.",
+    "say Below his tower, in catacombs carved from living darkness, rebels scheme and plot.",
+    "say The Rebel Leader rallies those who refuse to bow to Shade's eternal night.",
+    "say And deeper still -- in a cage of shadow-forged iron -- the prisoner Selset waits.",
+    "say What secrets does Selset carry? What bargain was struck in the dark?",
+    "emote lets the final haunting note hang in the air...",
+    "say That, my friends, is a tale for another night...",
+    "emote stands abruptly, winks at the crowd, and takes a deep bow.",
+    "say ...if you dare to ask!",
+  }
+  tellStoryLines(lines)
+end
+
+-- Bard tale menu
+function showBardTaleMenu()
+  cecho("\n<cyan>┌------------------------------------------------------------------------------┐\n")
+  cecho("<cyan>|                          <magenta> Bard Tales                                           <cyan>|\n")
+  cecho("<cyan>├------------------------------------------------------------------------------┤\n")
+  cecho("<cyan>|                                                                              |\n")
+  cecho("<cyan>|  <magenta>1) <reset>The High Tower of Magic                                                <cyan>|\n")
+  cecho("<cyan>|  <magenta>2) <reset>The Fall of King Learander                                             <cyan>|\n")
+  cecho("<cyan>|  <magenta>3) <reset>The Shadow City of Shade                                               <cyan>|\n")
+  cecho("<cyan>|                                                                              <cyan>|\n")
+  cecho("<cyan>|  <white>Usage: <reset>bardtale <number>                                                    <cyan>|\n")
+  cecho("<cyan>|                                                                              <cyan>|\n")
+  cecho("<cyan>└------------------------------------------------------------------------------┘\n")
+end
+
+-- Dispatcher: bardtale / bardtale <number>
+function bardTale(storyId)
+  if not storyId then
+    showBardTaleMenu()
+    return
+  end
+  local id = tonumber(storyId)
+  if id == 1 then
+    bardTaleHTOM()
+  elseif id == 2 then
+    bardTaleLearander()
+  elseif id == 3 then
+    bardTaleShade()
+  else
+    cecho("\n<red>Bard Tale Error: <reset>Invalid story number '" .. tostring(storyId) .. "'. Type <cyan>bardtale<reset> to see available stories.\n")
+  end
+end
+
 cecho("\n<cyan>Directions Script Loaded! Use: travel <plane> <zone>\n")
 
 -- =============================================
