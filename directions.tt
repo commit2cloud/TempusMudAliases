@@ -3063,6 +3063,94 @@
 #NOP ----------------------------------------------------------------------------------------------
 
 #NOP ----------------------------------------------------------------------------------------------
+#NOP                                    Bard Social Stories
+#NOP
+#NOP  Three in-game storytelling performances using TempusMUD lore.
+#NOP  Each line is sent to the server with a 3-second delay between them.
+#NOP  Usage: bardtale         (show menu)
+#NOP         bardtale 1       (The High Tower of Magic)
+#NOP         bardtale 2       (The Fall of King Learander)
+#NOP         bardtale 3       (The Shadow City of Shade)
+#NOP ----------------------------------------------------------------------------------------------
+
+#ALIAS {bardtale}
+{
+    #SH {<afc>┌------------------------------------------------------------------------------┐<099>};
+    #SH {<afc>|                           <FF0F> Bard Tales                                        <afc>|<099>};
+    #SH {<afc>├------------------------------------------------------------------------------┤<099>};
+    #SH {<afc>|                                                                              |<099>};
+    #SH {<afc>|  <FF0F>1) <099>The High Tower of Magic                                                <afc>|<099>};
+    #SH {<afc>|  <FF0F>2) <099>The Fall of King Learander                                             <afc>|<099>};
+    #SH {<afc>|  <FF0F>3) <099>The Shadow City of Shade                                               <afc>|<099>};
+    #SH {<afc>|                                                                              <afc>|<099>};
+    #SH {<afc>|  <FFF0>Usage: <099>bardtale <number>                                                    <afc>|<099>};
+    #SH {<afc>|                                                                              <afc>|<099>};
+    #SH {<afc>└------------------------------------------------------------------------------┘<099>};
+}
+{5}
+
+#ALIAS {bardtale1}
+{
+    #SH {<afc>Performing: <FFF0>The High Tower of Magic<099>};
+    emote strums a haunting melody on his lute and clears his throat.;
+    #DELAY {3}  {say Heed me, good travelers! I shall tell you the tale of the High Tower of Magic!};
+    #DELAY {6}  {say In the days of Past Tempus, a tower of unparalleled beauty stretched toward the heavens...};
+    #DELAY {9}  {say Its stones were laid by the greatest archmages of the age, each brick imbued with raw power.};
+    #DELAY {12} {say The Grand Mistress ruled from its highest chamber, keeper of all arcane knowledge.};
+    #DELAY {15} {say Mages would travel for months -- from Elven Village, from Mavernal, from Istan itself...};
+    #DELAY {18} {say ...just to study within those hallowed halls for a single season.};
+    #DELAY {21} {say But power draws shadows, and shadows breed envy.};
+    #DELAY {24} {say The wars of the Future tore across time itself, unraveling what centuries had built.};
+    #DELAY {27} {say Today, in the age to come, only ruins remain where that great tower once stood.};
+    #DELAY {30} {say The Ruins of the High Tower -- a monument to ambition and its terrible price.};
+    #DELAY {33} {emote wipes a single dramatic tear from his eye.};
+    #DELAY {36} {say So lift your cups to the Grand Mistress! May her wisdom echo through the ages!};
+    #DELAY {39} {emote strums a final, fading chord and gives a sweeping bow.};
+}
+{5}
+
+#ALIAS {bardtale2}
+{
+    #SH {<afc>Performing: <FFF0>The Fall of King Learander<099>};
+    emote settles onto a nearby crate, plucking the opening notes of an old ballad.;
+    #DELAY {3}  {say Friends, do you know the name Learander? No? Then listen well!};
+    #DELAY {6}  {say Once he was called the King of the Northern Reaches -- proud, powerful, and just.};
+    #DELAY {9}  {say His armies marched from Holy Square to the frozen tundras of the far north.};
+    #DELAY {12} {say They said no gate could hold against him -- not the gates of Istan, not the Great Pyramid.};
+    #DELAY {15} {say But the king's heart was his undoing. He sought power beyond mortal reckoning.};
+    #DELAY {18} {say He delved into the old magic -- the kind that rots the soul from the inside out.};
+    #DELAY {21} {say His advisors fled. His knights abandoned him. His people wept.};
+    #DELAY {24} {say Now his caves fester in the western reaches, fifty-six leagues from Holy Square.};
+    #DELAY {27} {say Twisted servants patrol his halls, loyal only to a master long lost to madness.};
+    #DELAY {30} {emote grins and winks at the crowd.};
+    #DELAY {33} {say I've walked those caves myself, and I'll tell you this for free:};
+    #DELAY {36} {say The Caves of Learander are no place for the faint of heart... or the foolish.};
+    #DELAY {39} {say Though if you're bold enough, the king's lost treasures await the worthy!};
+    #DELAY {42} {emote stands with a flourish and tips his hat.};
+}
+{5}
+
+#ALIAS {bardtale3}
+{
+    #SH {<afc>Performing: <FFF0>The Shadow City of Shade<099>};
+    emote lowers his voice to barely above a whisper and begins to play a haunting minor key.;
+    #DELAY {3}  {say What do you know of Shade? The Shadow City? The Realm Between Worlds?};
+    #DELAY {6}  {say Sixty-one leagues north of Holy Square, east through realms of twilight...};
+    #DELAY {9}  {say ...there exists a city where no sun has ever shone.};
+    #DELAY {12} {say Tiltin, the Mage of Shade, watches from his tower with eyes like cold fire.};
+    #DELAY {15} {say He knows every shadow, every whisper, every secret carried on the dark wind.};
+    #DELAY {18} {say Below his tower, in catacombs carved from living darkness, rebels scheme and plot.};
+    #DELAY {21} {say The Rebel Leader rallies those who refuse to bow to Shade's eternal night.};
+    #DELAY {24} {say And deeper still -- in a cage of shadow-forged iron -- the prisoner Selset waits.};
+    #DELAY {27} {say What secrets does Selset carry? What bargain was struck in the dark?};
+    #DELAY {30} {emote lets the final haunting note hang in the air...};
+    #DELAY {33} {say That, my friends, is a tale for another night...};
+    #DELAY {36} {emote stands abruptly, winks at the crowd, and takes a deep bow.};
+    #DELAY {39} {say ...if you dare to ask!};
+}
+{5}
+
+#NOP ----------------------------------------------------------------------------------------------
 #NOP                                    Utilities
 
 #ALIAS {showcolors} {#SH <FF00>'FF00' Red <F0F0>'F0F0' Green <F00F>'F00F' Blue <FFF0>'FFF0' Yellow <F0FF>'F0FF' Cyan <FF0F>'FF0F' Purple <acf>'acf' Azure <afc>'afc' Jade <caf>'caf' Violet <cfa>'cfa' Lime <fac>'fac' Pink <fca>'fca' Orange<000>}

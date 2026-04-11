@@ -19,6 +19,7 @@ Easily navigate TempusMUD zones using a travel menu system. Originally written f
   - [Personalization](#personalization)
   - [Registering the Aliases](#registering-the-aliases)
 - [Usage](#usage)
+- [Bard Social Stories](#bard-social-stories)
 - [Files](#files)
 - [Screenshots](#screenshots)
 
@@ -439,6 +440,62 @@ Some zones also have dedicated helper aliases for multi-step navigation (e.g., `
 | `config.lua` | Configuration file (optional) - place in Mudlet home directory |
 | `LICENSE` | License file |
 | `README.md` | This file |
+
+---
+
+## Bard Social Stories
+
+The script includes a **Bard Social** feature — a set of in-character story performances your bard can deliver to a room full of players. Each story is told one line at a time with a 3-second pause between each `say` or `emote`, giving your audience time to read.
+
+Three lore-rich stories are included, each referencing actual TempusMUD zones and characters.
+
+### Available Stories
+
+| # | Title | Lore References |
+|---|---|---|
+| 1 | **The High Tower of Magic** | High Tower of Magic (Past), Ruins of the High Tower (Future), Grand Mistress, Elven Village, Mavernal, Istan |
+| 2 | **The Fall of King Learander** | Caves of Learander, Holy Square, Great Pyramid, Istan, Frozen Tundras |
+| 3 | **The Shadow City of Shade** | Shadow City of Shade, Tiltin the Mage of Shade, Rebel Leader, Selset |
+
+### Usage
+
+| Client | Show Menu | Perform Story |
+|---|---|---|
+| **Mudlet (Lua)** | `bardtale` | `bardtale 1` / `bardtale 2` / `bardtale 3` |
+| **zMUD** | `bardtale` | `bardtale 1` / `bardtale 2` / `bardtale 3` |
+| **TinTin++** | `bardtale` | `bardtale1` / `bardtale2` / `bardtale3` |
+
+> **Note:** TinTin++ aliases cannot contain spaces in the alias name, so use `bardtale1`, `bardtale2`, `bardtale3` (no space before the number).
+
+### Registering the Alias in Mudlet
+
+After loading the script, create a `bardtale` alias in Mudlet:
+
+| Field | Value |
+|---|---|
+| **Name** | `bardtale` |
+| **Pattern** | `^bardtale\s*(\d*)$` |
+| **Type** | Regex |
+
+**Command / Script body:**
+
+```lua
+local id = matches[2] ~= "" and tonumber(matches[2]) or nil
+bardTale(id)
+```
+
+### What It Looks Like In-Game
+
+When you run `bardtale 1` (The High Tower of Magic), your character performs live for the room:
+
+```
+Dracken strums a haunting melody on his lute and clears his throat.
+You say 'Heed me, good travelers! I shall tell you the tale of the High Tower of Magic!'
+You say 'In the days of Past Tempus, a tower of unparalleled beauty stretched toward the heavens...'
+You say 'Its stones were laid by the greatest archmages of the age, each brick imbued with raw power.'
+...
+Dracken strums a final, fading chord and gives a sweeping bow.
+```
 
 ---
 
