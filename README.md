@@ -19,6 +19,10 @@ Easily navigate TempusMUD zones using a travel menu system. Originally written f
   - [Personalization](#personalization)
   - [Registering the Aliases](#registering-the-aliases)
 - [Usage](#usage)
+  - [Travel Commands](#travel-commands)
+  - [Speak Feature](#speak-feature)
+  - [AutoPractice (ap)](#autopractice-ap)
+  - [Combat Log / XP Tracking (combatlog)](#combat-log--xp-tracking-combatlog)
 - [Files](#files)
 - [Screenshots](#screenshots)
 
@@ -395,6 +399,8 @@ The `travel()` function in the script handles all menu displays and destination 
 
 Once everything is set up, use the `travel` command in your MUD client:
 
+### Travel Commands
+
 | Command | Action |
 |---|---|
 | `travel` | Show the main travel menu |
@@ -429,6 +435,99 @@ Some zones also have dedicated helper aliases for multi-step navigation (e.g., `
 
 ---
 
+### AutoPractice (ap)
+
+**AutoPractice** automates skill and spell practice for bard characters. It navigates to the Bard Guildmaster and practices every enabled skill in your configured list.
+
+#### Registering the `ap` alias (Mudlet)
+
+In Mudlet's Alias Editor, create an alias with:
+
+- **Pattern:** `^ap\s*(.*)$`
+- **Script:**
+  ```lua
+  local input = matches[2] or ""
+  local cmd, arg = input:match("^(%S+)%s*(.*)")
+  ap(cmd, arg)
+  ```
+
+#### `ap` Commands
+
+| Command | Action |
+|---|---|
+| `ap` | Navigate to Bard Guildmaster and practice all enabled skills |
+| `ap status` | Display the practice list with ON/OFF toggles |
+| `ap toggle <skill>` | Toggle a skill on or off |
+| `ap add <skill>` | Add a new skill to the practice list |
+| `ap remove <skill>` | Remove a skill from the practice list |
+| `ap stop` | Abort a running practice session |
+| `ap help` | Show usage help |
+
+#### Default Bard Skill List
+
+The default practice list is defined in `directions.lua` and can be customised in `config.lua`:
+
+```lua
+apSkillList = {
+  {name = "lullaby",      enabled = true},
+  {name = "chant",        enabled = true},
+  {name = "ballad",       enabled = true},
+  {name = "hymn",         enabled = true},
+  {name = "melody",       enabled = true},
+  {name = "verse",        enabled = true},
+  {name = "kick",         enabled = true},
+  {name = "dodge",        enabled = true},
+  {name = "rescue",       enabled = true},
+  {name = "long blade",   enabled = true},
+  {name = "short blade",  enabled = true},
+  {name = "blunt weapon", enabled = true},
+}
+```
+
+> **Tip:** Place a custom `apSkillList` table in your `config.lua` to override the defaults without modifying `directions.lua`.
+
+---
+
+### Combat Log / XP Tracking (combatlog)
+
+The **Combat Log** tracks experience points gained and kills during a play session and reports XP-per-hour metrics.
+
+XP is captured automatically from TempusMUD's `You gain XXXX experience points.` message. Kill counts increment each time `R.I.P.` appears while you are in combat. Tracking begins automatically on the first XP gain, or you can start a session manually.
+
+#### Registering the `combatlog` alias (Mudlet)
+
+In Mudlet's Alias Editor, create an alias with:
+
+- **Pattern:** `^combatlog\s*(.*)$`
+- **Script:**
+  ```lua
+  combatlog(matches[2])
+  ```
+
+#### `combatlog` Commands
+
+| Command | Action |
+|---|---|
+| `combatlog` | Display current session metrics (XP, XP/hour, kills, elapsed time) |
+| `combatlog start` | Start a new tracking session and reset all counters |
+| `combatlog reset` | Reset counters while keeping tracking active |
+| `combatlog stop` | Pause XP tracking |
+
+#### Example Output
+
+```
+┌──────────────────────────────────────────┐
+│         Combat Log Summary              │
+├──────────────────────────────────────────┤
+│  Session Time: 42m 15s
+│  Total XP:     125000
+│  XP / Hour:    177514
+│  Kills:        87
+└──────────────────────────────────────────┘
+```
+
+---
+
 ## Files
 
 | File | Description |
@@ -437,6 +536,7 @@ Some zones also have dedicated helper aliases for multi-step navigation (e.g., `
 | `directions.zmud` | Dedicated zMUD port of the travel system |
 | `directions.lua` | Mudlet Lua port of the travel system |
 | `config.lua` | Configuration file (optional) - place in Mudlet home directory |
+| `test_travel.lua` | Unit tests for `directions.lua` (run with `lua test_travel.lua`) |
 | `LICENSE` | License file |
 | `README.md` | This file |
 
