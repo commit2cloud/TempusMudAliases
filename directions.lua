@@ -91,6 +91,12 @@ githZ = 0
 -- Helper Functions
 -- =============================================
 
+-- Trim leading/trailing whitespace and lower-case a string.
+-- Used to normalise command arguments consistently across modules.
+function trimAndLower(s)
+  return string.lower(s:match("^%s*(.-)%s*$"))
+end
+
 function sendDirs(dirString)
   -- Direction shorthand to full command mapping
   local dirMap = {
@@ -296,7 +302,7 @@ function ap(cmd, arg)
     apStart()
     return
   end
-  local c = string.lower(cmd)
+  local c = trimAndLower(cmd)
   if c == "status" then
     apShowStatus()
   elseif c == "toggle" then
@@ -370,7 +376,7 @@ function combatlog(cmd)
     combatLogShow()
     return
   end
-  local c = string.lower(cmd:match("^%s*(.-)%s*$"))
+  local c = trimAndLower(cmd)
   if c == "start" then
     combatLogStart()
   elseif c == "reset" then

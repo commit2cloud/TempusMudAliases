@@ -102,7 +102,6 @@ matches = {}
 -- os.time stub – returns a fixed epoch for deterministic XP/hour calculations
 local _fakeTime = 1000
 os = os or {}
-local _real_os_time = os.time
 os.time = function() return _fakeTime end
 
 -- =============================================
@@ -141,6 +140,22 @@ chunk()
 local function clearSent()
   _sentCommands = {}
 end
+
+-- =============================================
+-- Section 0: trimAndLower helper
+-- =============================================
+
+print("\n--- trimAndLower: Shared Helper ---")
+
+test("trimAndLower: lowercases and trims leading/trailing spaces", function()
+  assertEquals(trimAndLower("  START  "), "start")
+  assertEquals(trimAndLower("STOP"), "stop")
+  assertEquals(trimAndLower("  Status "), "status")
+end)
+
+test("trimAndLower: already lowercase and no spaces is unchanged", function()
+  assertEquals(trimAndLower("reset"), "reset")
+end)
 
 -- =============================================
 -- Section 1: sendDirs – Speedwalk Alias Parsing
