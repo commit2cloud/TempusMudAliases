@@ -429,13 +429,72 @@ Some zones also have dedicated helper aliases for multi-step navigation (e.g., `
 
 ---
 
+## AutoPractice (Bard)
+
+`autopractice.lua` is an optional Mudlet Lua module that automatically navigates your bard to the Bard Guildmaster and practices every enabled spell/skill in sequence.
+
+### Setup
+
+1. **Load** `autopractice.lua` **after** `directions.lua` so that `gotoBardGuildmaster()` is available.
+   - In the **Script Editor** (`Alt+S`), add a new script entry below `TempusMUD Directions`, name it `TempusMUD AutoPractice`, and paste in the contents of `autopractice.lua`.
+   - Or load on demand: `lua dofile(getMudletHomeDir() .. "/autopractice.lua")`
+
+2. Optionally edit the `apSkills` table near the top of `autopractice.lua` to add, remove, or reorder bard spells and skills for your character.
+
+### Commands
+
+| Command | Description |
+|---|---|
+| `lua autopractice()` | Navigate to Bard Guildmaster and practice all enabled skills |
+| `lua apList()` | Show all spells/skills and their ON/OFF state |
+| `lua apToggle("Steal")` | Toggle a single skill on or off by name |
+| `lua apReset()` | Re-enable every skill |
+| `lua apStop()` | Abort a running auto-practice session |
+
+### How It Works
+
+1. Builds a queue of every skill that is currently toggled **ON**.
+2. Calls `gotoBardGuildmaster()` and waits for the travel system to signal arrival.
+3. Sends `practice <skill>` for each queued skill, separated by a short configurable delay (`apDelay`, default 0.6 s).
+4. Prints a confirmation when the session is complete.
+
+---
+
+## XP Tracking
+
+XP-per-hour tracking is built into `directions.lua`. It listens for TempusMUD experience-gain messages and accumulates totals so you can see how efficiently you are levelling.
+
+### Commands
+
+| Command | Description |
+|---|---|
+| `lua xpStart()` | Begin a new XP tracking session |
+| `lua xpStatus()` | Print current XP gained, time elapsed, and XP/hr rate |
+| `lua xpStop()` | End the session and print a final summary |
+
+### Example Output
+
+```
+========== XP Tracking Status ==========
+  XP gained so far: 45820
+  Session duration: 1h 12m 34s
+  XP per hour     : 37992
+  Last kill XP    : 1240
+========================================
+```
+
+Enable `debug` mode (`debug = true` in Mudlet console) to see a running XP ticker after every kill.
+
+---
+
 ## Files
 
 | File | Description |
 |---|---|
 | `directions.tt` | Original TinTin++ script |
 | `directions.zmud` | Dedicated zMUD port of the travel system |
-| `directions.lua` | Mudlet Lua port of the travel system |
+| `directions.lua` | Mudlet Lua port of the travel system (includes XP tracking) |
+| `autopractice.lua` | Optional AutoPractice module for bard characters (Mudlet) |
 | `config.lua` | Configuration file (optional) - place in Mudlet home directory |
 | `LICENSE` | License file |
 | `README.md` | This file |
