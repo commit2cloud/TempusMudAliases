@@ -138,6 +138,7 @@ All `travel` commands work directly from the zMUD command line after loading the
 | Command | Action |
 |---|---|
 | `travel` | Show the main travel menu |
+| `travel status` | Show current travel system state |
 | `travel 1` or `travel past` | Show Past locations list |
 | `travel 2` or `travel future` | Show Future locations list |
 | `travel 3` or `travel planes` | Show Planes locations list |
@@ -398,6 +399,7 @@ Once everything is set up, use the `travel` command in your MUD client:
 | Command | Action |
 |---|---|
 | `travel` | Show the main travel menu |
+| `travel status` | Show current travel system state (room, travel/error/combat flags) |
 | `travel 1` | Show Past locations |
 | `travel 2` | Show Future locations |
 | `travel 3` | Show Planes locations |

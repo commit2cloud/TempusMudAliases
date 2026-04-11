@@ -1034,6 +1034,26 @@ function showAllMenu()
   cecho("<cyan>└------------------------------------------------------------------------------┘\n")
 end
 
+function showStatus()
+  local travelState = travelling == 1 and "<green>Travelling<reset>" or "<white>Idle<reset>"
+  local errorState  = travelerror == 1 and "<red>Error<reset>" or "<green>None<reset>"
+  local fightState  = isFighting and "<red>In Combat<reset>" or "<green>Not in Combat<reset>"
+  local githState   = findGith == 1 and "<yellow>Searching<reset>" or
+                      (githFound == 1 and "<green>Found<reset>" or "<white>Inactive<reset>")
+  local roomDisplay = (currentRoom ~= nil and currentRoom ~= "") and ("<yellow>" .. currentRoom .. "<reset>") or "<white>(unknown)<reset>"
+
+  cecho("\n<cyan>┌------------------------------------------------------------------------------┐\n")
+  cecho("<cyan>|                      <orange>Travel System Status                                  <cyan>|\n")
+  cecho("<cyan>├------------------------------------------------------------------------------┤\n")
+  cecho("<cyan>|  <white>Current Room   : <reset>" .. roomDisplay .. "\n")
+  cecho("<cyan>|  <white>Travel State   : <reset>" .. travelState .. "\n")
+  cecho("<cyan>|  <white>Travel Error   : <reset>" .. errorState .. "\n")
+  cecho("<cyan>|  <white>Combat State   : <reset>" .. fightState .. "\n")
+  cecho("<cyan>|  <white>Gith Search    : <reset>" .. githState .. "\n")
+  cecho("<cyan>|  <white>Debug Mode     : <reset>" .. (debug and "<yellow>On<reset>" or "<white>Off<reset>") .. "\n")
+  cecho("<cyan>└------------------------------------------------------------------------------┘\n")
+end
+
 -- =============================================
 -- Main Travel Command Function
 -- =============================================
@@ -1066,6 +1086,12 @@ function travel(plane, zone, action)
   -- Check for help request
   if p == "help" or p == "?" then
     showHelpMenu()
+    return
+  end
+
+  -- Check for status request
+  if p == "status" then
+    showStatus()
     return
   end
   
