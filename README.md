@@ -19,6 +19,7 @@ Easily navigate TempusMUD zones using a travel menu system. Originally written f
   - [Personalization](#personalization)
   - [Registering the Aliases](#registering-the-aliases)
 - [Usage](#usage)
+- [AutoPractice (Bard)](#autopractice-bard)
 - [Files](#files)
 - [Screenshots](#screenshots)
 
@@ -429,6 +430,106 @@ Some zones also have dedicated helper aliases for multi-step navigation (e.g., `
 
 ---
 
+## AutoPractice (Bard)
+
+`autopractice.lua` automates practicing your bard's skills and songs at the Bard Guildmaster.  It travels there automatically, sends each `practice` command in sequence, and — most importantly — shows you **exactly what it is doing** at every step so you always know its status.
+
+### Installation
+
+1. **Download** `autopractice.lua` from this repository.
+2. Load it in Mudlet using any of the same methods as `directions.lua` (Script Editor or `dofile`).  
+   > **Important:** `autopractice.lua` depends on functions defined in `directions.lua` (`gotoBardGuildmaster`, `isFighting`, etc.), so `directions.lua` must be loaded first.
+
+### Quick-start Commands
+
+| Command | What it does |
+|---|---|
+| `startAutoPractice()` | Travel to Bard Guild and practice all enabled skills |
+| `stopAutoPractice()` | Cancel the current session immediately |
+| `apstatus()` | **See exactly what it is doing right now** — the answer to "how do I see what it's doing?" |
+| `apToggle("backstab")` | Enable or disable a skill for the session |
+| `apDebug = true` | Print a debug line for every internal step |
+| `apSetXP(1234567)` | Set your current XP total so the module can track XP/hour |
+
+### Seeing what it's doing — `apstatus()`
+
+Type `apstatus()` at any time to get a full dashboard:
+
+```
+═══════════════════════════════════════════
+          AutoPractice  –  Status
+═══════════════════════════════════════════
+  ◉ RUNNING
+  Currently practicing: backstab
+  Practice sessions left: 8
+  Progress: 5 done, 7 remaining (of 13)
+  Session time: 2m 14s
+  XP gained: 2400
+  XP / hour: 64285
+  Practiced this session:
+    ✓  song of fear
+    ✓  song of protection
+    ✓  song of speed
+    ✓  song of the storm
+    ✓  song of healing
+  Still to practice:
+    –  song of battle
+    –  song of disruption
+    ...
+  Skill list (apToggle to change):
+    [on ]  song of fear
+    [on ]  backstab
+    [off]  charm person
+    ...
+═══════════════════════════════════════════
+```
+
+### Enabling debug output
+
+Set `apDebug = true` to see a trace of every internal action:
+
+```
+[AP Debug]  Queue built: 13 items
+[AP Debug]  Sending: practice song of fear
+[AP Debug]  Improved: song of fear
+[AP Debug]  +XP 480 (session total: 480)
+[AP Debug]  Sending: practice song of protection
+...
+```
+
+Set `apDebug = false` to return to quiet mode.
+
+### Customizing the skill list
+
+Open `autopractice.lua` and edit the `apSkillList` table near the top.  Each entry looks like:
+
+```lua
+{name = "backstab", enabled = true, type = "skill"},
+```
+
+- Set `enabled = false` to skip a skill by default.
+- Call `apToggle("backstab")` at runtime to flip the flag without editing the file.
+- The three `type` values are `"skill"`, `"song"`, and `"spell"`.
+
+### XP tracking
+
+The module tracks XP gain automatically from server messages.  For accurate XP/hour:
+
+1. Check your current XP (e.g. via the `score` command) before starting.
+2. Tell the module your baseline: `apSetXP(1234567)`
+3. Run `startAutoPractice()`.
+4. The `apstatus()` output will include XP gained and XP/hour for the session.
+
+### Recommended Mudlet aliases
+
+| Alias name | Pattern | Script body |
+|---|---|---|
+| `ap` | `^ap$` | `startAutoPractice()` |
+| `apstop` | `^apstop$` | `stopAutoPractice()` |
+| `apstatus` | `^apstatus$` | `apstatus()` |
+
+---
+
 ## Files
 
 | File | Description |
@@ -436,6 +537,7 @@ Some zones also have dedicated helper aliases for multi-step navigation (e.g., `
 | `directions.tt` | Original TinTin++ script |
 | `directions.zmud` | Dedicated zMUD port of the travel system |
 | `directions.lua` | Mudlet Lua port of the travel system |
+| `autopractice.lua` | Bard AutoPractice module (requires `directions.lua`) |
 | `config.lua` | Configuration file (optional) - place in Mudlet home directory |
 | `LICENSE` | License file |
 | `README.md` | This file |
